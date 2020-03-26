@@ -7,7 +7,7 @@ namespace GameDev2D
 	class Water : public Tile
 	{
 	public:
-		Water(unsigned char row, unsigned char col, bool hasCollider);
+		Water(unsigned char row, unsigned char col, bool hasCollider, bool hasVariant);
 		~Water();
 
 		Tile::Type GetType() override;

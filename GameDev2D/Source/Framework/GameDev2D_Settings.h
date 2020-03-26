@@ -5,7 +5,7 @@
 #define LIMIT_FPS true
 
 #define WINDOW_TITLE "GameDev2D"
-#define WINDOW_WIDTH 1280
+#define WINDOW_WIDTH 950
 #define WINDOW_HEIGHT 720
 #define WINDOW_IS_FULLSCREEN false
 

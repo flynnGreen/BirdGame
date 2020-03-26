@@ -19,6 +19,9 @@ namespace GameDev2D
 	{
 		//Load the Room
 		Load(filename);
+
+		bool isActive = filename == LEVEL1_NAMES[0];
+		SetIsActive(isActive);
 	}
 
 	Room::~Room()
@@ -43,7 +46,15 @@ namespace GameDev2D
 		{
 			for (unsigned char c = 0; c < m_NumColumns; c++)
 			{
-				m_Tiles[r][c]->Update(delta);
+				if (IsOnScreen(m_Tiles[r][c]) == true)
+				{
+					m_Tiles[r][c]->SetIsActive(true);
+					m_Tiles[r][c]->Update(delta);
+				}
+				else
+				{
+					m_Tiles[r][c]->SetIsActive(false);
+				}
 			}
 		}
 	}
@@ -54,7 +65,8 @@ namespace GameDev2D
 		{
 			for (unsigned char c = 0; c < m_NumColumns; c++)
 			{
-				if (m_Tiles[r][c]->GetType() != Tile::Empty)
+				if (m_Tiles[r][c]->GetType() != Tile::Empty
+					&& m_Tiles[r][c]->IsActive() == true)
 				{
 					m_Tiles[r][c]->Draw(spriteBatch);
 				}
@@ -83,6 +95,34 @@ namespace GameDev2D
 	unsigned char Room::GetColumns()
 	{
 		return m_NumColumns;
+	}
+
+	void Room::SetIsActive(bool isActive)
+	{
+		for (unsigned char r = 0; r < GetRows(); r++)
+		{
+			for (unsigned char c = 0; c < GetColumns(); c++)
+			{
+				Tile* tile = m_Tiles[r][c];
+				bool activeState = isActive ? IsOnScreen(tile) : false;
+				tile->SetIsActive(activeState);
+			}
+		}
+	}
+
+	bool Room::IsOnScreen(Tile* tile)
+	{
+		Vector2 cameraPosition = GetCamera()->GetPosition();
+		float left = cameraPosition.x - GetHalfScreenWidth() - HALF_TILE_SIZE;
+		float right = cameraPosition.x + GetHalfScreenWidth() + HALF_TILE_SIZE;
+		float top = cameraPosition.y + GetHalfScreenHeight() + HALF_TILE_SIZE;
+		float bottom = cameraPosition.y - GetHalfScreenHeight() - HALF_TILE_SIZE;
+
+		Vector2 tilePosition = tile->GetPosition();
+		return tilePosition.x >= left
+			&& tilePosition.x <= right
+			&& tilePosition.y >= bottom
+			&& tilePosition.y <= top;
 	}
 
 	float Room::GetWidth()
@@ -162,14 +202,15 @@ namespace GameDev2D
 	Tile* Room::CreateNewTile(unsigned char data, unsigned char row, unsigned char col)
 	{
 		bool hasCollider = (data & 1) != 0;
+		bool hasVariant = (data & 2) != 0;
 
 		if ((data & Tile::Main) == Tile::Main)
 		{
-			return new MainTile(row, col, hasCollider);
+			return new MainTile(row, col, hasCollider, hasVariant);
 		}
 		if ((data & Tile::Water) == Tile::Water)
 		{
-			return new Water(row, col, hasCollider);
+			return new Water(row, col, hasCollider, hasVariant);
 		}
 		if ((data & Tile::Item) == Tile::Item)
 		{
@@ -177,7 +218,7 @@ namespace GameDev2D
 		}
 		if ((data & Tile::Tree) == Tile::Tree)
 		{
-			return new Tree(row, col, hasCollider);
+			return new Tree(row, col, hasCollider, hasVariant);
 		}
 		if ((data & Tile::House) == Tile::House)
 		{

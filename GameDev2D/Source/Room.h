@@ -18,6 +18,9 @@ namespace GameDev2D
 		unsigned char GetRows();
 		unsigned char GetColumns();
 
+		void SetIsActive(bool isActive);
+		bool IsOnScreen(Tile* tile);
+
 		float GetWidth();
 		float GetHeight();
 

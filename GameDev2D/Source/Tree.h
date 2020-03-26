@@ -7,7 +7,7 @@ namespace GameDev2D
 	class Tree : public Tile
 	{
 	public:
-		Tree(unsigned char row, unsigned char col, bool hasCollider);
+		Tree(unsigned char row, unsigned char col, bool hasCollider, bool hasVariant);
 		~Tree();
 
 		Tile::Type GetType() override;

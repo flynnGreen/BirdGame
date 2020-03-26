@@ -21,6 +21,14 @@ namespace GameDev2D
 
 	void Level::Update(double delta)
 	{
+
+		Vector2 cameraPosition = GetCamera()->GetPosition();
+
+		cameraPosition.x = Math::Clamp(cameraPosition.x, GetHalfScreenWidth(), m_Room[m_CurrentRoom]->GetWidth() - GetHalfScreenWidth());
+		cameraPosition.y = Math::Clamp(cameraPosition.y, GetHalfScreenHeight(), m_Room[m_CurrentRoom]->GetHeight() - GetHalfScreenHeight());
+
+		GetCamera()->SetPosition(cameraPosition);
+
 		if (IsKeyDown(Keyboard::Up))
 		{
 			GetCamera()->SetPositionY(GetCamera()->GetPosition().y + CAMERA_SPEED);
@@ -64,17 +72,17 @@ namespace GameDev2D
 		if (key == Keyboard::One)
 		{
 			m_CurrentRoom = 0;
-			GetCamera()->SetPosition(GetScreenWidth() / 2,  GetScreenHeight() / 2);
+			GetCamera()->SetPosition(GetHalfScreenWidth(), GetHalfScreenHeight());
 		}
 		if (key == Keyboard::Two)
 		{
 			m_CurrentRoom = 1;
-			GetCamera()->SetPosition(GetScreenWidth() / 2, GetScreenHeight() / 2);
+			GetCamera()->SetPosition(GetHalfScreenWidth(), GetHalfScreenHeight());
 		}
 		if (key == Keyboard::Three)
 		{
 			m_CurrentRoom = 2;
-			GetCamera()->SetPosition(GetScreenWidth() / 2, GetScreenHeight() / 2);
+			GetCamera()->SetPosition(GetHalfScreenWidth(), GetHalfScreenHeight());
 		}
 	}
 

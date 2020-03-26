@@ -7,7 +7,7 @@ namespace GameDev2D
 	class MainTile : public Tile
 	{
 	public:
-		MainTile(unsigned char row, unsigned char col, bool hasCollider);
+		MainTile(unsigned char row, unsigned char col, bool hasCollider, bool hasVariant);
 		~MainTile();
 
 		Tile::Type GetType() override;
