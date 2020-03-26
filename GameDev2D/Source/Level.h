@@ -2,6 +2,7 @@
 
 #include <GameDev2D.h>
 #include "Room.h"
+#include "Constants.h"
 
 
 namespace GameDev2D
@@ -20,6 +21,9 @@ namespace GameDev2D
 		void HandleKeyReleased(Keyboard::Key key);
 
 	protected:
-		Room* m_Room;
+		Room* m_Room[LEVEL1_ROOM_NUM];
+
+	private:
+		unsigned int m_CurrentRoom = 0;
 	};
 }

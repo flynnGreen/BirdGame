@@ -12,10 +12,13 @@ namespace GameDev2D
 
 		enum Type
 		{
-			Empty = 0x00,   // (0000 0000)
-			Main = 0x04,	// (0000 0100)
-
-			//TODO: Add more tile types here
+			Empty = 0x00,       // (0000 0000)
+			Main = 0x04,	    // (0000 0100)
+			Water = 0x08,       // (0000 1000)
+			Item = 0x10,        // (0001 0000)
+			Tree = 0x20,        // (0010 0000)
+			House = 0x40,       // (0100 0000)
+			Teleport = 0x80,    // (1000 0000)
 
 		};
 

@@ -1,12 +1,282 @@
 {
    "frames" : [
       {
-         "filename" : "Tile",
+         "filename" : "Dirt Block",
          "frame" : {
             "h" : 64,
             "w" : 64,
             "x" : 8,
             "y" : 8
+         }
+      },
+      {
+         "filename" : "Grass Block",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 80,
+            "y" : 8
+         }
+      },
+      {
+         "filename" : "House",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 8,
+            "y" : 80
+         }
+      },
+      {
+         "filename" : "Item Empty",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 80,
+            "y" : 80
+         }
+      },
+      {
+         "filename" : "Item",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 152,
+            "y" : 8
+         }
+      },
+      {
+         "filename" : "Sprite Left",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 8,
+            "y" : 152
+         }
+      },
+      {
+         "filename" : "Sprite Move Left1",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 80,
+            "y" : 152
+         }
+      },
+      {
+         "filename" : "Sprite Move Left2",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 152,
+            "y" : 80
+         }
+      },
+      {
+         "filename" : "Sprite Move Left3",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 152,
+            "y" : 152
+         }
+      },
+      {
+         "filename" : "Sprite Move Right1",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 224,
+            "y" : 8
+         }
+      },
+      {
+         "filename" : "Sprite Move Right2",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 8,
+            "y" : 224
+         }
+      },
+      {
+         "filename" : "Sprite Move Right3",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 80,
+            "y" : 224
+         }
+      },
+      {
+         "filename" : "Sprite Right",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 224,
+            "y" : 80
+         }
+      },
+      {
+         "filename" : "Teleporter1",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 152,
+            "y" : 224
+         }
+      },
+      {
+         "filename" : "Teleporter2",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 224,
+            "y" : 152
+         }
+      },
+      {
+         "filename" : "Teleporter3",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 296,
+            "y" : 8
+         }
+      },
+      {
+         "filename" : "Teleporter4",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 8,
+            "y" : 296
+         }
+      },
+      {
+         "filename" : "Tree Bottom1",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 80,
+            "y" : 296
+         }
+      },
+      {
+         "filename" : "Tree Bottom2",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 296,
+            "y" : 80
+         }
+      },
+      {
+         "filename" : "Tree Bottom3",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 224,
+            "y" : 224
+         }
+      },
+      {
+         "filename" : "Tree Bottom4",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 152,
+            "y" : 296
+         }
+      },
+      {
+         "filename" : "Tree Top1",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 296,
+            "y" : 152
+         }
+      },
+      {
+         "filename" : "Tree Top2",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 368,
+            "y" : 8
+         }
+      },
+      {
+         "filename" : "Tree Top3",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 8,
+            "y" : 368
+         }
+      },
+      {
+         "filename" : "Tree Top4",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 224,
+            "y" : 296
+         }
+      },
+      {
+         "filename" : "Water Block1",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 296,
+            "y" : 224
+         }
+      },
+      {
+         "filename" : "Water Block2",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 80,
+            "y" : 368
+         }
+      },
+      {
+         "filename" : "Water Block3",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 368,
+            "y" : 80
+         }
+      },
+      {
+         "filename" : "Water Bottom1",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 152,
+            "y" : 368
+         }
+      },
+      {
+         "filename" : "Water Bottom2",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 368,
+            "y" : 152
+         }
+      },
+      {
+         "filename" : "Water Bottom3",
+         "frame" : {
+            "h" : 64,
+            "w" : 64,
+            "x" : 296,
+            "y" : 296
          }
       }
    ]

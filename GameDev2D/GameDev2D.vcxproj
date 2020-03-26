@@ -99,6 +99,8 @@
     <ClInclude Include="Source\Framework\Windows\resource.h" />
     <ClInclude Include="Source\Framework\Windows\stdafx.h" />
     <ClInclude Include="Source\Game.h" />
+    <ClInclude Include="Source\House.h" />
+    <ClInclude Include="Source\Item.h" />
     <ClInclude Include="Source\Level.h" />
     <ClInclude Include="Source\Libraries\fmod\include\fmod.h" />
     <ClInclude Include="Source\Libraries\fmod\include\fmod.hpp" />
@@ -120,8 +122,11 @@
     <ClInclude Include="Source\Libraries\lodepng\lodepng.h" />
     <ClInclude Include="Source\MainTile.h" />
     <ClInclude Include="Source\Room.h" />
+    <ClInclude Include="Source\Teleport.h" />
     <ClInclude Include="Source\Tile.h" />
     <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\Tree.h" />
+    <ClInclude Include="Source\Water.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\EmptyTile.cpp" />
@@ -208,6 +213,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Source\House.cpp" />
+    <ClCompile Include="Source\Item.cpp" />
     <ClCompile Include="Source\Level.cpp" />
     <ClCompile Include="Source\Libraries\jsoncpp\json_reader.cpp" />
     <ClCompile Include="Source\Libraries\jsoncpp\json_value.cpp" />
@@ -216,11 +223,18 @@
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\MainTile.cpp" />
     <ClCompile Include="Source\Room.cpp" />
+    <ClCompile Include="Source\Teleport.cpp" />
     <ClCompile Include="Source\Tile.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
+    <ClCompile Include="Source\Tree.cpp" />
+    <ClCompile Include="Source\Water.cpp" />
     <ClCompile Include="Source\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Data\Level1_Room1.bin" />
+    <None Include="Assets\Data\Level1_Room2.bin" />
+    <None Include="Assets\Data\Level1_Room3.bin" />
+    <None Include="Assets\Images\Assets.json" />
     <None Include="Assets\Shaders\passThrough-debug.fsh" />
     <None Include="Assets\Shaders\passThrough-debug.gsh" />
     <None Include="Assets\Shaders\passThrough-debug.vsh" />
@@ -235,6 +249,7 @@
     <None Include="Source\Libraries\jsoncpp\json_valueiterator.inl" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\Images\Assets.png" />
     <Image Include="Source\Framework\Windows\Icon.ico" />
   </ItemGroup>
   <ItemGroup>

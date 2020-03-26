@@ -339,6 +339,11 @@
     <ClInclude Include="Source\MainTile.h" />
     <ClInclude Include="Source\Room.h" />
     <ClInclude Include="Source\Level.h" />
+    <ClInclude Include="Source\Water.h" />
+    <ClInclude Include="Source\Item.h" />
+    <ClInclude Include="Source\Tree.h" />
+    <ClInclude Include="Source\House.h" />
+    <ClInclude Include="Source\Teleport.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Libraries\lodepng\lodepng.cpp">
@@ -525,6 +530,11 @@
     <ClCompile Include="Source\MainTile.cpp" />
     <ClCompile Include="Source\Room.cpp" />
     <ClCompile Include="Source\Level.cpp" />
+    <ClCompile Include="Source\Water.cpp" />
+    <ClCompile Include="Source\Item.cpp" />
+    <ClCompile Include="Source\Tree.cpp" />
+    <ClCompile Include="Source\House.cpp" />
+    <ClCompile Include="Source\Teleport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Libraries\jsoncpp\json_internalarray.inl">
@@ -557,9 +567,22 @@
     <None Include="Assets\Shaders\passThrough-debug.fsh" />
     <None Include="Assets\Shaders\passThrough-debug.gsh" />
     <None Include="Assets\Shaders\passThrough-debug.vsh" />
+    <None Include="Assets\Images\Assets.json" />
+    <None Include="Assets\Data\Level1_Room1.bin">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Data\Level1_Room2.bin">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\Data\Level1_Room3.bin">
+      <Filter>Assets</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Source\Framework\Windows\Icon.ico">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Images\Assets.png">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>

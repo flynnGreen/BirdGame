@@ -9,7 +9,7 @@
 #define WINDOW_HEIGHT 720
 #define WINDOW_IS_FULLSCREEN false
 
-#define BACKGROUND_CLEAR_COLOR Color::BlackColor()
+#define BACKGROUND_CLEAR_COLOR Color::CornflowerBlueColor()
 
 #define SUSPEND_APP_WHEN_IN_BACKGROUND 1
 

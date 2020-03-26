@@ -2,6 +2,11 @@
 #include "Constants.h"
 #include "EmptyTile.h"
 #include "MainTile.h"
+#include "Water.h"
+#include "Item.h"
+#include "Tree.h"
+#include "House.h"
+#include "Teleport.h"
 #include <fstream>
 
 
@@ -66,6 +71,8 @@ namespace GameDev2D
 				m_Tiles[r][c]->Reset();
 			}
 		}
+
+		GetCamera()->SetPosition(GetScreenWidth() / 2, GetScreenHeight() / 2);
 	}
 
 	unsigned char Room::GetRows()
@@ -159,6 +166,26 @@ namespace GameDev2D
 		if ((data & Tile::Main) == Tile::Main)
 		{
 			return new MainTile(row, col, hasCollider);
+		}
+		if ((data & Tile::Water) == Tile::Water)
+		{
+			return new Water(row, col, hasCollider);
+		}
+		if ((data & Tile::Item) == Tile::Item)
+		{
+			return new Item(row, col, hasCollider);
+		}
+		if ((data & Tile::Tree) == Tile::Tree)
+		{
+			return new Tree(row, col, hasCollider);
+		}
+		if ((data & Tile::House) == Tile::House)
+		{
+			return new House(row, col, hasCollider);
+		}
+		if ((data & Tile::Teleport) == Tile::Teleport)
+		{
+			return new Teleport(row, col, hasCollider);
 		}
 		return new EmptyTile(row, col);
 	}

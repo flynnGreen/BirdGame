@@ -7,7 +7,7 @@ namespace GameDev2D
 		m_Tile(nullptr)
 	{
 		m_Tile = new SpriteAtlas("Assets");
-		m_Tile->UseFrame("Tile");
+		m_Tile->UseFrame("Dirt Block");
 		m_Tile->SetAnchor(0.5f, 0.5f);
 		m_Tile->AttachTo(this);
 	}
