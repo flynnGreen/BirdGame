@@ -344,6 +344,7 @@
     <ClInclude Include="Source\Tree.h" />
     <ClInclude Include="Source\House.h" />
     <ClInclude Include="Source\Teleport.h" />
+    <ClInclude Include="Source\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Libraries\lodepng\lodepng.cpp">
@@ -535,6 +536,7 @@
     <ClCompile Include="Source\Tree.cpp" />
     <ClCompile Include="Source\House.cpp" />
     <ClCompile Include="Source\Teleport.cpp" />
+    <ClCompile Include="Source\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Libraries\jsoncpp\json_internalarray.inl">

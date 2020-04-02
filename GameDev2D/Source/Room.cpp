@@ -104,7 +104,17 @@ namespace GameDev2D
 			for (unsigned char c = 0; c < GetColumns(); c++)
 			{
 				Tile* tile = m_Tiles[r][c];
-				bool activeState = isActive ? IsOnScreen(tile) : false;
+				bool activeState = isActive;
+
+				if (isActive == true)
+				{
+					activeState = IsOnScreen(tile);
+				}
+				else
+				{
+					activeState = false;
+				}
+
 				tile->SetIsActive(activeState);
 			}
 		}

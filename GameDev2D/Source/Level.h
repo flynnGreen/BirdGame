@@ -3,6 +3,7 @@
 #include <GameDev2D.h>
 #include "Room.h"
 #include "Constants.h"
+#include "Player.h"
 
 
 namespace GameDev2D
@@ -17,11 +18,17 @@ namespace GameDev2D
 		void Draw(SpriteBatch* spriteBatch);
 		void Reset();
 
+		Room* GetActiveRoom();
+		int GetActiveRoomNum();
+
+		void SetActiveRoom(unsigned int index);
+
 		void HandleKeyPress(Keyboard::Key key);
 		void HandleKeyReleased(Keyboard::Key key);
 
 	protected:
 		Room* m_Room[LEVEL1_ROOM_NUM];
+		Player* m_Player;
 
 	private:
 		unsigned int m_CurrentRoom = 0;
