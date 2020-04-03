@@ -86,8 +86,6 @@ namespace GameDev2D
 
 	void Level::Reset()
 	{
-		m_CurrentRoom = 0;
-		SetActiveRoom(0);
 		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
 		{
 			m_Room[i]->Reset();

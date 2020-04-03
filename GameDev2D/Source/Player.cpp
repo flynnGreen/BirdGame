@@ -131,6 +131,12 @@ namespace GameDev2D
 			//set back to false
 			m_IsInAir = true;
 		}
+		else
+		{
+			Reset();
+			m_Level->Reset();
+
+		}
 	}
 
 	void Player::Draw(SpriteBatch* spriteBatch)
@@ -277,6 +283,14 @@ namespace GameDev2D
 		else if (tile->GetType() == Tile::Water)
 		{
 			SetState(Dead);
+		}
+		else if (tile->GetType() == Tile::Teleport)
+		{
+			if (IsKeyDown(Keyboard::Up))
+			{
+				//TODO: Doesn't work yet. Figure it out
+				m_Level->SetActiveRoom(m_ActiveRoom++);
+			}
 		}
 
 		return resolveCollision;
