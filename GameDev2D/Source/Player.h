@@ -2,6 +2,7 @@
 
 #include <GameDev2D.h>
 #include "Constants.h"
+#include "Platform.h"
 
 
 namespace GameDev2D
@@ -31,6 +32,8 @@ namespace GameDev2D
 		float GetWidth();
 		float GetHeight();
 
+		AxisAlignedRectangleCollider* GetCollider();
+
 		//State enum to manage the state of the player
 		enum State
 		{
@@ -46,6 +49,9 @@ namespace GameDev2D
 		//Returns wether the player is dead or not
 		bool IsDead();
 
+		//Determines if a Player and Platform are colliding and collision should be resolved
+		bool ValidatePlatformCollision(Platform* platform, unsigned char playerEdgeCollision, unsigned char platformEdgeCollision);
+
 	private:
 		//Handle collision between a specific Tile and the Player
 		bool HandleTileCollision(Tile* tile, unsigned char playerEdgeCollision);
@@ -59,5 +65,7 @@ namespace GameDev2D
 		State m_State;
 		int m_ActiveRoom = 0;
 		bool m_IsInAir;
+		bool m_CanDoubleJump;
+		Vector2 m_PreviousPosition;
 	};
 }

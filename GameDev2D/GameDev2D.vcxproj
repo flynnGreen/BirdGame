@@ -121,6 +121,7 @@
     <ClInclude Include="Source\Libraries\jsoncpp\writer.h" />
     <ClInclude Include="Source\Libraries\lodepng\lodepng.h" />
     <ClInclude Include="Source\MainTile.h" />
+    <ClInclude Include="Source\Platform.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Room.h" />
     <ClInclude Include="Source\Teleport.h" />
@@ -223,6 +224,7 @@
     <ClCompile Include="Source\Libraries\lodepng\lodepng.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\MainTile.cpp" />
+    <ClCompile Include="Source\Platform.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\Room.cpp" />
     <ClCompile Include="Source\Teleport.cpp" />

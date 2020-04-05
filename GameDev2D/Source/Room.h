@@ -2,13 +2,16 @@
 
 #include <GameDev2D.h>
 #include "Tile.h"
+#include "Platform.h"
 
 namespace GameDev2D
 {
+	class Level;
+
 	class Room
 	{
 	public:
-		Room(const std::string& filename);
+		Room(Level* level, const std::string& filename);
 		~Room();
 
 		void Update(double delta);
@@ -24,6 +27,15 @@ namespace GameDev2D
 		float GetWidth();
 		float GetHeight();
 
+		Level* GetLevel();
+
+		//GameObject methods
+		GameObject* AddGameObject(GameObject* gameObject);
+		unsigned int GetNumberOfGameObjects();
+		GameObject* GetGameObjectAtIndex(int index);
+		void RemoveGameObjectAtIndex(int index);
+		void RemoveAllGameObjects();
+
 	private:
 		//Loads the raw data and creates Tile objects
 		void Load(const std::string& filename);
@@ -33,8 +45,10 @@ namespace GameDev2D
 		Tile* CreateNewTile(unsigned char data, unsigned char row, unsigned char col);
 
 		//Member variables
+		Level* m_Level;
 		Tile*** m_Tiles;  //Used as a dynamic 2D-Array of Tile pointers
 		unsigned char m_NumRows;
 		unsigned char m_NumColumns;
+		std::vector<GameObject*> m_GameObjects;
 	};
 }

@@ -4,7 +4,7 @@
 #define TARGET_FPS 60
 #define LIMIT_FPS true
 
-#define WINDOW_TITLE "GameDev2D"
+#define WINDOW_TITLE "Bird"
 #define WINDOW_WIDTH 950
 #define WINDOW_HEIGHT 720
 #define WINDOW_IS_FULLSCREEN false

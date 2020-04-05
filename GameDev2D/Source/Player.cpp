@@ -13,7 +13,9 @@ namespace GameDev2D
 		m_Walk(nullptr),
 		m_ActiveSprite(nullptr),
 		m_State(Unknown),
-		m_IsInAir(false)
+		m_IsInAir(false),
+		m_CanDoubleJump(true),
+		m_PreviousPosition(Vector2::Zero)
 	{
 		m_Idle = new SpriteAtlas("Assets");
 		m_Idle->UseFrame("Sprite");
@@ -158,6 +160,8 @@ namespace GameDev2D
 		SetLinearVelocity(Vector2::Zero);
 		m_IsInAir = true;
 		SetState(Idle);
+		SetScaleX(1.0);
+		m_CanDoubleJump = true;
 	}
 
 	void Player::GetActiveRoom(int room)
@@ -200,6 +204,14 @@ namespace GameDev2D
 				m_LinearVelocity.y += PLAYER_JUMP_SPEED;
 				m_IsInAir = true;
 			}
+			else
+			{
+				if (m_CanDoubleJump == true)
+				{
+					m_LinearVelocity.y = PLAYER_JUMP_SPEED;
+					m_CanDoubleJump = false;
+				}
+			}
 		}
 	}
 
@@ -222,6 +234,11 @@ namespace GameDev2D
 	float Player::GetHeight()
 	{
 		return PLAYER_HEIGHT;
+	}
+
+	AxisAlignedRectangleCollider* Player::GetCollider()
+	{
+		return m_Collider;
 	}
 
 	void Player::SetState(State state)
@@ -257,6 +274,30 @@ namespace GameDev2D
 		return m_State == Dead;
 	}
 
+	bool Player::ValidatePlatformCollision(Platform* platform, unsigned char playerEdgeCollision, unsigned char platformEdgeCollision)
+	{
+		//Local variables
+		float previousPlayerBottomEdge = m_PreviousPosition.y - PLAYER_HALF_HEIGHT;
+		float playerBottomEdge = GetPosition().y - PLAYER_HALF_HEIGHT;
+		float platformTopEdge = platform->GetPosition().y + PLATFORM_SEGMENT_HEIGHT * 0.5f;
+
+		if (GetLinearVelocity().y <= 0.0f && IsKeyDown(Keyboard::Down) == false)
+		{
+			if (Math::IsClose(playerBottomEdge, platformTopEdge, 2.5f)
+				|| (previousPlayerBottomEdge > platformTopEdge && playerBottomEdge < platformTopEdge)
+				|| previousPlayerBottomEdge == platformTopEdge)
+			{
+				if ((playerEdgeCollision & AxisAlignedRectangleCollider::BottomEdge) == AxisAlignedRectangleCollider::BottomEdge
+					&& (platformEdgeCollision & AxisAlignedRectangleCollider::TopEdge) == AxisAlignedRectangleCollider::TopEdge)
+				{
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	bool Player::HandleTileCollision(Tile* tile, unsigned char playerEdgeCollision)
 	{
 		bool resolveCollision = false;
@@ -272,6 +313,7 @@ namespace GameDev2D
 			== AxisAlignedRectangleCollider::BottomEdge)
 		{
 			m_IsInAir = false;
+			m_CanDoubleJump = true;
 		}
 
 		//The Tile type was the main tile we want to resolve the collision

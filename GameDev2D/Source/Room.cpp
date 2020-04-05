@@ -12,16 +12,26 @@
 
 namespace GameDev2D
 {
-	Room::Room(const std::string& filename) :
+	Room::Room(Level* level, const std::string& filename) :
 		m_Tiles(nullptr),
 		m_NumRows(0),
-		m_NumColumns(0)
+		m_NumColumns(0),
+		m_Level(level)
 	{
 		//Load the Room
 		Load(filename);
 
 		bool isActive = filename == LEVEL1_NAMES[0];
 		SetIsActive(isActive);
+
+		//Create the Platform
+		//Platform* platform = new Platform(this,
+		//								  PLATFORM_START_POSITION,
+		//								  PLATFORM_DISPLACEMENT,
+		//								  PLATFORM_DURATION);
+
+		////Add the Platform to the Room
+		//this->AddGameObject(platform);
 	}
 
 	Room::~Room()
@@ -38,6 +48,7 @@ namespace GameDev2D
 			}
 			SafeDeleteArray(m_Tiles);
 		}
+		RemoveAllGameObjects();
 	}
 
 	void Room::Update(double delta)
@@ -57,6 +68,10 @@ namespace GameDev2D
 				}
 			}
 		}
+		for (int i = 0; i < m_GameObjects.size(); i++)
+		{
+			m_GameObjects.at(i)->Update(delta);
+		}
 	}
 
 	void Room::Draw(SpriteBatch* spriteBatch)
@@ -72,6 +87,10 @@ namespace GameDev2D
 				}
 			}
 		}
+		for (int i = 0; i < m_GameObjects.size(); i++)
+		{
+			m_GameObjects.at(i)->Draw(spriteBatch);
+		}
 	}
 
 	void Room::Reset()
@@ -85,6 +104,11 @@ namespace GameDev2D
 		}
 
 		GetCamera()->SetPosition(GetScreenWidth() / 2, GetScreenHeight() / 2);
+
+		for (int i = 0; i < m_GameObjects.size(); i++)
+		{
+			m_GameObjects.at(i)->Reset();
+		}
 	}
 
 	unsigned char Room::GetRows()
@@ -118,6 +142,10 @@ namespace GameDev2D
 				tile->SetIsActive(activeState);
 			}
 		}
+		for (int i = 0; i < m_GameObjects.size(); i++)
+		{
+			m_GameObjects.at(i)->SetIsActive(isActive);
+		}
 	}
 
 	bool Room::IsOnScreen(Tile* tile)
@@ -143,6 +171,11 @@ namespace GameDev2D
 	float Room::GetHeight()
 	{
 		return (float)GetRows() * TILE_SIZE;
+	}
+
+	Level* Room::GetLevel()
+	{
+		return m_Level;
 	}
 
 	void Room::Load(const std::string& filename)
@@ -241,4 +274,44 @@ namespace GameDev2D
 		return new EmptyTile(row, col);
 	}
 
+	GameObject* Room::AddGameObject(GameObject* gameObject)
+	{
+		if (gameObject != nullptr)
+		{
+			m_GameObjects.push_back(gameObject);
+		}
+		return gameObject;
+	}
+
+	unsigned int Room::GetNumberOfGameObjects()
+	{
+		return m_GameObjects.size();
+	}
+
+	GameObject* Room::GetGameObjectAtIndex(int index)
+	{
+		if (index >= 0 && index < GetNumberOfGameObjects())
+		{
+			return m_GameObjects.at(index);
+		}
+		return nullptr;
+	}
+
+	void Room::RemoveGameObjectAtIndex(int index)
+	{
+		if (index >= 0 && index < GetNumberOfGameObjects())
+		{
+			SafeDelete(m_GameObjects.at(index));
+			m_GameObjects.erase(m_GameObjects.begin() + index);
+		}
+	}
+
+	void Room::RemoveAllGameObjects()
+	{
+		for (int i = 0; i < GetNumberOfGameObjects(); i++)
+		{
+			SafeDelete(m_GameObjects.at(i));
+		}
+		m_GameObjects.clear();
+	}
 }

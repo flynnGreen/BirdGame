@@ -20,6 +20,7 @@ namespace GameDev2D
 
 		Room* GetActiveRoom();
 		int GetActiveRoomNum();
+		Player* GetPlayer();
 
 		void SetActiveRoom(unsigned int index);
 

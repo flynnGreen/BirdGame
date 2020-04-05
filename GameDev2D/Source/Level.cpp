@@ -8,7 +8,7 @@ namespace GameDev2D
 	{
 		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
 		{
-			m_Room[i] = new Room(LEVEL1_NAMES[i]);
+			m_Room[i] = new Room(this, LEVEL1_NAMES[i]);
 		}
 
 		m_Player = new Player(this);
@@ -49,22 +49,22 @@ namespace GameDev2D
 
 		GetCamera()->SetPosition(cameraPosition);
 
-		/*if (IsKeyDown(Keyboard::Up))
+		if (IsKeyDown(Keyboard::W))
 		{
 			GetCamera()->SetPositionY(GetCamera()->GetPosition().y + CAMERA_SPEED);
 		}
-		if (IsKeyDown(Keyboard::Down))
+		if (IsKeyDown(Keyboard::S))
 		{
 			GetCamera()->SetPositionY(GetCamera()->GetPosition().y - CAMERA_SPEED);
 		}
-		if (IsKeyDown(Keyboard::Right))
+		if (IsKeyDown(Keyboard::D))
 		{
 			GetCamera()->SetPositionX(GetCamera()->GetPosition().x + CAMERA_SPEED);
 		}
-		if (IsKeyDown(Keyboard::Left))
+		if (IsKeyDown(Keyboard::A))
 		{
 			GetCamera()->SetPositionX(GetCamera()->GetPosition().x - CAMERA_SPEED);
-		}*/
+		}
 
 		m_Room[m_CurrentRoom]->Update(delta);
 
@@ -106,6 +106,11 @@ namespace GameDev2D
 		return m_CurrentRoom;
 	}
 
+	Player* Level::GetPlayer()
+	{
+		return m_Player;
+	}
+
 	void Level::SetActiveRoom(unsigned int index)
 	{
 		if (m_CurrentRoom != index && index < LEVEL1_ROOM_NUM)
@@ -121,6 +126,9 @@ namespace GameDev2D
 
 			//Reset the camera's position
 			GetCamera()->SetPosition(GetHalfScreenWidth(), GetHalfScreenHeight());
+
+			//Reset the player
+			m_Player->Reset();
 		}
 	}
 
@@ -134,20 +142,14 @@ namespace GameDev2D
 		if (key == Keyboard::One)
 		{
 			SetActiveRoom(0);
-			GetCamera()->SetPosition(GetHalfScreenWidth(), GetHalfScreenHeight());
-			m_Player->Reset();
 		}
 		if (key == Keyboard::Two)
 		{
 			SetActiveRoom(1);
-			GetCamera()->SetPosition(GetHalfScreenWidth(), GetHalfScreenHeight());
-			m_Player->Reset();
 		}
 		if (key == Keyboard::Three)
 		{
 			SetActiveRoom(2);
-			GetCamera()->SetPosition(GetHalfScreenWidth(), GetHalfScreenHeight());
-			m_Player->Reset();
 		}
 		else
 		{
