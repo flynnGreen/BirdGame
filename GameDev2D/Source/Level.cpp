@@ -49,7 +49,7 @@ namespace GameDev2D
 
 		GetCamera()->SetPosition(cameraPosition);
 
-		if (IsKeyDown(Keyboard::W))
+		/*if (IsKeyDown(Keyboard::W))
 		{
 			GetCamera()->SetPositionY(GetCamera()->GetPosition().y + CAMERA_SPEED);
 		}
@@ -64,7 +64,7 @@ namespace GameDev2D
 		if (IsKeyDown(Keyboard::A))
 		{
 			GetCamera()->SetPositionX(GetCamera()->GetPosition().x - CAMERA_SPEED);
-		}
+		}*/
 
 		m_Room[m_CurrentRoom]->Update(delta);
 

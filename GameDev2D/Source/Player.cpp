@@ -2,6 +2,7 @@
 #include "Level.h"
 #include "Room.h"
 #include "Tile.h"
+#include "Platform.h"
 
 
 namespace GameDev2D
@@ -31,7 +32,7 @@ namespace GameDev2D
 		m_Walk->SetFrameSpeed(PLAYER_WALK_ANIMATION_FRAMESPEED);
 		m_Walk->AttachTo(this);
 
-		CollisionFilter filter(PLAYER_COLLISION_FILTER, TILE_COLLISION_FILTER);
+		CollisionFilter filter(PLAYER_COLLISION_FILTER, TILE_COLLISION_FILTER | PLATFORM_COLLISION_FILTER);
 		m_Collider = AddAxisAlignedRectangleCollider(GetWidth(), GetHeight(), Collider::Dynamic, filter);
 
 		Reset();
@@ -111,6 +112,9 @@ namespace GameDev2D
 				m_LinearVelocity.y = GRAVITY.y;
 			}
 
+			//Cache the player's previous position
+			m_PreviousPosition = GetPosition();
+
 			//Increment the position
 			Vector2 increment = (previousVelocity + m_LinearVelocity) * delta * 0.5;
 			Vector2 position = GetPosition() + increment;
@@ -160,13 +164,9 @@ namespace GameDev2D
 		SetLinearVelocity(Vector2::Zero);
 		m_IsInAir = true;
 		SetState(Idle);
+		m_PreviousPosition = Vector2::Zero;
 		SetScaleX(1.0);
 		m_CanDoubleJump = true;
-	}
-
-	void Player::GetActiveRoom(int room)
-	{
-
 	}
 
 	void Player::CollisionDetected(CollisionEvent* collisionEvent)
@@ -181,6 +181,14 @@ namespace GameDev2D
 				unsigned char playerEdgeCollision = m_Collider->GetEdgeCollision();
 				collisionEvent->resolveCollision = HandleTileCollision(tile, playerEdgeCollision);
 			}
+			//Collider B is a Platform
+			else if (collisionEvent->b->GetFilter().categoryBits == PLATFORM_COLLISION_FILTER)
+			{
+				Platform* platform = static_cast<Platform*>(collisionEvent->b->GetGameObject());
+				unsigned char playerEdgeCollision = m_Collider->GetEdgeCollision();
+				unsigned char platformEdgeCollision = platform->GetCollider()->GetEdgeCollision();
+				collisionEvent->resolveCollision = HandlePlatformCollision(platform, playerEdgeCollision, platformEdgeCollision);
+			}
 		}
 		//Collider B is the Player
 		else if (collisionEvent->b->GetGameObject() == this)
@@ -191,6 +199,14 @@ namespace GameDev2D
 				Tile* tile = static_cast<Tile*>(collisionEvent->a->GetGameObject());
 				unsigned char playerEdgeCollision = m_Collider->GetEdgeCollision();
 				collisionEvent->resolveCollision = HandleTileCollision(tile, playerEdgeCollision);
+			}
+			//Collider A is a Platform
+			else if (collisionEvent->a->GetFilter().categoryBits == PLATFORM_COLLISION_FILTER)
+			{
+				Platform* platform = static_cast<Platform*>(collisionEvent->a->GetGameObject());
+				unsigned char playerEdgeCollision = m_Collider->GetEdgeCollision();
+				unsigned char platformEdgeCollision = platform->GetCollider()->GetEdgeCollision();
+				collisionEvent->resolveCollision = HandlePlatformCollision(platform, playerEdgeCollision, platformEdgeCollision);
 			}
 		}
 	}
@@ -332,6 +348,39 @@ namespace GameDev2D
 			{
 				//TODO: Doesn't work yet. Figure it out
 				m_Level->SetActiveRoom(m_ActiveRoom++);
+			}
+		}
+
+		return resolveCollision;
+	}
+	bool Player::HandlePlatformCollision(Platform* platform, unsigned char playerEdgeCollision, unsigned char platformEdgeCollision)
+	{
+		bool resolveCollision = false;
+
+		//Don't handle collision if the edge is unknown
+		if (playerEdgeCollision == AxisAlignedRectangleCollider::UnknownEdge)
+		{
+			return resolveCollision;
+		}
+
+		//Local variables
+		float previousPlayerBottomEdge = m_PreviousPosition.y - PLAYER_HALF_HEIGHT;
+		float playerBottomEdge = GetPosition().y - PLAYER_HALF_HEIGHT;
+		float platformTopEdge = platform->GetPosition().y + PLATFORM_SEGMENT_HEIGHT * 0.5f;
+
+		if (GetLinearVelocity().y <= 0.0f && IsKeyDown(Keyboard::Down) == false)
+		{
+			if (Math::IsClose(playerBottomEdge, platformTopEdge, 2.5f)
+				|| (previousPlayerBottomEdge > platformTopEdge && playerBottomEdge < platformTopEdge)
+				|| previousPlayerBottomEdge == platformTopEdge)
+			{
+				if ((playerEdgeCollision & AxisAlignedRectangleCollider::BottomEdge) == AxisAlignedRectangleCollider::BottomEdge
+					&& (platformEdgeCollision & AxisAlignedRectangleCollider::TopEdge) == AxisAlignedRectangleCollider::TopEdge)
+				{
+					m_IsInAir = false;
+					m_CanDoubleJump = true;
+					resolveCollision = true;
+				}
 			}
 		}
 

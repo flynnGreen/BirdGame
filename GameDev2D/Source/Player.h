@@ -2,7 +2,6 @@
 
 #include <GameDev2D.h>
 #include "Constants.h"
-#include "Platform.h"
 
 
 namespace GameDev2D
@@ -10,6 +9,7 @@ namespace GameDev2D
 	//Forward declarations
 	class Level;
 	class Tile;
+	class Platform;
 
 	//Class definitions
 	class Player : public GameObject
@@ -21,8 +21,6 @@ namespace GameDev2D
 		void Update(double delta) override;
 		void Draw(SpriteBatch* spriteBatch = nullptr) override;
 		void Reset() override;
-
-		void GetActiveRoom(int room);
 
 		void CollisionDetected(CollisionEvent* collisionEvent) override;
 
@@ -55,6 +53,7 @@ namespace GameDev2D
 	private:
 		//Handle collision between a specific Tile and the Player
 		bool HandleTileCollision(Tile* tile, unsigned char playerEdgeCollision);
+		bool HandlePlatformCollision(Platform* platform, unsigned char playerEdgeCollision, unsigned char platformEdgeCollision);
 
 		//Member variables
 		Level* m_Level;

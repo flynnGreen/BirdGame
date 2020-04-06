@@ -24,14 +24,34 @@ namespace GameDev2D
 		bool isActive = filename == LEVEL1_NAMES[0];
 		SetIsActive(isActive);
 
-		//Create the Platform
-		//Platform* platform = new Platform(this,
-		//								  PLATFORM_START_POSITION,
-		//								  PLATFORM_DISPLACEMENT,
-		//								  PLATFORM_DURATION);
+		//Create the Platforms
+		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
+		{
+			if (filename == LEVEL1_NAMES[i])
+			{
+				Platform* platform = new Platform(this,
+					PLATFORM_START_POSITION[i],
+					PLATFORM_DISPLACEMENT[i],
+					PLATFORM_DURATION[i]);
 
-		////Add the Platform to the Room
-		//this->AddGameObject(platform);
+				//Add the Platform to the Room
+				this->AddGameObject(platform);
+			}
+		}
+
+		//Create still platforms
+		if (filename == LEVEL1_NAMES[1])
+		{
+			Platform* platform1 = new Platform(this, PLATFORM_START_POSITION[1], Vector2::Zero, 0);
+
+			//Add the Platform to the Room
+			this->AddGameObject(platform1);
+
+			Platform* platform2 = new Platform(this, PLATFORM_START_POSITION[2], Vector2::Zero, 0);
+
+			//Add the Platform to the Room
+			this->AddGameObject(platform2);
+		}
 	}
 
 	Room::~Room()
@@ -103,7 +123,7 @@ namespace GameDev2D
 			}
 		}
 
-		GetCamera()->SetPosition(GetScreenWidth() / 2, GetScreenHeight() / 2);
+		GetCamera()->SetPosition(GetHalfScreenWidth(), GetHalfScreenHeight());
 
 		for (int i = 0; i < m_GameObjects.size(); i++)
 		{
