@@ -600,4 +600,33 @@
       <Filter>Framework\Windows</Filter>
     </Manifest>
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Assets\Audio\Death.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\Audio\Jump.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\Audio\DeathReal.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\Audio\JumpReal.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\Audio\JokeModeActivated.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\Audio\Birdsong.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\Audio\Room3Music.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\Audio\Room1Music.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\Audio\Room2Music.wav">
+      <Filter>Assets</Filter>
+    </Media>
+  </ItemGroup>
 </Project>

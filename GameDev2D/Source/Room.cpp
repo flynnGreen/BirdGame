@@ -25,7 +25,7 @@ namespace GameDev2D
 		bool isActive = filename == LEVEL1_NAMES[0];
 		SetIsActive(isActive);
 
-		//Create the Platforms
+		//Create the Platforms and music
 		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
 		{
 			if (filename == LEVEL1_NAMES[i])
@@ -41,17 +41,17 @@ namespace GameDev2D
 		}
 
 		//Create still platforms
-		if (filename == LEVEL1_NAMES[1])
+		if (filename == LEVEL1_NAMES[0])
 		{
-			Platform* platform1 = new Platform(this, PLATFORM_START_POSITION[1], Vector2::Zero, 0);
+			Platform* stillPlatform1 = new Platform(this, STILL_PLATFORM_START_POSITION[0], Vector2::Zero, 0);
 
 			//Add the Platform to the Room
-			this->AddGameObject(platform1);
+			this->AddGameObject(stillPlatform1);
 
-			Platform* platform2 = new Platform(this, PLATFORM_START_POSITION[2], Vector2::Zero, 0);
+			Platform* stillPlatform2 = new Platform(this, STILL_PLATFORM_START_POSITION[1], Vector2::Zero, 0);
 
 			//Add the Platform to the Room
-			this->AddGameObject(platform2);
+			this->AddGameObject(stillPlatform2);
 		}
 	}
 

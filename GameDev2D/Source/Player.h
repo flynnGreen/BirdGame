@@ -30,6 +30,8 @@ namespace GameDev2D
 		float GetWidth();
 		float GetHeight();
 
+		void SetMusic(int roomNum);
+
 		AxisAlignedRectangleCollider* GetCollider();
 
 		//State enum to manage the state of the player
@@ -66,5 +68,13 @@ namespace GameDev2D
 		bool m_IsInAir;
 		bool m_CanDoubleJump;
 		Vector2 m_PreviousPosition;
+		bool m_IsJokeOn;
+		Audio* m_DeathSoundJ;
+		Audio* m_JumpSoundJ;
+		Audio* m_DeathSound;
+		Audio* m_JumpSound;
+		Audio* m_JokeModeActivated;
+		Audio* m_Birds;
+		Audio* m_Music[LEVEL1_ROOM_NUM];
 	};
 }

@@ -16,7 +16,15 @@ namespace GameDev2D
 		m_State(Unknown),
 		m_IsInAir(false),
 		m_CanDoubleJump(true),
-		m_PreviousPosition(Vector2::Zero)
+		m_PreviousPosition(Vector2::Zero),
+		m_IsJokeOn(false),
+		m_DeathSoundJ(nullptr),
+		m_JumpSoundJ(nullptr),
+		m_DeathSound(nullptr),
+		m_JumpSound(nullptr),
+		m_JokeModeActivated(nullptr),
+		m_Birds(nullptr),
+		m_Music { nullptr }
 	{
 		m_Idle = new SpriteAtlas("Assets");
 		m_Idle->UseFrame("Sprite");
@@ -32,16 +40,60 @@ namespace GameDev2D
 		m_Walk->SetFrameSpeed(PLAYER_WALK_ANIMATION_FRAMESPEED);
 		m_Walk->AttachTo(this);
 
+		LoadAudio("Death");
+		LoadAudio("Jump");
+		LoadAudio("JumpReal");
+		LoadAudio("DeathReal");
+		LoadAudio("JokeModeActivated");
+		LoadAudio("Birdsong");
+		LoadAudio("Room1Music");
+		LoadAudio("Room2Music");
+		LoadAudio("Room3Music");
+
+		m_DeathSoundJ = new Audio("Death");
+		m_JumpSoundJ = new Audio("Jump");
+		m_DeathSound = new Audio("DeathReal");
+		m_JumpSound = new Audio("JumpReal");
+		m_JokeModeActivated = new Audio("JokeModeActivated");
+		m_Birds = new Audio("Birdsong");
+
 		CollisionFilter filter(PLAYER_COLLISION_FILTER, TILE_COLLISION_FILTER | PLATFORM_COLLISION_FILTER);
 		m_Collider = AddAxisAlignedRectangleCollider(GetWidth(), GetHeight(), Collider::Dynamic, filter);
+
+		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
+		{
+			//m_Music[i]->SetDoesLoop(true);
+			m_Music[i] = new Audio(LEVEL1_MUSIC[i]);
+		}
 
 		Reset();
 	}
 
 	Player::~Player()
 	{
+		UnloadAudio("Death");
+		UnloadAudio("Jump");
+		UnloadAudio("JumpReal");
+		UnloadAudio("DeathReal");
+		UnloadAudio("JokeModeActivated");
+		UnloadAudio("Birdsong");
+		UnloadAudio("Room1Music");
+		UnloadAudio("Room2Music");
+		UnloadAudio("Room3Music");
+
+		SafeDelete(m_Birds);
+		SafeDelete(m_JokeModeActivated);
+		SafeDelete(m_DeathSound);
+		SafeDelete(m_JumpSound);
+		SafeDelete(m_DeathSoundJ);
+		SafeDelete(m_JumpSoundJ);
 		SafeDelete(m_Idle);
 		SafeDelete(m_Walk);
+
+		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
+		{
+			SafeDelete(m_Music[i]);
+		}
 	}
 
 	void Player::Update(double delta)
@@ -167,6 +219,11 @@ namespace GameDev2D
 		m_PreviousPosition = Vector2::Zero;
 		SetScaleX(1.0);
 		m_CanDoubleJump = true;
+
+		m_Birds->Stop();
+		m_Birds->Play();
+
+		SetMusic(m_Level->GetActiveRoomNum());
 	}
 
 	void Player::CollisionDetected(CollisionEvent* collisionEvent)
@@ -213,12 +270,39 @@ namespace GameDev2D
 
 	void Player::HandleKeyPress(Keyboard::Key key)
 	{
+		//Set Joke mode
+		if (key == Keyboard::J)
+		{
+			if (m_IsJokeOn == false)
+			{
+				m_IsJokeOn = true;
+				m_JokeModeActivated->Stop();
+				m_JokeModeActivated->Play();
+			}
+			else if (m_IsJokeOn == true)
+			{
+				m_IsJokeOn = false;
+				m_JokeModeActivated->Stop();
+			}
+		}
+
 		if (key == Keyboard::Spacebar)
 		{
 			if (m_IsInAir == false)
 			{
 				m_LinearVelocity.y += PLAYER_JUMP_SPEED;
 				m_IsInAir = true;
+
+				if (m_IsJokeOn == true)
+				{
+					m_JumpSoundJ->Stop();
+					m_JumpSoundJ->Play();
+				}
+				else
+				{
+					m_JumpSound->Stop();
+					m_JumpSound->Play();
+				}
 			}
 			else
 			{
@@ -226,6 +310,16 @@ namespace GameDev2D
 				{
 					m_LinearVelocity.y = PLAYER_JUMP_SPEED;
 					m_CanDoubleJump = false;
+					if (m_IsJokeOn == true)
+					{
+						m_JumpSoundJ->Stop();
+						m_JumpSoundJ->Play();
+					}
+					else
+					{
+						m_JumpSound->Stop();
+						m_JumpSound->Play();
+					}
 				}
 			}
 		}
@@ -250,6 +344,15 @@ namespace GameDev2D
 	float Player::GetHeight()
 	{
 		return PLAYER_HEIGHT;
+	}
+
+	void Player::SetMusic(int roomNum)
+	{
+		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
+		{
+			m_Music[i]->Stop();
+		}
+		m_Music[roomNum]->Play();
 	}
 
 	AxisAlignedRectangleCollider* Player::GetCollider()
@@ -280,7 +383,14 @@ namespace GameDev2D
 			//Dead State
 			else if (m_State == Dead)
 			{
-				//TODO: Play sfx when player dies
+				if (m_IsJokeOn == true)
+				{
+					m_DeathSoundJ->Play();
+				}
+				else
+				{
+					m_DeathSound->Play();
+				}
 			}
 		}
 	}
@@ -295,13 +405,17 @@ namespace GameDev2D
 		//Local variables
 		float previousPlayerBottomEdge = m_PreviousPosition.y - PLAYER_HALF_HEIGHT;
 		float playerBottomEdge = GetPosition().y - PLAYER_HALF_HEIGHT;
+		float previousPlatformTopEdge = platform->GetPreviousPosition().y + PLATFORM_SEGMENT_HEIGHT * 0.5f;
 		float platformTopEdge = platform->GetPosition().y + PLATFORM_SEGMENT_HEIGHT * 0.5f;
 
 		if (GetLinearVelocity().y <= 0.0f && IsKeyDown(Keyboard::Down) == false)
 		{
 			if (Math::IsClose(playerBottomEdge, platformTopEdge, 2.5f)
+				|| Math::IsClose(previousPlayerBottomEdge, previousPlatformTopEdge, 2.5f)
 				|| (previousPlayerBottomEdge > platformTopEdge && playerBottomEdge < platformTopEdge)
-				|| previousPlayerBottomEdge == platformTopEdge)
+				|| previousPlayerBottomEdge == platformTopEdge
+				|| previousPlayerBottomEdge == previousPlatformTopEdge
+)
 			{
 				if ((playerEdgeCollision & AxisAlignedRectangleCollider::BottomEdge) == AxisAlignedRectangleCollider::BottomEdge
 					&& (platformEdgeCollision & AxisAlignedRectangleCollider::TopEdge) == AxisAlignedRectangleCollider::TopEdge)
@@ -346,8 +460,9 @@ namespace GameDev2D
 		{
 			if (IsKeyDown(Keyboard::Up))
 			{
-				//TODO: Doesn't work yet. Figure it out
-				m_Level->SetActiveRoom(m_ActiveRoom++);
+				int activeRoom = m_Level->GetActiveRoomNum() + 1;
+				m_Level->SetActiveRoom(activeRoom);
+				SetMusic(activeRoom);
 			}
 		}
 

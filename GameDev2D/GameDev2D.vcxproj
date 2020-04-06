@@ -262,6 +262,17 @@
   <ItemGroup>
     <Manifest Include="Source\Framework\Windows\DeclareDPIAware.manifest" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Assets\Audio\Birdsong.wav" />
+    <Media Include="Assets\Audio\Death.wav" />
+    <Media Include="Assets\Audio\DeathReal.wav" />
+    <Media Include="Assets\Audio\JokeModeActivated.wav" />
+    <Media Include="Assets\Audio\Jump.wav" />
+    <Media Include="Assets\Audio\JumpReal.wav" />
+    <Media Include="Assets\Audio\Room1Music.wav" />
+    <Media Include="Assets\Audio\Room2Music.wav" />
+    <Media Include="Assets\Audio\Room3Music.wav" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5B4F3AE6-46CD-46D8-BB74-330F3B13576B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

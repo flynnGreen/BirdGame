@@ -24,6 +24,8 @@ namespace GameDev2D
 
 		AxisAlignedRectangleCollider* GetCollider();
 
+		Vector2 GetPreviousPosition();
+
 	private:
 		Room* m_Room;
 		SpriteAtlas* m_Segments[PLATFORM_NUM_SEGMENTS];
@@ -31,5 +33,6 @@ namespace GameDev2D
 		Vector2 m_StartPosition;
 		Vector2 m_Displacement;
 		Timer m_Timer;
+		Vector2 m_PreviousPosition;
 	};
 }

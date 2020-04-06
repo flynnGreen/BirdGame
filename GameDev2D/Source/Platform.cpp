@@ -13,13 +13,14 @@ namespace GameDev2D
 		m_Collider(nullptr),
 		m_StartPosition(startPosition),
 		m_Displacement(displacement),
-		m_Timer(duration)
+		m_Timer(duration),
+		m_PreviousPosition(Vector2::Zero)
 	{
 		//Calculate the starting position of the segments
 		float posX = -GetWidth() * 0.5f;
 
 		//Loop through and create each SpriteAtlas, 
-		//and determine it's frame and position
+		//and determine its frame and position
 		for (int i = 0; i < PLATFORM_NUM_SEGMENTS; i++)
 		{
 			//Create the SpriteAtlas object
@@ -76,6 +77,10 @@ namespace GameDev2D
 		//Calculate the difference in position
 		Vector2 difference = position - GetPosition();
 
+		//Before we set the position, cache the previous position
+		m_PreviousPosition = GetPosition();
+
+
 		//Set the position
 		SetPosition(position);
 
@@ -106,6 +111,7 @@ namespace GameDev2D
 
 	void Platform::Reset()
 	{
+		m_PreviousPosition = Vector2::Zero;
 	}
 
 	float Platform::GetWidth()
@@ -121,5 +127,9 @@ namespace GameDev2D
 	AxisAlignedRectangleCollider* Platform::GetCollider()
 	{
 		return m_Collider;
+	}
+	Vector2 Platform::GetPreviousPosition()
+	{
+		return m_PreviousPosition;
 	}
 }
