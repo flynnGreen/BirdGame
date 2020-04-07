@@ -3,6 +3,7 @@
 #include "Room.h"
 #include "Tile.h"
 #include "Platform.h"
+#include "Spikes.h"
 
 
 namespace GameDev2D
@@ -246,6 +247,14 @@ namespace GameDev2D
 				unsigned char platformEdgeCollision = platform->GetCollider()->GetEdgeCollision();
 				collisionEvent->resolveCollision = HandlePlatformCollision(platform, playerEdgeCollision, platformEdgeCollision);
 			}
+			//Collider B is Spikes
+			else if (collisionEvent->b->GetFilter().categoryBits == SPIKES_COLLISION_FILTER)
+			{
+				Spikes* spikes = static_cast<Spikes*>(collisionEvent->b->GetGameObject());
+				unsigned char playerEdgeCollision = m_Collider->GetEdgeCollision();
+				unsigned char spikesEdgeCollision = spikes->GetCollider()->GetEdgeCollision();
+				collisionEvent->resolveCollision = HandleSpikesCollision(spikes, playerEdgeCollision, spikesEdgeCollision);
+			}
 		}
 		//Collider B is the Player
 		else if (collisionEvent->b->GetGameObject() == this)
@@ -264,6 +273,14 @@ namespace GameDev2D
 				unsigned char playerEdgeCollision = m_Collider->GetEdgeCollision();
 				unsigned char platformEdgeCollision = platform->GetCollider()->GetEdgeCollision();
 				collisionEvent->resolveCollision = HandlePlatformCollision(platform, playerEdgeCollision, platformEdgeCollision);
+			}
+			//Collider A is Spikes
+			else if (collisionEvent->a->GetFilter().categoryBits == SPIKES_COLLISION_FILTER)
+			{
+				Spikes* spikes = static_cast<Spikes*>(collisionEvent->a->GetGameObject());
+				unsigned char playerEdgeCollision = m_Collider->GetEdgeCollision();
+				unsigned char spikesEdgeCollision = spikes->GetCollider()->GetEdgeCollision();
+				collisionEvent->resolveCollision = HandleSpikesCollision(spikes, playerEdgeCollision, spikesEdgeCollision);
 			}
 		}
 	}
@@ -400,6 +417,11 @@ namespace GameDev2D
 		return m_State == Dead;
 	}
 
+	void Player::Kill()
+	{
+		SetState(Dead);
+	}
+
 	bool Player::ValidatePlatformCollision(Platform* platform, unsigned char playerEdgeCollision, unsigned char platformEdgeCollision)
 	{
 		//Local variables
@@ -422,6 +444,25 @@ namespace GameDev2D
 				{
 					return true;
 				}
+			}
+		}
+
+		return false;
+	}
+
+	bool Player::ValidateSpikesCollision(Spikes* spikes, unsigned char playerEdgeCollision, unsigned char spikesEdgeCollision)
+	{
+		float previousPlayerBottomEdge = m_PreviousPosition.y - PLAYER_HALF_HEIGHT;
+		float playerBottomEdge = GetPosition().y - PLAYER_HALF_HEIGHT;
+		float spikesTopEdge = spikes->GetPosition().y + SPIKES_HEIGHT * 0.5f;
+
+		if ((previousPlayerBottomEdge > spikesTopEdge && playerBottomEdge < spikesTopEdge)
+			|| previousPlayerBottomEdge == spikesTopEdge)
+		{
+			if ((playerEdgeCollision & AxisAlignedRectangleCollider::BottomEdge) == AxisAlignedRectangleCollider::BottomEdge
+				&& (spikesEdgeCollision & AxisAlignedRectangleCollider::TopEdge) == AxisAlignedRectangleCollider::TopEdge)
+			{
+				return true;
 			}
 		}
 
@@ -496,6 +537,34 @@ namespace GameDev2D
 					m_CanDoubleJump = true;
 					resolveCollision = true;
 				}
+			}
+		}
+
+		return resolveCollision;
+	}
+	bool Player::HandleSpikesCollision(Spikes* spikes, unsigned char playerEdgeCollision, unsigned char spikesEdgeCollision)
+	{
+		bool resolveCollision = false;
+
+		//Don't handle collision if the edge is unknown
+		if (playerEdgeCollision == AxisAlignedRectangleCollider::UnknownEdge)
+		{
+			return resolveCollision;
+		}
+
+		//Local variables
+		float previousPlayerBottomEdge = m_PreviousPosition.y - PLAYER_HALF_HEIGHT;
+		float playerBottomEdge = GetPosition().y - PLAYER_HALF_HEIGHT;
+		float spikesTopEdge = spikes->GetPosition().y + PLATFORM_SEGMENT_HEIGHT * 0.5f;
+
+		if (Math::IsClose(playerBottomEdge, spikesTopEdge, 2.5f)
+			|| (previousPlayerBottomEdge > spikesTopEdge && playerBottomEdge < spikesTopEdge)
+			|| previousPlayerBottomEdge == spikesTopEdge)
+		{
+			if ((playerEdgeCollision & AxisAlignedRectangleCollider::BottomEdge) == AxisAlignedRectangleCollider::BottomEdge
+				&& (spikesEdgeCollision & AxisAlignedRectangleCollider::TopEdge) == AxisAlignedRectangleCollider::TopEdge)
+			{
+				resolveCollision = true;
 			}
 		}
 

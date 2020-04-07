@@ -10,6 +10,7 @@ namespace GameDev2D
 	class Level;
 	class Tile;
 	class Platform;
+	class Spikes;
 
 	//Class definitions
 	class Player : public GameObject
@@ -49,13 +50,18 @@ namespace GameDev2D
 		//Returns wether the player is dead or not
 		bool IsDead();
 
+		//Kills player
+		void Kill();
+
 		//Determines if a Player and Platform are colliding and collision should be resolved
 		bool ValidatePlatformCollision(Platform* platform, unsigned char playerEdgeCollision, unsigned char platformEdgeCollision);
+		bool ValidateSpikesCollision(Spikes* spikes, unsigned char playerEdgeCollision, unsigned char platformEdgeCollision);
 
 	private:
 		//Handle collision between a specific Tile and the Player
 		bool HandleTileCollision(Tile* tile, unsigned char playerEdgeCollision);
 		bool HandlePlatformCollision(Platform* platform, unsigned char playerEdgeCollision, unsigned char platformEdgeCollision);
+		bool HandleSpikesCollision(Spikes* spikes, unsigned char playerEdgeCollision, unsigned char spikesEdgeCollision);
 
 		//Member variables
 		Level* m_Level;

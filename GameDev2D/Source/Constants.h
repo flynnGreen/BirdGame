@@ -7,6 +7,7 @@ const float HALF_TILE_SIZE = 32.0f;
 const unsigned short TILE_COLLISION_FILTER = 0x0001;
 const unsigned short PLAYER_COLLISION_FILTER = 0x0002;
 const unsigned short PLATFORM_COLLISION_FILTER = 0x0004;
+const unsigned short SPIKES_COLLISION_FILTER = 0x0008;
 
 const float CAMERA_SPEED = 10.0f;
 
@@ -57,3 +58,11 @@ const GameDev2D::Vector2 PLATFORM_DISPLACEMENT[MOVING_PLATFORM_NUM] = { PLATFORM
 const double PLATFORM_DURATION[MOVING_PLATFORM_NUM] = { 3.5, 3.0, 3.5 };
 
 const GameDev2D::Vector2 STILL_PLATFORM_START_POSITION[STILL_PLATFORM_NUM] = { STILL_PLATFORM1_START_POS, STILL_PLATFORM2_START_POS };
+
+//Spikes
+const float SPIKES_WIDTH = 64.0f;
+const float SPIKES_HEIGHT = 25.0f;
+
+const GameDev2D::Vector2 SPIKES_START_POS(864.0f, 480.0f);
+const GameDev2D::Vector2 SPIKES_DISPLACEMENT(0.0f, 352.0f);
+const double SPIKES_DURATION = 5.0;

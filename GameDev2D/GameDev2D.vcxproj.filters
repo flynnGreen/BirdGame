@@ -346,6 +346,7 @@
     <ClInclude Include="Source\Teleport.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Platform.h" />
+    <ClInclude Include="Source\Spikes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Libraries\lodepng\lodepng.cpp">
@@ -539,6 +540,7 @@
     <ClCompile Include="Source\Teleport.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\Platform.cpp" />
+    <ClCompile Include="Source\Spikes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Libraries\jsoncpp\json_internalarray.inl">

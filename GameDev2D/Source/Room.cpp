@@ -53,6 +53,12 @@ namespace GameDev2D
 			//Add the Platform to the Room
 			this->AddGameObject(stillPlatform2);
 		}
+		//Create spikes
+		if (filename == LEVEL1_NAMES[1])
+		{
+			Spikes* spikes = new Spikes(this, SPIKES_START_POS, SPIKES_DISPLACEMENT, SPIKES_DURATION);
+			this->AddGameObject(spikes);
+		}
 	}
 
 	Room::~Room()

@@ -3,6 +3,7 @@
 #include <GameDev2D.h>
 #include "Tile.h"
 #include "Platform.h"
+#include "Spikes.h"
 
 namespace GameDev2D
 {
