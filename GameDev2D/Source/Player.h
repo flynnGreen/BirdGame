@@ -79,6 +79,7 @@ namespace GameDev2D
 		Audio* m_JumpSoundJ;
 		Audio* m_DeathSound;
 		Audio* m_JumpSound;
+		Audio* m_JumpSound2;
 		Audio* m_JokeModeActivated;
 		Audio* m_Birds;
 		Audio* m_Music[LEVEL1_ROOM_NUM];

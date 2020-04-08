@@ -23,6 +23,7 @@ namespace GameDev2D
 		m_JumpSoundJ(nullptr),
 		m_DeathSound(nullptr),
 		m_JumpSound(nullptr),
+		m_JumpSound2(nullptr),
 		m_JokeModeActivated(nullptr),
 		m_Birds(nullptr),
 		m_Music { nullptr }
@@ -44,6 +45,7 @@ namespace GameDev2D
 		LoadAudio("Death");
 		LoadAudio("Jump");
 		LoadAudio("JumpReal");
+		LoadAudio("JumpReal2");
 		LoadAudio("DeathReal");
 		LoadAudio("JokeModeActivated");
 		LoadAudio("Birdsong");
@@ -55,10 +57,11 @@ namespace GameDev2D
 		m_JumpSoundJ = new Audio("Jump");
 		m_DeathSound = new Audio("DeathReal");
 		m_JumpSound = new Audio("JumpReal");
+		m_JumpSound2 = new Audio("JumpReal2");
 		m_JokeModeActivated = new Audio("JokeModeActivated");
 		m_Birds = new Audio("Birdsong");
 
-		CollisionFilter filter(PLAYER_COLLISION_FILTER, TILE_COLLISION_FILTER | PLATFORM_COLLISION_FILTER);
+		CollisionFilter filter(PLAYER_COLLISION_FILTER, TILE_COLLISION_FILTER | PLATFORM_COLLISION_FILTER | SPIKES_COLLISION_FILTER);
 		m_Collider = AddAxisAlignedRectangleCollider(GetWidth(), GetHeight(), Collider::Dynamic, filter);
 
 		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
@@ -75,6 +78,7 @@ namespace GameDev2D
 		UnloadAudio("Death");
 		UnloadAudio("Jump");
 		UnloadAudio("JumpReal");
+		UnloadAudio("JumpReal2");
 		UnloadAudio("DeathReal");
 		UnloadAudio("JokeModeActivated");
 		UnloadAudio("Birdsong");
@@ -86,6 +90,7 @@ namespace GameDev2D
 		SafeDelete(m_JokeModeActivated);
 		SafeDelete(m_DeathSound);
 		SafeDelete(m_JumpSound);
+		SafeDelete(m_JumpSound2);
 		SafeDelete(m_DeathSoundJ);
 		SafeDelete(m_JumpSoundJ);
 		SafeDelete(m_Idle);
@@ -334,8 +339,8 @@ namespace GameDev2D
 					}
 					else
 					{
-						m_JumpSound->Stop();
-						m_JumpSound->Play();
+						m_JumpSound2->Stop();
+						m_JumpSound2->Play();
 					}
 				}
 			}
