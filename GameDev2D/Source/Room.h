@@ -51,5 +51,6 @@ namespace GameDev2D
 		unsigned char m_NumRows;
 		unsigned char m_NumColumns;
 		std::vector<GameObject*> m_GameObjects;
+		SpriteAtlas* m_Background;
 	};
 }

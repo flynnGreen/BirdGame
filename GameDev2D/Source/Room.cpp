@@ -17,13 +17,20 @@ namespace GameDev2D
 		m_Tiles(nullptr),
 		m_NumRows(0),
 		m_NumColumns(0),
-		m_Level(level)
+		m_Level(level),
+		m_Background(nullptr)
 	{
 		//Load the Room
 		Load(filename);
 
 		bool isActive = filename == LEVEL1_NAMES[0];
 		SetIsActive(isActive);
+
+		if (filename == LEVEL1_NAMES[1])
+		{
+			m_Background = new SpriteAtlas("Assets");
+			m_Background->UseFrame("Background1");
+		}
 
 		//Create the Platforms and music
 		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
@@ -75,6 +82,7 @@ namespace GameDev2D
 			}
 			SafeDeleteArray(m_Tiles);
 		}
+		SafeDelete(m_Background);
 		RemoveAllGameObjects();
 	}
 
@@ -103,6 +111,7 @@ namespace GameDev2D
 
 	void Room::Draw(SpriteBatch* spriteBatch)
 	{
+		spriteBatch->Draw(m_Background);
 		for (unsigned char r = 0; r < m_NumRows; r++)
 		{
 			for (unsigned char c = 0; c < m_NumColumns; c++)
