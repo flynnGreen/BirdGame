@@ -50,16 +50,17 @@ namespace GameDev2D
 		//Create still platforms
 		if (filename == LEVEL1_NAMES[0])
 		{
-			Platform* stillPlatform1 = new Platform(this, STILL_PLATFORM_START_POSITION[0], Vector2::Zero, 0);
+			Platform* stillPlatform1 = new Platform(this, STILL_PLATFORM_START_POSITION[0], Vector2::Zero, 0.1);
 
 			//Add the Platform to the Room
 			this->AddGameObject(stillPlatform1);
 
-			Platform* stillPlatform2 = new Platform(this, STILL_PLATFORM_START_POSITION[1], Vector2::Zero, 0);
+			Platform* stillPlatform2 = new Platform(this, STILL_PLATFORM_START_POSITION[1], Vector2::Zero, 0.1);
 
 			//Add the Platform to the Room
 			this->AddGameObject(stillPlatform2);
 		}
+
 		//Create spikes
 		if (filename == LEVEL1_NAMES[1])
 		{

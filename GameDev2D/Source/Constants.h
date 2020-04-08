@@ -13,7 +13,7 @@ const float CAMERA_SPEED = 10.0f;
 
 const int LEVEL1_ROOM_NUM = 3;
 const std::string LEVEL1_NAMES[LEVEL1_ROOM_NUM] = { "Level1_Room1", "Level1_Room2", "Level1_Room3" };
-const std::string LEVEL1_MUSIC[LEVEL1_ROOM_NUM] = { "Room1Music", "Room2Music", "Room3Music"};
+const std::string LEVEL1_MUSIC[LEVEL1_ROOM_NUM] = { "Room1Music", "Room2Music", "Room3Music" };
 
 const float PLAYER_WIDTH = 34.0f;
 const float PLAYER_HEIGHT = 63.0f;
@@ -50,8 +50,8 @@ const GameDev2D::Vector2 PLATFORM2_DISPLACEMENT(80.0f, 80.0f);
 const GameDev2D::Vector2 PLATFORM3_START_POS(576.0f, 800.0f);
 const GameDev2D::Vector2 PLATFORM3_DISPLACEMENT(120.0f, 0.0f);
 
-const GameDev2D::Vector2 STILL_PLATFORM1_START_POS(256.0f, 3264.0f);
-const GameDev2D::Vector2 STILL_PLATFORM2_START_POS(100.0f, 100.0f);
+const GameDev2D::Vector2 STILL_PLATFORM1_START_POS(320.0f, 2610.5f);
+const GameDev2D::Vector2 STILL_PLATFORM2_START_POS(320.0f, 1984.0f);
 
 const GameDev2D::Vector2 PLATFORM_START_POSITION[MOVING_PLATFORM_NUM] = { PLATFORM1_START_POS, PLATFORM2_START_POS, PLATFORM3_START_POS };
 const GameDev2D::Vector2 PLATFORM_DISPLACEMENT[MOVING_PLATFORM_NUM] = { PLATFORM1_DISPLACEMENT, PLATFORM2_DISPLACEMENT, PLATFORM3_DISPLACEMENT };
