@@ -4,6 +4,7 @@
 #include "Tile.h"
 #include "Platform.h"
 #include "Spikes.h"
+#include "Enemy.h"
 
 
 namespace GameDev2D
@@ -61,7 +62,7 @@ namespace GameDev2D
 		m_JokeModeActivated = new Audio("JokeModeActivated");
 		m_Birds = new Audio("Birdsong");
 
-		CollisionFilter filter(PLAYER_COLLISION_FILTER, TILE_COLLISION_FILTER | PLATFORM_COLLISION_FILTER | SPIKES_COLLISION_FILTER);
+		CollisionFilter filter(PLAYER_COLLISION_FILTER, TILE_COLLISION_FILTER | PLATFORM_COLLISION_FILTER | SPIKES_COLLISION_FILTER | ENEMY_COLLISION_FILTER);
 		m_Collider = AddAxisAlignedRectangleCollider(GetWidth(), GetHeight(), Collider::Dynamic, filter);
 
 		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
@@ -260,6 +261,13 @@ namespace GameDev2D
 				unsigned char spikesEdgeCollision = spikes->GetCollider()->GetEdgeCollision();
 				collisionEvent->resolveCollision = HandleSpikesCollision(spikes, playerEdgeCollision, spikesEdgeCollision);
 			}
+			//Collider B is an Enemy
+			else if (collisionEvent->b->GetFilter().categoryBits == ENEMY_COLLISION_FILTER)
+			{
+				Enemy* enemy = static_cast<Enemy*>(collisionEvent->b->GetGameObject());
+				unsigned char playerEdgeCollision = m_Collider->GetEdgeCollision();
+				HandleEnemyCollision(enemy, playerEdgeCollision);
+			}
 		}
 		//Collider B is the Player
 		else if (collisionEvent->b->GetGameObject() == this)
@@ -286,6 +294,13 @@ namespace GameDev2D
 				unsigned char playerEdgeCollision = m_Collider->GetEdgeCollision();
 				unsigned char spikesEdgeCollision = spikes->GetCollider()->GetEdgeCollision();
 				collisionEvent->resolveCollision = HandleSpikesCollision(spikes, playerEdgeCollision, spikesEdgeCollision);
+			}
+			//Collider A is an Enemy
+			else if (collisionEvent->a->GetFilter().categoryBits == ENEMY_COLLISION_FILTER)
+			{
+				Enemy* enemy = static_cast<Enemy*>(collisionEvent->a->GetGameObject());
+				unsigned char playerEdgeCollision = m_Collider->GetEdgeCollision();
+				HandleEnemyCollision(enemy, playerEdgeCollision);
 			}
 		}
 	}
@@ -491,6 +506,14 @@ namespace GameDev2D
 			m_IsInAir = false;
 			m_CanDoubleJump = true;
 		}
+		else if ((playerEdgeCollision & AxisAlignedRectangleCollider::TopEdge) != 0)
+		{
+			//Its an ItemBox, and it has an actionn feature
+			if (tile->GetType() == Tile::Item)
+			{
+				tile->Action();
+			}
+		}
 
 		//The Tile type was the main tile we want to resolve the collision
 		//so that the Player doesn't pass through the Tile
@@ -574,5 +597,28 @@ namespace GameDev2D
 		}
 
 		return resolveCollision;
+	}
+
+	void Player::HandleEnemyCollision(Enemy* enemy, unsigned char playerEdgeCollision)
+	{
+		if (enemy->GetType() == Enemy::SexyFish)
+		{
+			if ((playerEdgeCollision & AxisAlignedRectangleCollider::BottomEdge) != 0)
+			{
+				//The player landed on top of the enemy, set the enemy state to in-active
+				//it will appear as if the enemy is dead
+				enemy->SetIsActive(false);
+
+				//Bounce the Player off the enemy's head
+				m_LinearVelocity.y = PLAYER_JUMP_SPEED * 0.5f;
+				m_IsInAir = true;
+			}
+			else
+			{
+				//The Player collided with the enemy from the sides 
+				//or top and has met their demise
+				SetState(Dead);
+			}
+		}
 	}
 }

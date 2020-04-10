@@ -37,6 +37,10 @@ namespace GameDev2D
 	{
 	}
 
+	void Tile::Action()
+	{
+	}
+
 	unsigned char Tile::GetRow()
 	{
 		return m_Row;

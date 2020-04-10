@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Constants.h" />
     <ClInclude Include="Source\EmptyTile.h" />
+    <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Framework\Animation\Animator.h" />
     <ClInclude Include="Source\Framework\Animation\Easing.h" />
     <ClInclude Include="Source\Framework\Audio\Audio.h" />
@@ -121,9 +122,12 @@
     <ClInclude Include="Source\Libraries\jsoncpp\writer.h" />
     <ClInclude Include="Source\Libraries\lodepng\lodepng.h" />
     <ClInclude Include="Source\MainTile.h" />
+    <ClInclude Include="Source\Pickup.h" />
     <ClInclude Include="Source\Platform.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Room.h" />
+    <ClInclude Include="Source\SeedPickup.h" />
+    <ClInclude Include="Source\SexyFish.h" />
     <ClInclude Include="Source\Spikes.h" />
     <ClInclude Include="Source\Teleport.h" />
     <ClInclude Include="Source\Tile.h" />
@@ -133,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\EmptyTile.cpp" />
+    <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Framework\Animation\Animator.cpp" />
     <ClCompile Include="Source\Framework\Animation\Easing.cpp" />
     <ClCompile Include="Source\Framework\Audio\Audio.cpp" />
@@ -225,9 +230,12 @@
     <ClCompile Include="Source\Libraries\lodepng\lodepng.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\MainTile.cpp" />
+    <ClCompile Include="Source\Pickup.cpp" />
     <ClCompile Include="Source\Platform.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\Room.cpp" />
+    <ClCompile Include="Source\SeedPickup.cpp" />
+    <ClCompile Include="Source\SexyFish.cpp" />
     <ClCompile Include="Source\Spikes.cpp" />
     <ClCompile Include="Source\Teleport.cpp" />
     <ClCompile Include="Source\Tile.cpp" />

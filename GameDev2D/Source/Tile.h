@@ -28,6 +28,8 @@ namespace GameDev2D
 		virtual void Draw(SpriteBatch* spriteBatch = nullptr) override;
 		virtual void Reset() override;
 
+		virtual void Action();
+
 		unsigned char GetRow();
 		unsigned char GetColumn();
 

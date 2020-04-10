@@ -347,6 +347,10 @@
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Platform.h" />
     <ClInclude Include="Source\Spikes.h" />
+    <ClInclude Include="Source\Enemy.h" />
+    <ClInclude Include="Source\SexyFish.h" />
+    <ClInclude Include="Source\Pickup.h" />
+    <ClInclude Include="Source\SeedPickup.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Libraries\lodepng\lodepng.cpp">
@@ -541,6 +545,10 @@
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\Platform.cpp" />
     <ClCompile Include="Source\Spikes.cpp" />
+    <ClCompile Include="Source\Enemy.cpp" />
+    <ClCompile Include="Source\SexyFish.cpp" />
+    <ClCompile Include="Source\Pickup.cpp" />
+    <ClCompile Include="Source\SeedPickup.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Libraries\jsoncpp\json_internalarray.inl">

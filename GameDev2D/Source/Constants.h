@@ -8,6 +8,8 @@ const unsigned short TILE_COLLISION_FILTER = 0x0001;
 const unsigned short PLAYER_COLLISION_FILTER = 0x0002;
 const unsigned short PLATFORM_COLLISION_FILTER = 0x0004;
 const unsigned short SPIKES_COLLISION_FILTER = 0x0008;
+const unsigned short ENEMY_COLLISION_FILTER = 0x0010;
+const unsigned short PICKUP_COLLISION_FILTER = 0x0020;
 
 const float CAMERA_SPEED = 10.0f;
 
@@ -66,3 +68,51 @@ const float SPIKES_HEIGHT = 25.0f;
 const GameDev2D::Vector2 SPIKES_START_POS(864.0f, 480.0f);
 const GameDev2D::Vector2 SPIKES_DISPLACEMENT(0.0f, 352.0f);
 const double SPIKES_DURATION = 5.0;
+
+//Sexy Fish consts
+const float SEXY_SPEED = 50.0;
+const double SEXY_COLLISION_IGNORE_DURATION = 1.0;
+
+const GameDev2D::Vector2 SEXY1_START_POS(576.0f, 4704.0f);
+const float SEXY1_DISPLACEMENT_X = 96.0f;
+
+const GameDev2D::Vector2 SEXY2_START_POS(608.0f, 3424.0f);
+const float SEXY2_DISPLACEMENT_X = 90.0f;
+
+//Item box consts
+const double ITEM_BOX_SCALE_TIMER = 0.25;
+
+const int ROOM_1_ITEM_BOX_NUM = 5;
+
+const unsigned char ROOM_1_ITEM_BOX_1_ROW = 20;
+const unsigned char ROOM_1_ITEM_BOX_1_COLUMN = 11;
+
+const unsigned char ROOM_1_ITEM_BOX_2_ROW = 43;
+const unsigned char ROOM_1_ITEM_BOX_2_COLUMN = 18;
+
+const unsigned char ROOM_1_ITEM_BOX_3_ROW = 63;
+const unsigned char ROOM_1_ITEM_BOX_3_COLUMN = 8;
+
+const unsigned char ROOM_1_ITEM_BOX_4_ROW = 75;
+const unsigned char ROOM_1_ITEM_BOX_4_COLUMN = 8;
+
+const unsigned char ROOM_1_ITEM_BOX_5_ROW = 77;
+const unsigned char ROOM_1_ITEM_BOX_5_COLUMN = 2;
+
+const unsigned char ROOM_1_ITEM_BOX_ROWS[ROOM_1_ITEM_BOX_NUM] = { ROOM_1_ITEM_BOX_1_ROW,
+																  ROOM_1_ITEM_BOX_2_ROW,
+																  ROOM_1_ITEM_BOX_3_ROW,
+																  ROOM_1_ITEM_BOX_4_ROW,
+																  ROOM_1_ITEM_BOX_5_ROW };
+
+const unsigned char ROOM_1_ITEM_BOX_COLUMNS[ROOM_1_ITEM_BOX_NUM] = { ROOM_1_ITEM_BOX_1_COLUMN,
+																	 ROOM_1_ITEM_BOX_2_COLUMN,
+																	 ROOM_1_ITEM_BOX_3_COLUMN,
+																	 ROOM_1_ITEM_BOX_4_COLUMN,
+																	 ROOM_1_ITEM_BOX_5_COLUMN };
+
+const float ROOM_1_ITEM_BOX_POSITION_X[ROOM_1_ITEM_BOX_NUM] = { ROOM_1_ITEM_BOX_1_COLUMN * TILE_SIZE + HALF_TILE_SIZE,
+																ROOM_1_ITEM_BOX_2_COLUMN * TILE_SIZE + HALF_TILE_SIZE,
+																ROOM_1_ITEM_BOX_3_COLUMN * TILE_SIZE + HALF_TILE_SIZE,
+																ROOM_1_ITEM_BOX_4_COLUMN * TILE_SIZE + HALF_TILE_SIZE,
+																ROOM_1_ITEM_BOX_5_COLUMN * TILE_SIZE + HALF_TILE_SIZE, }

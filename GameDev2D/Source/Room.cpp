@@ -8,6 +8,8 @@
 #include "Tree.h"
 #include "House.h"
 #include "Teleport.h"
+#include "SexyFish.h"
+#include "SeedPickup.h"
 #include <fstream>
 
 
@@ -26,6 +28,7 @@ namespace GameDev2D
 		bool isActive = filename == LEVEL1_NAMES[0];
 		SetIsActive(isActive);
 
+		//Set room 2 background
 		if (filename == LEVEL1_NAMES[1])
 		{
 			m_Background = new SpriteAtlas("Assets");
@@ -47,7 +50,7 @@ namespace GameDev2D
 			}
 		}
 
-		//Create still platforms
+		//Create still platforms/SexyFishes/Items
 		if (filename == LEVEL1_NAMES[0])
 		{
 			Platform* stillPlatform1 = new Platform(this, STILL_PLATFORM_START_POSITION[0], Vector2::Zero, 0.1);
@@ -59,6 +62,25 @@ namespace GameDev2D
 
 			//Add the Platform to the Room
 			this->AddGameObject(stillPlatform2);
+
+			AddGameObject(new SexyFish(SEXY1_START_POS, SEXY1_DISPLACEMENT_X));
+			AddGameObject(new SexyFish(SEXY2_START_POS, SEXY2_DISPLACEMENT_X));
+
+			Tile* tile = GetTile(ROOM_1_ITEM_BOX_1_ROW, ROOM_1_ITEM_BOX_1_COLUMN);
+
+			//Ensure that the tile pointer actually points to an ItemBoxTile object
+			//If it doesn't (maybe because the level changed), then throw an assert
+			//An assert is used to test assumptions made by the programmer, these are assumtions
+			//that must be correct, the assert throws an exception if the statement isn't valid
+			assert(tile->GetType() == Tile::Item);
+			Item* item = static_cast<Item*>(tile);
+
+			//Create the Seed pickup
+			Vector2 spawnPosition(ROOM_1_ITEM_BOX_1_POSITION_X, ROOM_1_ITEM_BOX_1_POSITION_Y);
+			SeedPickup* seedPickup = new SeedPickup(spawnPosition);
+
+			//Set the item box tile's pickup, it is now responsible for deleting the Pickup object
+			item->SetPickup(seedPickup);
 		}
 
 		//Create spikes
@@ -106,7 +128,10 @@ namespace GameDev2D
 		}
 		for (int i = 0; i < m_GameObjects.size(); i++)
 		{
-			m_GameObjects.at(i)->Update(delta);
+			if (m_GameObjects.at(i)->IsActive() == true)
+			{
+				m_GameObjects.at(i)->Update(delta);
+			}
 		}
 	}
 
@@ -126,7 +151,10 @@ namespace GameDev2D
 		}
 		for (int i = 0; i < m_GameObjects.size(); i++)
 		{
-			m_GameObjects.at(i)->Draw(spriteBatch);
+			if (m_GameObjects.at(i)->IsActive() == true)
+			{
+				m_GameObjects.at(i)->Draw(spriteBatch);
+			}
 		}
 	}
 
@@ -215,6 +243,20 @@ namespace GameDev2D
 		return m_Level;
 	}
 
+	Tile* Room::GetTile(unsigned char row, unsigned char column)
+	{
+		if (Validate(row, column) == true)
+		{
+			return m_Tiles[row][column];
+		}
+		return nullptr;
+	}
+
+	bool Room::Validate(unsigned char row, unsigned char column)
+	{
+		return row >= 0 && row < GetRows() && column >= 0 && column < GetColumns();
+	}
+
 	void Room::Load(const std::string& filename)
 	{
 		unsigned char** tiles = nullptr;
@@ -294,7 +336,7 @@ namespace GameDev2D
 		}
 		if ((data & Tile::Item) == Tile::Item)
 		{
-			return new Item(row, col, hasCollider);
+			return new Item(this, row, col, hasCollider);
 		}
 		if ((data & Tile::Tree) == Tile::Tree)
 		{

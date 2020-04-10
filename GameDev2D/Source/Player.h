@@ -11,6 +11,7 @@ namespace GameDev2D
 	class Tile;
 	class Platform;
 	class Spikes;
+	class Enemy;
 
 	//Class definitions
 	class Player : public GameObject
@@ -62,6 +63,7 @@ namespace GameDev2D
 		bool HandleTileCollision(Tile* tile, unsigned char playerEdgeCollision);
 		bool HandlePlatformCollision(Platform* platform, unsigned char playerEdgeCollision, unsigned char platformEdgeCollision);
 		bool HandleSpikesCollision(Spikes* spikes, unsigned char playerEdgeCollision, unsigned char spikesEdgeCollision);
+		void HandleEnemyCollision(Enemy* enemy, unsigned char playerEdgeCollision);
 
 		//Member variables
 		Level* m_Level;

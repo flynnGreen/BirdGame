@@ -30,6 +30,9 @@ namespace GameDev2D
 
 		Level* GetLevel();
 
+		Tile* GetTile(unsigned char row, unsigned char column);
+		bool Validate(unsigned char row, unsigned char column);
+
 		//GameObject methods
 		GameObject* AddGameObject(GameObject* gameObject);
 		unsigned int GetNumberOfGameObjects();
