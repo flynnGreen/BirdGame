@@ -10,6 +10,8 @@
 #include "Teleport.h"
 #include "SexyFish.h"
 #include "SeedPickup.h"
+#include "MilletPickup.h"
+#include "EggPickup.h"
 #include <fstream>
 
 
@@ -50,7 +52,7 @@ namespace GameDev2D
 			}
 		}
 
-		//Create still platforms/SexyFishes/Items
+		//Create still platforms/Spikes/SexyFishes/Items
 		if (filename == LEVEL1_NAMES[0])
 		{
 			Platform* stillPlatform1 = new Platform(this, STILL_PLATFORM_START_POSITION[0], Vector2::Zero, 0.1);
@@ -66,28 +68,51 @@ namespace GameDev2D
 			AddGameObject(new SexyFish(SEXY1_START_POS, SEXY1_DISPLACEMENT_X));
 			AddGameObject(new SexyFish(SEXY2_START_POS, SEXY2_DISPLACEMENT_X));
 
-			Tile* tile = GetTile(ROOM_1_ITEM_BOX_1_ROW, ROOM_1_ITEM_BOX_1_COLUMN);
+			for (int i = 0; i < ROOM_1_ITEM_BOX_NUM; i++)
+			{
+				Tile* tile = GetTile(ROOM_1_ITEM_BOX_ROWS[i], ROOM_1_ITEM_BOX_COLUMNS[i]);
 
-			//Ensure that the tile pointer actually points to an ItemBoxTile object
-			//If it doesn't (maybe because the level changed), then throw an assert
-			//An assert is used to test assumptions made by the programmer, these are assumtions
-			//that must be correct, the assert throws an exception if the statement isn't valid
-			assert(tile->GetType() == Tile::Item);
-			Item* item = static_cast<Item*>(tile);
+				//Ensure that the tile pointer actually points to an ItemBoxTile object
+				//If it doesn't (maybe because the level changed), then throw an assert
+				//An assert is used to test assumptions made by the programmer, these are assumtions
+				//that must be correct, the assert throws an exception if the statement isn't valid
+				assert(tile->GetType() == Tile::Item);
 
-			//Create the Seed pickup
-			Vector2 spawnPosition(ROOM_1_ITEM_BOX_1_POSITION_X, ROOM_1_ITEM_BOX_1_POSITION_Y);
-			SeedPickup* seedPickup = new SeedPickup(spawnPosition);
-
-			//Set the item box tile's pickup, it is now responsible for deleting the Pickup object
-			item->SetPickup(seedPickup);
+				CreateNewPickup(ROOM_1_ITEM_BOX_ITEMS[i], 0, tile);
+			}
 		}
-
-		//Create spikes
 		if (filename == LEVEL1_NAMES[1])
 		{
 			Spikes* spikes = new Spikes(this, SPIKES_START_POS, SPIKES_DISPLACEMENT, SPIKES_DURATION);
 			this->AddGameObject(spikes);
+
+			for (int i = 0; i < ROOM_2_ITEM_BOX_NUM; i++)
+			{
+				Tile* tile = GetTile(ROOM_2_ITEM_BOX_ROWS[i], ROOM_2_ITEM_BOX_COLUMNS[i]);
+
+				//Ensure that the tile pointer actually points to an ItemBoxTile object
+				//If it doesn't (maybe because the level changed), then throw an assert
+				//An assert is used to test assumptions made by the programmer, these are assumtions
+				//that must be correct, the assert throws an exception if the statement isn't valid
+				assert(tile->GetType() == Tile::Item);
+				
+				CreateNewPickup(ROOM_2_ITEM_BOX_ITEMS[i], 1, tile);
+			}
+		}
+		if (filename == LEVEL1_NAMES[2])
+		{
+			for (int i = 0; i < ROOM_3_ITEM_BOX_NUM; i++)
+			{
+				Tile* tile = GetTile(ROOM_3_ITEM_BOX_ROWS[i], ROOM_3_ITEM_BOX_COLUMNS[i]);
+
+				//Ensure that the tile pointer actually points to an ItemBoxTile object
+				//If it doesn't (maybe because the level changed), then throw an assert
+				//An assert is used to test assumptions made by the programmer, these are assumtions
+				//that must be correct, the assert throws an exception if the statement isn't valid
+				assert(tile->GetType() == Tile::Item);
+
+				CreateNewPickup(ROOM_3_ITEM_BOX_ITEMS[i], 0, tile);
+			}
 		}
 	}
 
@@ -318,6 +343,103 @@ namespace GameDev2D
 				SafeDeleteArray(tiles[r]);
 			}
 			SafeDeleteArray(tiles);
+		}
+	}
+
+	void Room::CreateNewPickup(int boxNum, int room, Tile* tile)
+	{
+		Item* item = static_cast<Item*>(tile);
+		switch (room)
+		{
+		case 0:
+			if (ROOM_1_ITEM_BOX_ITEMS[boxNum] == 1)
+			{
+				//Create the Seed pickup
+				Vector2 spawnPosition(ROOM_1_ITEM_BOX_POSITION_X[boxNum], ROOM_1_ITEM_BOX_POSITION_Y[boxNum]);
+				SeedPickup* pickup = new SeedPickup(spawnPosition);
+
+				//Set the item box tile's pickup, it is now responsible for deleting the Pickup object
+				item->SetPickup(pickup);
+			}
+			else if (ROOM_1_ITEM_BOX_ITEMS[boxNum] == 2)
+			{
+				//Create the Millet pickup
+				Vector2 spawnPosition(ROOM_1_ITEM_BOX_POSITION_X[boxNum], ROOM_1_ITEM_BOX_POSITION_Y[boxNum]);
+				MilletPickup* pickup = new MilletPickup(spawnPosition);
+
+				//Set the item box tile's pickup, it is now responsible for deleting the Pickup object
+				item->SetPickup(pickup);
+			}
+			else if (ROOM_1_ITEM_BOX_ITEMS[boxNum] == 3)
+			{
+				//Create the Egg pickup
+				Vector2 spawnPosition(ROOM_1_ITEM_BOX_POSITION_X[boxNum], ROOM_1_ITEM_BOX_POSITION_Y[boxNum]);
+				EggPickup* pickup = new EggPickup(spawnPosition);
+
+				//Set the item box tile's pickup, it is now responsible for deleting the Pickup object
+				item->SetPickup(pickup);
+			}
+			break;
+		case 1:
+			if (ROOM_2_ITEM_BOX_ITEMS[boxNum] == 1)
+			{
+				//Create the Seed pickup
+				Vector2 spawnPosition(ROOM_2_ITEM_BOX_POSITION_X[boxNum], ROOM_2_ITEM_BOX_POSITION_Y[boxNum]);
+				SeedPickup* pickup = new SeedPickup(spawnPosition);
+
+				//Set the item box tile's pickup, it is now responsible for deleting the Pickup object
+				item->SetPickup(pickup);
+			}
+			else if (ROOM_2_ITEM_BOX_ITEMS[boxNum] == 2)
+			{
+				//Create the Seed pickup
+				Vector2 spawnPosition(ROOM_2_ITEM_BOX_POSITION_X[boxNum], ROOM_2_ITEM_BOX_POSITION_Y[boxNum]);
+				MilletPickup* pickup = new MilletPickup(spawnPosition);
+
+				//Set the item box tile's pickup, it is now responsible for deleting the Pickup object
+				item->SetPickup(pickup);
+			}
+			else if (ROOM_1_ITEM_BOX_ITEMS[boxNum] == 3)
+			{
+				//Create the Egg pickup
+				Vector2 spawnPosition(ROOM_1_ITEM_BOX_POSITION_X[boxNum], ROOM_1_ITEM_BOX_POSITION_Y[boxNum]);
+				EggPickup* pickup = new EggPickup(spawnPosition);
+
+				//Set the item box tile's pickup, it is now responsible for deleting the Pickup object
+				item->SetPickup(pickup);
+			}
+			break;
+		case 2:
+			if (ROOM_3_ITEM_BOX_ITEMS[boxNum] == 1)
+			{
+				//Create the Seed pickup
+				Vector2 spawnPosition(ROOM_3_ITEM_BOX_POSITION_X[boxNum], ROOM_3_ITEM_BOX_POSITION_Y[boxNum]);
+				SeedPickup* pickup = new SeedPickup(spawnPosition);
+
+				//Set the item box tile's pickup, it is now responsible for deleting the Pickup object
+				item->SetPickup(pickup);
+			}
+			else if (ROOM_3_ITEM_BOX_ITEMS[boxNum] == 2)
+			{
+				//Create the Seed pickup
+				Vector2 spawnPosition(ROOM_3_ITEM_BOX_POSITION_X[boxNum], ROOM_3_ITEM_BOX_POSITION_Y[boxNum]);
+				MilletPickup* pickup = new MilletPickup(spawnPosition);
+
+				//Set the item box tile's pickup, it is now responsible for deleting the Pickup object
+				item->SetPickup(pickup);
+			}
+			else if (ROOM_1_ITEM_BOX_ITEMS[boxNum] == 3)
+			{
+				//Create the Egg pickup
+				Vector2 spawnPosition(ROOM_1_ITEM_BOX_POSITION_X[boxNum], ROOM_1_ITEM_BOX_POSITION_Y[boxNum]);
+				EggPickup* pickup = new EggPickup(spawnPosition);
+
+				//Set the item box tile's pickup, it is now responsible for deleting the Pickup object
+				item->SetPickup(pickup);
+			}
+			break;
+		default:
+			break;
 		}
 	}
 

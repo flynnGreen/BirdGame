@@ -12,6 +12,7 @@ namespace GameDev2D
 	class Platform;
 	class Spikes;
 	class Enemy;
+	class Pickup;
 
 	//Class definitions
 	class Player : public GameObject
@@ -62,8 +63,9 @@ namespace GameDev2D
 		//Handle collision between a specific Tile and the Player
 		bool HandleTileCollision(Tile* tile, unsigned char playerEdgeCollision);
 		bool HandlePlatformCollision(Platform* platform, unsigned char playerEdgeCollision, unsigned char platformEdgeCollision);
-		bool HandleSpikesCollision(Spikes* spikes, unsigned char playerEdgeCollision, unsigned char spikesEdgeCollision);
+		void HandleSpikesCollision(Spikes* spikes);
 		void HandleEnemyCollision(Enemy* enemy, unsigned char playerEdgeCollision);
+		void HandlePickupCollision(Pickup* pickup);
 
 		//Member variables
 		Level* m_Level;
@@ -73,6 +75,9 @@ namespace GameDev2D
 		Sprite* m_ActiveSprite;
 		State m_State;
 		int m_ActiveRoom = 0;
+		int m_SeedAmt = 0;
+		int m_MilletAmt = 0;
+		int m_EggAmt = 0;
 		bool m_IsInAir;
 		bool m_CanDoubleJump;
 		Vector2 m_PreviousPosition;
@@ -85,5 +90,6 @@ namespace GameDev2D
 		Audio* m_JokeModeActivated;
 		Audio* m_Birds;
 		Audio* m_Music[LEVEL1_ROOM_NUM];
+		SpriteFont* m_Inventory;
 	};
 }

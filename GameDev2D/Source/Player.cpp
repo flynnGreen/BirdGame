@@ -5,6 +5,7 @@
 #include "Platform.h"
 #include "Spikes.h"
 #include "Enemy.h"
+#include "Pickup.h"
 
 
 namespace GameDev2D
@@ -27,7 +28,8 @@ namespace GameDev2D
 		m_JumpSound2(nullptr),
 		m_JokeModeActivated(nullptr),
 		m_Birds(nullptr),
-		m_Music { nullptr }
+		m_Music { nullptr },
+		m_Inventory(nullptr)
 	{
 		m_Idle = new SpriteAtlas("Assets");
 		m_Idle->UseFrame("Sprite");
@@ -62,7 +64,14 @@ namespace GameDev2D
 		m_JokeModeActivated = new Audio("JokeModeActivated");
 		m_Birds = new Audio("Birdsong");
 
-		CollisionFilter filter(PLAYER_COLLISION_FILTER, TILE_COLLISION_FILTER | PLATFORM_COLLISION_FILTER | SPIKES_COLLISION_FILTER | ENEMY_COLLISION_FILTER);
+		LoadFont("Hanged Letters_32");
+
+		m_Inventory = new SpriteFont("Hanged Letters_32");
+		m_Inventory->SetColor(Color::OrangeColor());
+		m_Inventory->SetText("Seeds: 0\nMillet: 0\nEggs: 0");
+		m_Inventory->SetPosition(m_Inventory->GetWidth() + UI_BUFFER, GetScreenHeight() - m_Inventory->GetHeight() - UI_BUFFER);
+
+		CollisionFilter filter(PLAYER_COLLISION_FILTER, TILE_COLLISION_FILTER | PLATFORM_COLLISION_FILTER | SPIKES_COLLISION_FILTER | ENEMY_COLLISION_FILTER | PICKUP_COLLISION_FILTER);
 		m_Collider = AddAxisAlignedRectangleCollider(GetWidth(), GetHeight(), Collider::Dynamic, filter);
 
 		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
@@ -86,6 +95,7 @@ namespace GameDev2D
 		UnloadAudio("Room1Music");
 		UnloadAudio("Room2Music");
 		UnloadAudio("Room3Music");
+		UnloadFont("Hanged Letters_32");
 
 		SafeDelete(m_Birds);
 		SafeDelete(m_JokeModeActivated);
@@ -96,6 +106,7 @@ namespace GameDev2D
 		SafeDelete(m_JumpSoundJ);
 		SafeDelete(m_Idle);
 		SafeDelete(m_Walk);
+		SafeDelete(m_Inventory);
 
 		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
 		{
@@ -202,6 +213,12 @@ namespace GameDev2D
 			m_Level->Reset();
 
 		}
+
+		std::string inventory = "Seeds: " + std::to_string(m_SeedAmt);
+		inventory.append("\nMillet: " + std::to_string(m_MilletAmt));
+		inventory.append("\nEggs: " + std::to_string(m_EggAmt));
+
+		m_Inventory->SetText(inventory);
 	}
 
 	void Player::Draw(SpriteBatch* spriteBatch)
@@ -210,6 +227,8 @@ namespace GameDev2D
 		{
 			spriteBatch->Draw(m_ActiveSprite);
 		}
+
+		m_Inventory->Draw();
 	}
 
 	void Player::Reset()
@@ -231,6 +250,8 @@ namespace GameDev2D
 		m_Birds->Play();
 
 		SetMusic(m_Level->GetActiveRoomNum());
+
+		m_ActiveRoom = m_Level->GetActiveRoomNum();
 	}
 
 	void Player::CollisionDetected(CollisionEvent* collisionEvent)
@@ -259,7 +280,7 @@ namespace GameDev2D
 				Spikes* spikes = static_cast<Spikes*>(collisionEvent->b->GetGameObject());
 				unsigned char playerEdgeCollision = m_Collider->GetEdgeCollision();
 				unsigned char spikesEdgeCollision = spikes->GetCollider()->GetEdgeCollision();
-				collisionEvent->resolveCollision = HandleSpikesCollision(spikes, playerEdgeCollision, spikesEdgeCollision);
+				HandleSpikesCollision(spikes);
 			}
 			//Collider B is an Enemy
 			else if (collisionEvent->b->GetFilter().categoryBits == ENEMY_COLLISION_FILTER)
@@ -267,6 +288,12 @@ namespace GameDev2D
 				Enemy* enemy = static_cast<Enemy*>(collisionEvent->b->GetGameObject());
 				unsigned char playerEdgeCollision = m_Collider->GetEdgeCollision();
 				HandleEnemyCollision(enemy, playerEdgeCollision);
+			}
+			//Collider B is a Pickup
+			else if (collisionEvent->b->GetFilter().categoryBits == PICKUP_COLLISION_FILTER)
+			{
+				Pickup* pickup = static_cast<Pickup*>(collisionEvent->b->GetGameObject());
+				HandlePickupCollision(pickup);
 			}
 		}
 		//Collider B is the Player
@@ -293,7 +320,7 @@ namespace GameDev2D
 				Spikes* spikes = static_cast<Spikes*>(collisionEvent->a->GetGameObject());
 				unsigned char playerEdgeCollision = m_Collider->GetEdgeCollision();
 				unsigned char spikesEdgeCollision = spikes->GetCollider()->GetEdgeCollision();
-				collisionEvent->resolveCollision = HandleSpikesCollision(spikes, playerEdgeCollision, spikesEdgeCollision);
+				HandleSpikesCollision(spikes);
 			}
 			//Collider A is an Enemy
 			else if (collisionEvent->a->GetFilter().categoryBits == ENEMY_COLLISION_FILTER)
@@ -301,6 +328,12 @@ namespace GameDev2D
 				Enemy* enemy = static_cast<Enemy*>(collisionEvent->a->GetGameObject());
 				unsigned char playerEdgeCollision = m_Collider->GetEdgeCollision();
 				HandleEnemyCollision(enemy, playerEdgeCollision);
+			}
+			//Collider A is a Pickup
+			else if (collisionEvent->a->GetFilter().categoryBits == PICKUP_COLLISION_FILTER)
+			{
+				Pickup* pickup = static_cast<Pickup*>(collisionEvent->a->GetGameObject());
+				HandlePickupCollision(pickup);
 			}
 		}
 	}
@@ -508,7 +541,7 @@ namespace GameDev2D
 		}
 		else if ((playerEdgeCollision & AxisAlignedRectangleCollider::TopEdge) != 0)
 		{
-			//Its an ItemBox, and it has an actionn feature
+			//Its an ItemBox, and it has an action feature
 			if (tile->GetType() == Tile::Item)
 			{
 				tile->Action();
@@ -527,11 +560,19 @@ namespace GameDev2D
 		}
 		else if (tile->GetType() == Tile::Teleport)
 		{
-			if (IsKeyDown(Keyboard::Up))
+			if (m_ActiveRoom != 2 && IsKeyDown(Keyboard::Up))
 			{
 				int activeRoom = m_Level->GetActiveRoomNum() + 1;
 				m_Level->SetActiveRoom(activeRoom);
 				SetMusic(activeRoom);
+				m_ActiveRoom++;
+			}
+			else if (m_ActiveRoom != 0 && IsKeyDown(Keyboard::Down))
+			{
+				int activeRoom = m_Level->GetActiveRoomNum() - 1;
+				m_Level->SetActiveRoom(activeRoom);
+				SetMusic(activeRoom);
+				m_ActiveRoom--;
 			}
 		}
 
@@ -570,33 +611,9 @@ namespace GameDev2D
 
 		return resolveCollision;
 	}
-	bool Player::HandleSpikesCollision(Spikes* spikes, unsigned char playerEdgeCollision, unsigned char spikesEdgeCollision)
+	void Player::HandleSpikesCollision(Spikes* spikes)
 	{
-		bool resolveCollision = false;
-
-		//Don't handle collision if the edge is unknown
-		if (playerEdgeCollision == AxisAlignedRectangleCollider::UnknownEdge)
-		{
-			return resolveCollision;
-		}
-
-		//Local variables
-		float previousPlayerBottomEdge = m_PreviousPosition.y - PLAYER_HALF_HEIGHT;
-		float playerBottomEdge = GetPosition().y - PLAYER_HALF_HEIGHT;
-		float spikesTopEdge = spikes->GetPosition().y + PLATFORM_SEGMENT_HEIGHT * 0.5f;
-
-		if (Math::IsClose(playerBottomEdge, spikesTopEdge, 2.5f)
-			|| (previousPlayerBottomEdge > spikesTopEdge && playerBottomEdge < spikesTopEdge)
-			|| previousPlayerBottomEdge == spikesTopEdge)
-		{
-			if ((playerEdgeCollision & AxisAlignedRectangleCollider::BottomEdge) == AxisAlignedRectangleCollider::BottomEdge
-				&& (spikesEdgeCollision & AxisAlignedRectangleCollider::TopEdge) == AxisAlignedRectangleCollider::TopEdge)
-			{
-				resolveCollision = true;
-			}
-		}
-
-		return resolveCollision;
+		SetState(Dead);
 	}
 
 	void Player::HandleEnemyCollision(Enemy* enemy, unsigned char playerEdgeCollision)
@@ -620,5 +637,42 @@ namespace GameDev2D
 				SetState(Dead);
 			}
 		}
+		else if (enemy->GetType() == Enemy::EyeFly)
+		{
+			if ((playerEdgeCollision & AxisAlignedRectangleCollider::BottomEdge) != 0)
+			{
+				//The player landed on top of the enemy, set the enemy state to in-active
+				//it will appear as if the enemy is dead
+				enemy->SetIsActive(false);
+
+				//Bounce the Player off the enemy's head
+				m_LinearVelocity.y = PLAYER_JUMP_SPEED * 0.5f;
+				m_IsInAir = true;
+			}
+			else
+			{
+				//The Player collided with the enemy from the sides 
+				//or top and has met their demise
+				SetState(Dead);
+			}
+		}
+		else if (enemy->GetType() == Enemy::NPC)
+		{
+			//TODO: Implement speech
+		}
+	}
+	void Player::HandlePickupCollision(Pickup* pickup)
+	{
+		if (pickup->GetType() == Pickup::Seed)
+		{
+			m_SeedAmt++;
+			//TODO: Play sound effect
+		}
+		else if (pickup->GetType() == Pickup::Millet)
+		{
+			m_MilletAmt++;
+		}
+
+		pickup->Consume();
 	}
 }

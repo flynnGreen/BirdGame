@@ -14,8 +14,9 @@ namespace GameDev2D
 		enum Type
 		{
 			Seed = 0,
-
-			//Add additional pickup types here
+			Millet,
+			Egg,
+			Wings,
 		};
 
 		virtual Type GetType() = 0;

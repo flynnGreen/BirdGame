@@ -351,6 +351,8 @@
     <ClInclude Include="Source\SexyFish.h" />
     <ClInclude Include="Source\Pickup.h" />
     <ClInclude Include="Source\SeedPickup.h" />
+    <ClInclude Include="Source\MilletPickup.h" />
+    <ClInclude Include="Source\EggPickup.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Libraries\lodepng\lodepng.cpp">
@@ -549,6 +551,8 @@
     <ClCompile Include="Source\SexyFish.cpp" />
     <ClCompile Include="Source\Pickup.cpp" />
     <ClCompile Include="Source\SeedPickup.cpp" />
+    <ClCompile Include="Source\MilletPickup.cpp" />
+    <ClCompile Include="Source\EggPickup.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Libraries\jsoncpp\json_internalarray.inl">
@@ -591,12 +595,16 @@
     <None Include="Assets\Data\Level1_Room3.bin">
       <Filter>Assets</Filter>
     </None>
+    <None Include="Assets\Fonts\Hanged Letters_32.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Source\Framework\Windows\Icon.ico">
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\Images\Assets.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Fonts\Hanged Letters_32.png">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>

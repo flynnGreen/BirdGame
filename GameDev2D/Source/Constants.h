@@ -1,6 +1,8 @@
 #pragma once
 #include <GameDev2D.h>
 
+const float UI_BUFFER = 5.0f;
+
 const float TILE_SIZE = 64.0f;
 const float HALF_TILE_SIZE = 32.0f;
 
@@ -80,39 +82,107 @@ const GameDev2D::Vector2 SEXY2_START_POS(608.0f, 3424.0f);
 const float SEXY2_DISPLACEMENT_X = 90.0f;
 
 //Item box consts
+//1 = seed, 2 = millet, 3 = egg
 const double ITEM_BOX_SCALE_TIMER = 0.25;
 
-const int ROOM_1_ITEM_BOX_NUM = 5;
+const int ROOM_1_ITEM_BOX_NUM = 6;
 
 const unsigned char ROOM_1_ITEM_BOX_1_ROW = 20;
 const unsigned char ROOM_1_ITEM_BOX_1_COLUMN = 11;
+const unsigned int ROOM_1_ITEM_BOX_1_ITEM = 1;
 
-const unsigned char ROOM_1_ITEM_BOX_2_ROW = 43;
-const unsigned char ROOM_1_ITEM_BOX_2_COLUMN = 18;
+const unsigned char ROOM_1_ITEM_BOX_2_ROW = 33;
+const unsigned char ROOM_1_ITEM_BOX_2_COLUMN = 5;
+const unsigned int ROOM_1_ITEM_BOX_2_ITEM = 1;
 
-const unsigned char ROOM_1_ITEM_BOX_3_ROW = 63;
-const unsigned char ROOM_1_ITEM_BOX_3_COLUMN = 8;
+const unsigned char ROOM_1_ITEM_BOX_3_ROW = 43;
+const unsigned char ROOM_1_ITEM_BOX_3_COLUMN = 18;
+const unsigned int ROOM_1_ITEM_BOX_3_ITEM = 1;
 
-const unsigned char ROOM_1_ITEM_BOX_4_ROW = 75;
+const unsigned char ROOM_1_ITEM_BOX_4_ROW = 63;
 const unsigned char ROOM_1_ITEM_BOX_4_COLUMN = 8;
+const unsigned int ROOM_1_ITEM_BOX_4_ITEM = 1;
 
-const unsigned char ROOM_1_ITEM_BOX_5_ROW = 77;
-const unsigned char ROOM_1_ITEM_BOX_5_COLUMN = 2;
+const unsigned char ROOM_1_ITEM_BOX_5_ROW = 75;
+const unsigned char ROOM_1_ITEM_BOX_5_COLUMN = 8;
+const unsigned int ROOM_1_ITEM_BOX_5_ITEM = 1;
+
+const unsigned char ROOM_1_ITEM_BOX_6_ROW = 77;
+const unsigned char ROOM_1_ITEM_BOX_6_COLUMN = 2;
+const unsigned int ROOM_1_ITEM_BOX_6_ITEM = 1;
 
 const unsigned char ROOM_1_ITEM_BOX_ROWS[ROOM_1_ITEM_BOX_NUM] = { ROOM_1_ITEM_BOX_1_ROW,
 																  ROOM_1_ITEM_BOX_2_ROW,
 																  ROOM_1_ITEM_BOX_3_ROW,
 																  ROOM_1_ITEM_BOX_4_ROW,
-																  ROOM_1_ITEM_BOX_5_ROW };
+																  ROOM_1_ITEM_BOX_5_ROW,
+																  ROOM_1_ITEM_BOX_6_ROW };
 
 const unsigned char ROOM_1_ITEM_BOX_COLUMNS[ROOM_1_ITEM_BOX_NUM] = { ROOM_1_ITEM_BOX_1_COLUMN,
 																	 ROOM_1_ITEM_BOX_2_COLUMN,
 																	 ROOM_1_ITEM_BOX_3_COLUMN,
 																	 ROOM_1_ITEM_BOX_4_COLUMN,
-																	 ROOM_1_ITEM_BOX_5_COLUMN };
+																	 ROOM_1_ITEM_BOX_5_COLUMN,
+																	 ROOM_1_ITEM_BOX_6_COLUMN };
 
 const float ROOM_1_ITEM_BOX_POSITION_X[ROOM_1_ITEM_BOX_NUM] = { ROOM_1_ITEM_BOX_1_COLUMN * TILE_SIZE + HALF_TILE_SIZE,
 																ROOM_1_ITEM_BOX_2_COLUMN * TILE_SIZE + HALF_TILE_SIZE,
 																ROOM_1_ITEM_BOX_3_COLUMN * TILE_SIZE + HALF_TILE_SIZE,
 																ROOM_1_ITEM_BOX_4_COLUMN * TILE_SIZE + HALF_TILE_SIZE,
-																ROOM_1_ITEM_BOX_5_COLUMN * TILE_SIZE + HALF_TILE_SIZE, }
+																ROOM_1_ITEM_BOX_5_COLUMN * TILE_SIZE + HALF_TILE_SIZE,
+																ROOM_1_ITEM_BOX_6_COLUMN * TILE_SIZE + HALF_TILE_SIZE };
+
+const float ROOM_1_ITEM_BOX_POSITION_Y[ROOM_1_ITEM_BOX_NUM] = { ROOM_1_ITEM_BOX_1_ROW * TILE_SIZE + HALF_TILE_SIZE,
+																ROOM_1_ITEM_BOX_2_ROW * TILE_SIZE + HALF_TILE_SIZE,
+																ROOM_1_ITEM_BOX_3_ROW * TILE_SIZE + HALF_TILE_SIZE,
+																ROOM_1_ITEM_BOX_4_ROW * TILE_SIZE + HALF_TILE_SIZE,
+																ROOM_1_ITEM_BOX_5_ROW * TILE_SIZE + HALF_TILE_SIZE,
+																ROOM_1_ITEM_BOX_6_ROW * TILE_SIZE + HALF_TILE_SIZE };
+
+const int ROOM_1_ITEM_BOX_ITEMS[ROOM_1_ITEM_BOX_NUM] = { ROOM_1_ITEM_BOX_1_ITEM,
+														 ROOM_1_ITEM_BOX_2_ITEM,
+														 ROOM_1_ITEM_BOX_3_ITEM,
+														 ROOM_1_ITEM_BOX_4_ITEM,
+														 ROOM_1_ITEM_BOX_5_ITEM,
+														 ROOM_1_ITEM_BOX_6_ITEM };
+
+const int ROOM_2_ITEM_BOX_NUM = 2;
+
+const unsigned char ROOM_2_ITEM_BOX_1_ROW = 12;
+const unsigned char ROOM_2_ITEM_BOX_1_COLUMN = 7;
+const unsigned int ROOM_2_ITEM_BOX_1_ITEM = 1;
+
+const unsigned char ROOM_2_ITEM_BOX_2_ROW = 12;
+const unsigned char ROOM_2_ITEM_BOX_2_COLUMN = 18;
+const unsigned int ROOM_2_ITEM_BOX_2_ITEM = 1;
+
+const unsigned char ROOM_2_ITEM_BOX_ROWS[ROOM_2_ITEM_BOX_NUM] = { ROOM_2_ITEM_BOX_1_ROW,
+																  ROOM_2_ITEM_BOX_2_ROW };
+
+const unsigned char ROOM_2_ITEM_BOX_COLUMNS[ROOM_2_ITEM_BOX_NUM] = { ROOM_2_ITEM_BOX_1_COLUMN,
+																	 ROOM_2_ITEM_BOX_2_COLUMN };
+
+const float ROOM_2_ITEM_BOX_POSITION_X[ROOM_2_ITEM_BOX_NUM] = { ROOM_2_ITEM_BOX_1_COLUMN * TILE_SIZE + HALF_TILE_SIZE,
+																ROOM_2_ITEM_BOX_2_COLUMN * TILE_SIZE + HALF_TILE_SIZE };
+
+const float ROOM_2_ITEM_BOX_POSITION_Y[ROOM_2_ITEM_BOX_NUM] = { ROOM_2_ITEM_BOX_1_ROW * TILE_SIZE + HALF_TILE_SIZE,
+																ROOM_2_ITEM_BOX_2_ROW * TILE_SIZE + HALF_TILE_SIZE };
+
+const int ROOM_2_ITEM_BOX_ITEMS[ROOM_2_ITEM_BOX_NUM] = { ROOM_2_ITEM_BOX_1_ITEM,
+														 ROOM_2_ITEM_BOX_2_ITEM };
+
+const int ROOM_3_ITEM_BOX_NUM = 1;
+
+const unsigned char ROOM_3_ITEM_BOX_1_ROW = 39;
+const unsigned char ROOM_3_ITEM_BOX_1_COLUMN = 13;
+const unsigned int ROOM_3_ITEM_BOX_1_ITEM = 1;
+
+const unsigned char ROOM_3_ITEM_BOX_ROWS[ROOM_3_ITEM_BOX_NUM] = { ROOM_3_ITEM_BOX_1_ROW };
+
+const unsigned char ROOM_3_ITEM_BOX_COLUMNS[ROOM_3_ITEM_BOX_NUM] = { ROOM_3_ITEM_BOX_1_COLUMN };
+
+const float ROOM_3_ITEM_BOX_POSITION_X[ROOM_3_ITEM_BOX_NUM] = { ROOM_3_ITEM_BOX_1_COLUMN * TILE_SIZE + HALF_TILE_SIZE };
+
+const float ROOM_3_ITEM_BOX_POSITION_Y[ROOM_3_ITEM_BOX_NUM] = { ROOM_3_ITEM_BOX_1_ROW * TILE_SIZE + HALF_TILE_SIZE };
+
+const int ROOM_3_ITEM_BOX_ITEMS[ROOM_3_ITEM_BOX_NUM] = { ROOM_3_ITEM_BOX_1_ITEM };

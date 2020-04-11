@@ -69,10 +69,6 @@ namespace GameDev2D
 	{
 		m_State = Enabled;
 		m_Tile->UseFrame("Item");
-		if (m_Pickup != nullptr)
-		{
-			m_Pickup->Reset();
-		}
 	}
 
 	void Item::Action()

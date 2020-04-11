@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Constants.h" />
+    <ClInclude Include="Source\EggPickup.h" />
     <ClInclude Include="Source\EmptyTile.h" />
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Framework\Animation\Animator.h" />
@@ -122,6 +123,7 @@
     <ClInclude Include="Source\Libraries\jsoncpp\writer.h" />
     <ClInclude Include="Source\Libraries\lodepng\lodepng.h" />
     <ClInclude Include="Source\MainTile.h" />
+    <ClInclude Include="Source\MilletPickup.h" />
     <ClInclude Include="Source\Pickup.h" />
     <ClInclude Include="Source\Platform.h" />
     <ClInclude Include="Source\Player.h" />
@@ -136,6 +138,7 @@
     <ClInclude Include="Source\Water.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\EggPickup.cpp" />
     <ClCompile Include="Source\EmptyTile.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Framework\Animation\Animator.cpp" />
@@ -230,6 +233,7 @@
     <ClCompile Include="Source\Libraries\lodepng\lodepng.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\MainTile.cpp" />
+    <ClCompile Include="Source\MilletPickup.cpp" />
     <ClCompile Include="Source\Pickup.cpp" />
     <ClCompile Include="Source\Platform.cpp" />
     <ClCompile Include="Source\Player.cpp" />
@@ -248,6 +252,7 @@
     <None Include="Assets\Data\Level1_Room1.bin" />
     <None Include="Assets\Data\Level1_Room2.bin" />
     <None Include="Assets\Data\Level1_Room3.bin" />
+    <None Include="Assets\Fonts\Hanged Letters_32.json" />
     <None Include="Assets\Images\Assets.json" />
     <None Include="Assets\Shaders\passThrough-debug.fsh" />
     <None Include="Assets\Shaders\passThrough-debug.gsh" />
@@ -263,6 +268,7 @@
     <None Include="Source\Libraries\jsoncpp\json_valueiterator.inl" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\Fonts\Hanged Letters_32.png" />
     <Image Include="Assets\Images\Assets.png" />
     <Image Include="Source\Framework\Windows\Icon.ico" />
   </ItemGroup>

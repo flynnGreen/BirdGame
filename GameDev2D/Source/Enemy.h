@@ -13,8 +13,8 @@ namespace GameDev2D
 		enum Type
 		{
 			EyeFly = 0,
-			Phantom,
 			SexyFish,
+			NPC,
 		};
 
 		virtual Type GetType() = 0;
