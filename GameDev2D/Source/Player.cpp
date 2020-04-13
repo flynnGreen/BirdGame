@@ -264,7 +264,7 @@ namespace GameDev2D
 
 		m_ActiveRoom = m_Level->GetActiveRoomNum();
 
-		//m_Level->Reset();
+		m_Level->Reset();
 	}
 
 	void Player::CollisionDetected(CollisionEvent* collisionEvent)

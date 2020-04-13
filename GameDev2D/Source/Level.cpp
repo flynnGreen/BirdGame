@@ -99,10 +99,10 @@ namespace GameDev2D
 		{
 			m_Room[i]->Reset();
 		}
-		if (m_Player != nullptr)
+		/*if (m_Player != nullptr)
 		{
 			m_Player->Reset();
-		}
+		}*/
 	}
 
 	Room* Level::GetActiveRoom()
@@ -146,6 +146,7 @@ namespace GameDev2D
 		if (key == Keyboard::R)
 		{
 			Reset();
+			m_Player->Reset();
 		}
 
 		if (key == Keyboard::One)
