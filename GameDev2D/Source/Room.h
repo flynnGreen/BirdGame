@@ -44,8 +44,6 @@ namespace GameDev2D
 		//Loads the raw data and creates Tile objects
 		void Load(const std::string& filename);
 
-		void CreateNewPickup(int boxNum, int room, Tile* tile);
-
 		//Method that takes in the tile data and the row and column used to create
 		//a single Tile object and returns a pointer to the newly created Tile
 		Tile* CreateNewTile(unsigned char data, unsigned char row, unsigned char col);
@@ -57,5 +55,6 @@ namespace GameDev2D
 		unsigned char m_NumColumns;
 		std::vector<GameObject*> m_GameObjects;
 		SpriteAtlas* m_Background;
+		int m_ActiveRoom;
 	};
 }

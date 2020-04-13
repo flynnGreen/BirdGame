@@ -86,6 +86,15 @@ namespace GameDev2D
 
 	void Level::Reset()
 	{
+		//Deactivate all rooms
+		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
+		{
+			m_Room[i]->SetIsActive(false);
+		}
+
+		GetActiveRoom()->SetIsActive(true);
+		GetActiveRoom()->Reset();
+
 		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
 		{
 			m_Room[i]->Reset();

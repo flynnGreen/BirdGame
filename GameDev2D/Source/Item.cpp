@@ -67,8 +67,8 @@ namespace GameDev2D
 
 	void Item::Reset()
 	{
-		m_State = Enabled;
-		m_Tile->UseFrame("Item");
+		//m_State = Enabled;
+		//m_Tile->UseFrame("Item");
 	}
 
 	void Item::Action()

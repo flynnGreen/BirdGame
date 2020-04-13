@@ -42,9 +42,9 @@ namespace GameDev2D
 		SetPosition(m_StartingPosition);
 		m_Timer.Restart();
 
-		m_State = Pickup::Hidden;
+		//m_State = Pickup::Hidden;
 
-		SetIsActive(true);
+		//SetIsActive(true);
 	}
 
 	void Pickup::Present()

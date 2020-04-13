@@ -353,6 +353,8 @@
     <ClInclude Include="Source\SeedPickup.h" />
     <ClInclude Include="Source\MilletPickup.h" />
     <ClInclude Include="Source\EggPickup.h" />
+    <ClInclude Include="Source\WingsPickup.h" />
+    <ClInclude Include="Source\NPC.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Libraries\lodepng\lodepng.cpp">
@@ -553,6 +555,8 @@
     <ClCompile Include="Source\SeedPickup.cpp" />
     <ClCompile Include="Source\MilletPickup.cpp" />
     <ClCompile Include="Source\EggPickup.cpp" />
+    <ClCompile Include="Source\WingsPickup.cpp" />
+    <ClCompile Include="Source\NPC.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Libraries\jsoncpp\json_internalarray.inl">
@@ -644,6 +648,15 @@
       <Filter>Assets</Filter>
     </Media>
     <Media Include="Assets\Audio\Room2Music.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\Audio\JumpReal2.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\Audio\Bonk.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\Audio\ItemGet.wav">
       <Filter>Assets</Filter>
     </Media>
   </ItemGroup>

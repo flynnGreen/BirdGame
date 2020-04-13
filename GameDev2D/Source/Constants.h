@@ -81,6 +81,16 @@ const float SEXY1_DISPLACEMENT_X = 96.0f;
 const GameDev2D::Vector2 SEXY2_START_POS(608.0f, 3424.0f);
 const float SEXY2_DISPLACEMENT_X = 90.0f;
 
+const GameDev2D::Vector2 SEXY3_START_POS(384.0f, 288.0f);
+const float SEXY3_DISPLACEMENT_X = 90.0f;
+
+//NPC consts
+const float NPC_SPEED = 50.0;
+const double NPC_COLLISION_IGNORE_DURATION = 1.0;
+
+const GameDev2D::Vector2 NPC1_START_POS(576.0f, 4704.0f);
+const float NPC1_DISPLACEMENT_X = 96.0f;
+
 //Item box consts
 //1 = seed, 2 = millet, 3 = egg
 const double ITEM_BOX_SCALE_TIMER = 0.25;
@@ -89,11 +99,11 @@ const int ROOM_1_ITEM_BOX_NUM = 6;
 
 const unsigned char ROOM_1_ITEM_BOX_1_ROW = 20;
 const unsigned char ROOM_1_ITEM_BOX_1_COLUMN = 11;
-const unsigned int ROOM_1_ITEM_BOX_1_ITEM = 1;
+const unsigned int ROOM_1_ITEM_BOX_1_ITEM = 2;
 
 const unsigned char ROOM_1_ITEM_BOX_2_ROW = 33;
 const unsigned char ROOM_1_ITEM_BOX_2_COLUMN = 5;
-const unsigned int ROOM_1_ITEM_BOX_2_ITEM = 1;
+const unsigned int ROOM_1_ITEM_BOX_2_ITEM = 2;
 
 const unsigned char ROOM_1_ITEM_BOX_3_ROW = 43;
 const unsigned char ROOM_1_ITEM_BOX_3_COLUMN = 18;
@@ -150,11 +160,11 @@ const int ROOM_2_ITEM_BOX_NUM = 2;
 
 const unsigned char ROOM_2_ITEM_BOX_1_ROW = 12;
 const unsigned char ROOM_2_ITEM_BOX_1_COLUMN = 7;
-const unsigned int ROOM_2_ITEM_BOX_1_ITEM = 1;
+const unsigned int ROOM_2_ITEM_BOX_1_ITEM = 2;
 
 const unsigned char ROOM_2_ITEM_BOX_2_ROW = 12;
 const unsigned char ROOM_2_ITEM_BOX_2_COLUMN = 18;
-const unsigned int ROOM_2_ITEM_BOX_2_ITEM = 1;
+const unsigned int ROOM_2_ITEM_BOX_2_ITEM = 3;
 
 const unsigned char ROOM_2_ITEM_BOX_ROWS[ROOM_2_ITEM_BOX_NUM] = { ROOM_2_ITEM_BOX_1_ROW,
 																  ROOM_2_ITEM_BOX_2_ROW };
@@ -175,7 +185,7 @@ const int ROOM_3_ITEM_BOX_NUM = 1;
 
 const unsigned char ROOM_3_ITEM_BOX_1_ROW = 39;
 const unsigned char ROOM_3_ITEM_BOX_1_COLUMN = 13;
-const unsigned int ROOM_3_ITEM_BOX_1_ITEM = 1;
+const unsigned int ROOM_3_ITEM_BOX_1_ITEM = 4;
 
 const unsigned char ROOM_3_ITEM_BOX_ROWS[ROOM_3_ITEM_BOX_NUM] = { ROOM_3_ITEM_BOX_1_ROW };
 

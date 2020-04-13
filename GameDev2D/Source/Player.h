@@ -90,6 +90,8 @@ namespace GameDev2D
 		Audio* m_JokeModeActivated;
 		Audio* m_Birds;
 		Audio* m_Music[LEVEL1_ROOM_NUM];
+		Audio* m_Bonk;
+		Audio* m_ItemGet;
 		SpriteFont* m_Inventory;
 	};
 }

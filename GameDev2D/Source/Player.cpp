@@ -29,6 +29,8 @@ namespace GameDev2D
 		m_JokeModeActivated(nullptr),
 		m_Birds(nullptr),
 		m_Music { nullptr },
+		m_Bonk(nullptr),
+		m_ItemGet(nullptr),
 		m_Inventory(nullptr)
 	{
 		m_Idle = new SpriteAtlas("Assets");
@@ -55,6 +57,8 @@ namespace GameDev2D
 		LoadAudio("Room1Music");
 		LoadAudio("Room2Music");
 		LoadAudio("Room3Music");
+		LoadAudio("Bonk");
+		LoadAudio("ItemGet");
 
 		m_DeathSoundJ = new Audio("Death");
 		m_JumpSoundJ = new Audio("Jump");
@@ -63,13 +67,16 @@ namespace GameDev2D
 		m_JumpSound2 = new Audio("JumpReal2");
 		m_JokeModeActivated = new Audio("JokeModeActivated");
 		m_Birds = new Audio("Birdsong");
+		m_Bonk = new Audio("Bonk");
+		m_ItemGet = new Audio("ItemGet");
 
 		LoadFont("Hanged Letters_32");
 
 		m_Inventory = new SpriteFont("Hanged Letters_32");
 		m_Inventory->SetColor(Color::OrangeColor());
 		m_Inventory->SetText("Seeds: 0\nMillet: 0\nEggs: 0");
-		m_Inventory->SetPosition(m_Inventory->GetWidth() + UI_BUFFER, GetScreenHeight() - m_Inventory->GetHeight() - UI_BUFFER);
+		m_Inventory->SetAnchor(4, -1.6);
+		m_Inventory->AttachTo(GetCamera());
 
 		CollisionFilter filter(PLAYER_COLLISION_FILTER, TILE_COLLISION_FILTER | PLATFORM_COLLISION_FILTER | SPIKES_COLLISION_FILTER | ENEMY_COLLISION_FILTER | PICKUP_COLLISION_FILTER);
 		m_Collider = AddAxisAlignedRectangleCollider(GetWidth(), GetHeight(), Collider::Dynamic, filter);
@@ -95,6 +102,8 @@ namespace GameDev2D
 		UnloadAudio("Room1Music");
 		UnloadAudio("Room2Music");
 		UnloadAudio("Room3Music");
+		UnloadAudio("Bonk");
+		UnloadAudio("ItemGet");
 		UnloadFont("Hanged Letters_32");
 
 		SafeDelete(m_Birds);
@@ -107,6 +116,8 @@ namespace GameDev2D
 		SafeDelete(m_Idle);
 		SafeDelete(m_Walk);
 		SafeDelete(m_Inventory);
+		SafeDelete(m_Bonk);
+		SafeDelete(m_ItemGet);
 
 		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
 		{
@@ -252,6 +263,8 @@ namespace GameDev2D
 		SetMusic(m_Level->GetActiveRoomNum());
 
 		m_ActiveRoom = m_Level->GetActiveRoomNum();
+
+		//m_Level->Reset();
 	}
 
 	void Player::CollisionDetected(CollisionEvent* collisionEvent)
@@ -648,6 +661,8 @@ namespace GameDev2D
 				//Bounce the Player off the enemy's head
 				m_LinearVelocity.y = PLAYER_JUMP_SPEED * 0.5f;
 				m_IsInAir = true;
+				m_Bonk->Stop();
+				m_Bonk->Play();
 			}
 			else
 			{
@@ -666,11 +681,26 @@ namespace GameDev2D
 		if (pickup->GetType() == Pickup::Seed)
 		{
 			m_SeedAmt++;
-			//TODO: Play sound effect
+			m_ItemGet->Stop();
+			m_ItemGet->Play();
 		}
 		else if (pickup->GetType() == Pickup::Millet)
 		{
 			m_MilletAmt++;
+			m_ItemGet->Stop();
+			m_ItemGet->Play();
+		}
+		else if (pickup->GetType() == Pickup::Egg)
+		{
+			m_EggAmt++;
+			m_ItemGet->Stop();
+			m_ItemGet->Play();
+		}
+		else if (pickup->GetType() == Pickup::Wings)
+		{
+			m_ItemGet->Stop();
+			m_ItemGet->Play();
+			//TODO: Win
 		}
 
 		pickup->Consume();

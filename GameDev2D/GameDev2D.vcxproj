@@ -124,6 +124,7 @@
     <ClInclude Include="Source\Libraries\lodepng\lodepng.h" />
     <ClInclude Include="Source\MainTile.h" />
     <ClInclude Include="Source\MilletPickup.h" />
+    <ClInclude Include="Source\NPC.h" />
     <ClInclude Include="Source\Pickup.h" />
     <ClInclude Include="Source\Platform.h" />
     <ClInclude Include="Source\Player.h" />
@@ -136,6 +137,7 @@
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\Tree.h" />
     <ClInclude Include="Source\Water.h" />
+    <ClInclude Include="Source\WingsPickup.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\EggPickup.cpp" />
@@ -234,6 +236,7 @@
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\MainTile.cpp" />
     <ClCompile Include="Source\MilletPickup.cpp" />
+    <ClCompile Include="Source\NPC.cpp" />
     <ClCompile Include="Source\Pickup.cpp" />
     <ClCompile Include="Source\Platform.cpp" />
     <ClCompile Include="Source\Player.cpp" />
@@ -246,6 +249,7 @@
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\Tree.cpp" />
     <ClCompile Include="Source\Water.cpp" />
+    <ClCompile Include="Source\WingsPickup.cpp" />
     <ClCompile Include="Source\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -280,11 +284,14 @@
   </ItemGroup>
   <ItemGroup>
     <Media Include="Assets\Audio\Birdsong.wav" />
+    <Media Include="Assets\Audio\Bonk.wav" />
     <Media Include="Assets\Audio\Death.wav" />
     <Media Include="Assets\Audio\DeathReal.wav" />
+    <Media Include="Assets\Audio\ItemGet.wav" />
     <Media Include="Assets\Audio\JokeModeActivated.wav" />
     <Media Include="Assets\Audio\Jump.wav" />
     <Media Include="Assets\Audio\JumpReal.wav" />
+    <Media Include="Assets\Audio\JumpReal2.wav" />
     <Media Include="Assets\Audio\Room1Music.wav" />
     <Media Include="Assets\Audio\Room2Music.wav" />
     <Media Include="Assets\Audio\Room3Music.wav" />
