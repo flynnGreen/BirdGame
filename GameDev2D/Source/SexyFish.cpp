@@ -83,7 +83,7 @@ namespace GameDev2D
 	void SexyFish::Reset()
 	{
 		SetPosition(m_StartingPosition);
-		SetIsActive(true);
+		SetIsActive(this->IsActive());
 		SetScaleX(m_InitialDirectionX);
 		m_ChangedDirectionTimer.Restart();
 	}

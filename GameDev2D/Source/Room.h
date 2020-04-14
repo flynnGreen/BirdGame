@@ -4,6 +4,7 @@
 #include "Tile.h"
 #include "Platform.h"
 #include "Spikes.h"
+#include "SexyFish.h"
 
 namespace GameDev2D
 {
@@ -56,5 +57,6 @@ namespace GameDev2D
 		std::vector<GameObject*> m_GameObjects;
 		SpriteAtlas* m_Background;
 		int m_ActiveRoom;
+		SexyFish* m_Sexy;
 	};
 }

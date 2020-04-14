@@ -260,7 +260,7 @@ namespace GameDev2D
 		m_Birds->Stop();
 		m_Birds->Play();
 
-		SetMusic(m_Level->GetActiveRoomNum());
+		//SetMusic(m_Level->GetActiveRoomNum());
 
 		m_ActiveRoom = m_Level->GetActiveRoomNum();
 
@@ -573,19 +573,18 @@ namespace GameDev2D
 		}
 		else if (tile->GetType() == Tile::Teleport)
 		{
-			if (m_ActiveRoom != 2 && IsKeyDown(Keyboard::Up))
+			if (m_ActiveRoom != LEVEL1_ROOM_NUM - 1 && IsKeyDown(Keyboard::Up))
 			{
-				int activeRoom = m_Level->GetActiveRoomNum() + 1;
-				m_Level->SetActiveRoom(activeRoom);
-				SetMusic(activeRoom);
 				m_ActiveRoom++;
+				m_Level->SetActiveRoom(m_ActiveRoom);
+				SetMusic(m_ActiveRoom);
+				
 			}
 			else if (m_ActiveRoom != 0 && IsKeyDown(Keyboard::Down))
 			{
-				int activeRoom = m_Level->GetActiveRoomNum() - 1;
-				m_Level->SetActiveRoom(activeRoom);
-				SetMusic(activeRoom);
 				m_ActiveRoom--;
+				m_Level->SetActiveRoom(m_ActiveRoom);
+				SetMusic(m_ActiveRoom);
 			}
 		}
 

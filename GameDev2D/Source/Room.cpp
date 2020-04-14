@@ -24,7 +24,8 @@ namespace GameDev2D
 		m_NumColumns(0),
 		m_Level(level),
 		m_Background(nullptr),
-		m_ActiveRoom(0)
+		m_ActiveRoom(0),
+		m_Sexy(nullptr)
 	{
 		//Load the Room
 		Load(filename);
@@ -39,7 +40,7 @@ namespace GameDev2D
 			m_Background->UseFrame("Background1");
 		}
 
-		//Create the Platforms and music
+		//Create the Platforms
 		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
 		{
 			if (filename == LEVEL1_NAMES[i])
@@ -69,8 +70,8 @@ namespace GameDev2D
 			//Add the Platform to the Room
 			this->AddGameObject(stillPlatform2);
 
-			AddGameObject(new SexyFish(SEXY1_START_POS, SEXY1_DISPLACEMENT_X));
-			AddGameObject(new SexyFish(SEXY2_START_POS, SEXY2_DISPLACEMENT_X));
+			this->AddGameObject(new SexyFish(SEXY1_START_POS, SEXY1_DISPLACEMENT_X));
+			this->AddGameObject(new SexyFish(SEXY2_START_POS, SEXY2_DISPLACEMENT_X));
 
 			for (int i = 0; i < ROOM_1_ITEM_BOX_NUM; i++)
 			{
@@ -130,7 +131,9 @@ namespace GameDev2D
 			Spikes* spikes = new Spikes(this, SPIKES_START_POS, SPIKES_DISPLACEMENT, SPIKES_DURATION);
 			this->AddGameObject(spikes);
 
-			AddGameObject(new SexyFish(SEXY3_START_POS, SEXY3_DISPLACEMENT_X));
+			//this->AddGameObject(new SexyFish(SEXY3_START_POS, SEXY3_DISPLACEMENT_X));
+			m_Sexy = new SexyFish(SEXY3_START_POS, SEXY3_DISPLACEMENT_X);
+			this->AddGameObject(m_Sexy);
 
 			for (int i = 0; i < ROOM_2_ITEM_BOX_NUM; i++)
 			{
@@ -344,7 +347,7 @@ namespace GameDev2D
 			for (unsigned char c = 0; c < GetColumns(); c++)
 			{
 				Tile* tile = m_Tiles[r][c];
-				bool activeState = isActive;
+				bool activeState;
 
 				if (isActive == true)
 				{
@@ -520,7 +523,7 @@ namespace GameDev2D
 
 	GameObject* Room::GetGameObjectAtIndex(int index)
 	{
-		if (index >= 0 && index < GetNumberOfGameObjects())
+		if (index >= 0 && index < this->GetNumberOfGameObjects())
 		{
 			return m_GameObjects.at(index);
 		}
@@ -529,7 +532,7 @@ namespace GameDev2D
 
 	void Room::RemoveGameObjectAtIndex(int index)
 	{
-		if (index >= 0 && index < GetNumberOfGameObjects())
+		if (index >= 0 && index < this->GetNumberOfGameObjects())
 		{
 			SafeDelete(m_GameObjects.at(index));
 			m_GameObjects.erase(m_GameObjects.begin() + index);
@@ -538,9 +541,9 @@ namespace GameDev2D
 
 	void Room::RemoveAllGameObjects()
 	{
-		for (int i = 0; i < GetNumberOfGameObjects(); i++)
+		for (int i = 0; i < this->GetNumberOfGameObjects(); i++)
 		{
-			SafeDelete(m_GameObjects.at(i));
+			SafeDelete(this->m_GameObjects.at(i));
 		}
 		m_GameObjects.clear();
 	}
