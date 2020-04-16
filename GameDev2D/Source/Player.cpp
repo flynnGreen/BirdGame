@@ -95,6 +95,7 @@ namespace GameDev2D
 
 		m_Dialogue = new SpriteFont("OpenSans-CondBold_22");
 		m_Dialogue->SetColor(Color::WhiteColor());
+		m_Dialogue->SetText("Are you ready to earn your wings?\n\nSpace to jump\nC to speak\nArrow keys to move");
 		m_Dialogue->SetAnchor(0.5, 0.5);
 		m_Dialogue->AttachTo(GetCamera());
 
@@ -122,6 +123,7 @@ namespace GameDev2D
 		UnloadAudio("Room1Music");
 		UnloadAudio("Room2Music");
 		UnloadAudio("Room3Music");
+		UnloadAudio("WinMusic");
 		UnloadAudio("Bonk");
 		UnloadAudio("ItemGet");
 		UnloadFont("Hanged Letters_32");
@@ -140,6 +142,8 @@ namespace GameDev2D
 		SafeDelete(m_Bonk);
 		SafeDelete(m_ItemGet);
 		SafeDelete(m_Dialogue);
+		SafeDelete(m_WinMusic);
+		SafeDelete(m_WinText);
 
 		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
 		{
@@ -151,98 +155,101 @@ namespace GameDev2D
 	{
 		if (IsDead() == false)
 		{
-			float directionX = 0.0f;
-
-			//Determine which direction the player is going
-			if (IsKeyDown(Keyboard::Left) == true)
+			if (m_GotWings == false)
 			{
-				directionX -= 1.0f;
-			}
+				float directionX = 0.0f;
 
-			if (IsKeyDown(Keyboard::Right) == true)
-			{
-				directionX += 1.0f;
-			}
-
-			//Set the scale and state based on the direction
-			if (directionX != 0.0f)
-			{
-				SetScaleX(directionX);
-				SetState(Moving);
-			}
-
-			//Is the player moving?
-			if (m_State == Moving)
-			{
-				if (IsKeyDown(Keyboard::Right) == false && IsKeyDown(Keyboard::Left) == false)
+				//Determine which direction the player is going
+				if (IsKeyDown(Keyboard::Left) == true)
 				{
-					//If player isn't moving, set state to idle
-					SetState(Idle);
+					directionX -= 1.0f;
 				}
-			}
 
-			Vector2 acceleration = GRAVITY;
-			float maxSpeedX = directionX * PLAYER_MAX_SPEED;
-			float speedDifferenceX = maxSpeedX - m_LinearVelocity.x;
-
-			//Calculate the acceleration along the x-axis
-			if (speedDifferenceX != 0.0f)
-			{
-				acceleration.x = speedDifferenceX < 0.0f ? -PLAYER_ACCELERATION : PLAYER_ACCELERATION;
-
-				if (m_IsInAir == true)
+				if (IsKeyDown(Keyboard::Right) == true)
 				{
-					acceleration.x *= PLAYER_AIR_ACCELERATION_PCT;
+					directionX += 1.0f;
 				}
-			}
 
-			//Calculate the velocity increment
-			Vector2 velocityIncrement = acceleration * delta;
+				//Set the scale and state based on the direction
+				if (directionX != 0.0f)
+				{
+					SetScaleX(directionX);
+					SetState(Moving);
+				}
 
-			//Cap the velocity increment to not exceed the max speed
-			if (fabsf(velocityIncrement.x) > fabsf(speedDifferenceX))
-			{
-				velocityIncrement.x = speedDifferenceX;
-			}
+				//Is the player moving?
+				if (m_State == Moving)
+				{
+					if (IsKeyDown(Keyboard::Right) == false && IsKeyDown(Keyboard::Left) == false)
+					{
+						//If player isn't moving, set state to idle
+						SetState(Idle);
+					}
+				}
 
-			//Increment the velocity
-			Vector2 previousVelocity = m_LinearVelocity;
-			m_LinearVelocity += velocityIncrement;
+				Vector2 acceleration = GRAVITY;
+				float maxSpeedX = directionX * PLAYER_MAX_SPEED;
+				float speedDifferenceX = maxSpeedX - m_LinearVelocity.x;
 
-			//Cap the velocity on the y-axis
-			if (m_LinearVelocity.y < GRAVITY.y)
-			{
-				m_LinearVelocity.y = GRAVITY.y;
-			}
+				//Calculate the acceleration along the x-axis
+				if (speedDifferenceX != 0.0f)
+				{
+					acceleration.x = speedDifferenceX < 0.0f ? -PLAYER_ACCELERATION : PLAYER_ACCELERATION;
 
-			//Cache the player's previous position
-			m_PreviousPosition = GetPosition();
+					if (m_IsInAir == true)
+					{
+						acceleration.x *= PLAYER_AIR_ACCELERATION_PCT;
+					}
+				}
 
-			//Increment the position
-			Vector2 increment = (previousVelocity + m_LinearVelocity) * delta * 0.5;
-			Vector2 position = GetPosition() + increment;
+				//Calculate the velocity increment
+				Vector2 velocityIncrement = acceleration * delta;
 
-			//Clamp the position
-			position.x = Math::Clamp(position.x, PLAYER_HALF_WIDTH, m_Level->GetActiveRoom()->GetWidth());
-			position.y = Math::Clamp(position.y, -PLAYER_HALF_HEIGHT, m_Level->GetActiveRoom()->GetHeight());
+				//Cap the velocity increment to not exceed the max speed
+				if (fabsf(velocityIncrement.x) > fabsf(speedDifferenceX))
+				{
+					velocityIncrement.x = speedDifferenceX;
+				}
 
-			//Set the position
-			SetPosition(position);
+				//Increment the velocity
+				Vector2 previousVelocity = m_LinearVelocity;
+				m_LinearVelocity += velocityIncrement;
 
-			//If the player is below zero, then change the state to Dead
-			if (position.y <= 0.0f)
-			{
-				SetState(Dead);
-			}
+				//Cap the velocity on the y-axis
+				if (m_LinearVelocity.y < GRAVITY.y)
+				{
+					m_LinearVelocity.y = GRAVITY.y;
+				}
 
-			//Set this to true, in case the player walks off the edge of a platform,
-			//If the player doesn't, then they will collide with the ground and this will be
-			//set back to false
-			m_IsInAir = true;
+				//Cache the player's previous position
+				m_PreviousPosition = GetPosition();
 
-			if (IsKeyDown(Keyboard::Spacebar) || IsKeyDown(Keyboard::Left) || IsKeyDown(Keyboard::Right))
-			{
-				m_IsSpeaking = false;
+				//Increment the position
+				Vector2 increment = (previousVelocity + m_LinearVelocity) * delta * 0.5;
+				Vector2 position = GetPosition() + increment;
+
+				//Clamp the position
+				position.x = Math::Clamp(position.x, PLAYER_HALF_WIDTH, m_Level->GetActiveRoom()->GetWidth());
+				position.y = Math::Clamp(position.y, -PLAYER_HALF_HEIGHT, m_Level->GetActiveRoom()->GetHeight());
+
+				//Set the position
+				SetPosition(position);
+
+				//If the player is below zero, then change the state to Dead
+				if (position.y <= 0.0f)
+				{
+					SetState(Dead);
+				}
+
+				//Set this to true, in case the player walks off the edge of a platform,
+				//If the player doesn't, then they will collide with the ground and this will be
+				//set back to false
+				m_IsInAir = true;
+
+				if (IsKeyDown(Keyboard::Spacebar) || IsKeyDown(Keyboard::Left) || IsKeyDown(Keyboard::Right))
+				{
+					m_IsSpeaking = false;
+				}
 			}
 		}
 		else
@@ -280,7 +287,7 @@ namespace GameDev2D
 		m_PreviousPosition = Vector2::Zero;
 		SetScaleX(1.0);
 		m_CanDoubleJump = true;
-		m_IsSpeaking = false;
+		//m_IsSpeaking = false;
 
 		m_Birds->Stop();
 		m_Birds->Play();
@@ -619,7 +626,7 @@ namespace GameDev2D
 				m_Level->SetActiveRoom(m_ActiveRoom);
 				SetMusic(m_ActiveRoom);
 			}
-			else if (m_ActiveRoom != LEVEL1_ROOM_NUM - 1 && IsKeyDown(Keyboard::Up))
+			else if (m_ActiveRoom != LEVEL1_ROOM_NUM - 2 && IsKeyDown(Keyboard::Up))
 			{
 				m_ActiveRoom++;
 				m_Level->SetActiveRoom(m_ActiveRoom);
@@ -631,6 +638,11 @@ namespace GameDev2D
 				m_ActiveRoom--;
 				m_Level->SetActiveRoom(m_ActiveRoom);
 				SetMusic(m_ActiveRoom);
+			}
+			else if (m_ActiveRoom = LEVEL1_ROOM_NUM - 2 && IsKeyDown(Keyboard::Up))
+			{
+				m_Dialogue->SetText("You still need " + std::to_string(MILLET_REQUIRED - m_MilletAmt) + " millet to pass!");
+				m_IsSpeaking = true;
 			}
 		}
 
@@ -708,6 +720,34 @@ namespace GameDev2D
 				}
 			}
 		}
+		else if (enemy->GetType() == Enemy::NPCgreta)
+		{
+			if (m_IsSpeaking == false)
+			{
+				if (IsKeyDown(Keyboard::C))
+				{
+					if (m_EggAmt == 0 && m_FoundEgg == false)
+					{
+						m_Dialogue->SetText(NPCGRETA_SPEECH[0]);
+						m_IsSpeaking = true;
+					}
+					else if (m_EggAmt != 0 && m_FoundEgg == false)
+					{
+						m_Dialogue->SetText(NPCGRETA_SPEECH[1]);
+						m_IsSpeaking = true;
+						m_FoundEgg = true;
+						m_EggAmt--;
+						m_MilletAmt++;
+					}
+					else if (m_EggAmt != 0 && m_FoundEgg == true)
+					{
+						m_Dialogue->SetText(NPCGRETA_SPEECH[2]);
+						m_IsSpeaking = true;
+						m_MilletAmt++;
+					}
+				}
+			}
+		}
 	}
 	void Player::HandlePickupCollision(Pickup* pickup)
 	{
@@ -735,7 +775,7 @@ namespace GameDev2D
 			{
 				m_Music[i]->Stop();
 			}
-			//TODO: Insert win music
+			m_WinMusic->Play();
 			m_GotWings = true;
 		}
 

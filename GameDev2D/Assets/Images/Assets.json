@@ -433,12 +433,21 @@
          }
       },
       {
-         "filename" : "NPC",
+         "filename" : "NPCgreta",
          "frame" : {
             "h" : 58,
             "w" : 31,
             "x" : 362,
             "y" : 1877
+         }
+      },
+      {
+         "filename" : "NPC",
+         "frame" : {
+            "h" : 58,
+            "w" : 31,
+            "x" : 538,
+            "y" : 1840
          }
       }
    ]

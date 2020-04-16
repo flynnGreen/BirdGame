@@ -104,6 +104,12 @@ const std::string NPCNORMAL_SPEECH[NPCNORMAL_SPEECH_NUM] = { "Hey there! On your
 															  "Watch out for the cave trials. Some of those drops can be a real doozy.",
 															  "I've heard if you press J, you can activate joke mode.\nToo bad I'm a bird and don't know what a keyboard is!"};
 
+const GameDev2D::Vector2 GRETA_START_POS(800.0f, 4704.0f);
+
+const std::string NPCGRETA_SPEECH[3] = { "Oh, my egg... My precious egg is gone...\nIf only someone could help me look for it...",
+										 "My egg! Oh, thank you! Thank you so much! Here, I have something for you.\n\nObtained 1 millet!",
+										 "Thank you again! Unfortunately that's all the millet I have..."};
+
 //Item box consts
 //1 = seed, 2 = millet, 3 = egg
 const int MILLET_REQUIRED = 3; //Millet required to get to room 3

@@ -74,6 +74,7 @@ namespace GameDev2D
 			this->AddGameObject(new NPCnormal(NPC1_START_POS));
 			this->AddGameObject(new NPCnormal(NPC2_START_POS));
 			this->AddGameObject(new NPCnormal(NPC3_START_POS));
+			this->AddGameObject(new NPCgreta(GRETA_START_POS));
 
 			for (int i = 0; i < ROOM_1_ITEM_BOX_NUM; i++)
 			{

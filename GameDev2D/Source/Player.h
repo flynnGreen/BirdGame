@@ -97,7 +97,8 @@ namespace GameDev2D
 		Audio* m_ItemGet;
 		SpriteFont* m_Inventory;
 		SpriteFont* m_Dialogue;
-		bool m_IsSpeaking = false;
+		bool m_IsSpeaking = true;
+		bool m_FoundEgg = false;
 		AnimatedSprite* m_WinText;
 		Audio* m_WinMusic;
 	};

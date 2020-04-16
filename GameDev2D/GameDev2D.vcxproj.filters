@@ -356,6 +356,7 @@
     <ClInclude Include="Source\WingsPickup.h" />
     <ClInclude Include="Source\EyeFly.h" />
     <ClInclude Include="Source\NPCnormal.h" />
+    <ClInclude Include="Source\NPCgreta.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Libraries\lodepng\lodepng.cpp">
@@ -559,6 +560,7 @@
     <ClCompile Include="Source\WingsPickup.cpp" />
     <ClCompile Include="Source\EyeFly.cpp" />
     <ClCompile Include="Source\NPCnormal.cpp" />
+    <ClCompile Include="Source\NPCgreta.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Libraries\jsoncpp\json_internalarray.inl">
