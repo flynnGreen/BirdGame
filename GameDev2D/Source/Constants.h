@@ -84,6 +84,12 @@ const float SEXY2_DISPLACEMENT_X = 90.0f;
 const GameDev2D::Vector2 SEXY3_START_POS(384.0f, 288.0f);
 const float SEXY3_DISPLACEMENT_X = 90.0f;
 
+//Phantom consts
+const float EYE_SPEED = 60.0;
+
+const GameDev2D::Vector2 EYE_START_POS(1120.0f, 448.0f);
+const float EYE_DISPLACEMENT_Y = 200.0f;
+
 //NPC consts
 const float NPC_SPEED = 50.0;
 const double NPC_COLLISION_IGNORE_DURATION = 1.0;

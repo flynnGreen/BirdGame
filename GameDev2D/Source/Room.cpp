@@ -24,8 +24,7 @@ namespace GameDev2D
 		m_NumColumns(0),
 		m_Level(level),
 		m_Background(nullptr),
-		m_ActiveRoom(0),
-		m_Sexy(nullptr)
+		m_ActiveRoom(0)
 	{
 		//Load the Room
 		Load(filename);
@@ -131,9 +130,9 @@ namespace GameDev2D
 			Spikes* spikes = new Spikes(this, SPIKES_START_POS, SPIKES_DISPLACEMENT, SPIKES_DURATION);
 			this->AddGameObject(spikes);
 
-			//this->AddGameObject(new SexyFish(SEXY3_START_POS, SEXY3_DISPLACEMENT_X));
-			m_Sexy = new SexyFish(SEXY3_START_POS, SEXY3_DISPLACEMENT_X);
-			this->AddGameObject(m_Sexy);
+			this->AddGameObject(new SexyFish(SEXY3_START_POS, SEXY3_DISPLACEMENT_X));
+
+			this->AddGameObject(new EyeFly(EYE_START_POS, EYE_DISPLACEMENT_Y));
 
 			for (int i = 0; i < ROOM_2_ITEM_BOX_NUM; i++)
 			{

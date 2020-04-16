@@ -20,7 +20,7 @@ namespace GameDev2D
 
 		//Add the collider
 		CollisionFilter filter(ENEMY_COLLISION_FILTER, PLAYER_COLLISION_FILTER | ENEMY_COLLISION_FILTER);
-		AddAxisAlignedRectangleCollider(GetWidth(), GetHeight(), Collider::Dynamic, filter);
+		AddAxisAlignedRectangleCollider(GetWidth(), GetHeight(), Collider::Static, filter);
 
 		//Reset the NPC
 		Reset();
@@ -40,13 +40,9 @@ namespace GameDev2D
 	{
 		m_ChangedDirectionTimer.Update(delta);
 
-		//NPC moving Right
+		//NPC turning around
 		if (GetScale().x == 1.0f)
 		{
-			//Calculate the displacement for this frame
-			float displacementX = SEXY_SPEED * delta;
-			Translate(Vector2(displacementX, 0.0f));
-
 			//Turn around
 			if (GetPosition().x > m_EndPointRight.x)
 			{
@@ -59,10 +55,6 @@ namespace GameDev2D
 		//NPC moving Left
 		else if (GetScale().x == -1.0f)
 		{
-			//Calculate the displacement for this frame
-			float displacementX = -SEXY_SPEED * delta;
-			Translate(Vector2(displacementX, 0.0f));
-
 			//Turn around
 			if (GetPosition().x < m_EndPointLeft.x)
 			{
@@ -76,13 +68,16 @@ namespace GameDev2D
 
 	void NPC::Draw(SpriteBatch* spriteBatch)
 	{
-		spriteBatch->Draw(m_NPC);
+		if (this->IsActive() == true)
+		{
+			spriteBatch->Draw(m_NPC);
+		}
 	}
 
 	void NPC::Reset()
 	{
 		SetPosition(m_StartingPosition);
-		SetIsActive(true);
+		SetIsActive(this->IsActive());
 		SetScaleX(m_InitialDirectionX);
 		m_ChangedDirectionTimer.Restart();
 	}
@@ -98,8 +93,8 @@ namespace GameDev2D
 				{
 					if (m_ChangedDirectionTimer.IsRunning() == false)
 					{
-						Flip();
-						m_ChangedDirectionTimer.Restart();
+						SetIsActive(false);
+						m_ChangedDirectionTimer.Stop();
 					}
 				}
 			}
@@ -113,8 +108,8 @@ namespace GameDev2D
 				{
 					if (m_ChangedDirectionTimer.IsRunning() == false)
 					{
-						Flip();
-						m_ChangedDirectionTimer.Restart();
+						SetIsActive(false);
+						m_ChangedDirectionTimer.Stop();
 					}
 				}
 			}

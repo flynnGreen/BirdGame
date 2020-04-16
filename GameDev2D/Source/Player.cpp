@@ -260,7 +260,7 @@ namespace GameDev2D
 		m_Birds->Stop();
 		m_Birds->Play();
 
-		//SetMusic(m_Level->GetActiveRoomNum());
+		SetMusic(m_Level->GetActiveRoomNum());
 
 		m_ActiveRoom = m_Level->GetActiveRoomNum();
 
@@ -630,26 +630,7 @@ namespace GameDev2D
 
 	void Player::HandleEnemyCollision(Enemy* enemy, unsigned char playerEdgeCollision)
 	{
-		if (enemy->GetType() == Enemy::SexyFish)
-		{
-			if ((playerEdgeCollision & AxisAlignedRectangleCollider::BottomEdge) != 0)
-			{
-				//The player landed on top of the enemy, set the enemy state to in-active
-				//it will appear as if the enemy is dead
-				enemy->SetIsActive(false);
-
-				//Bounce the Player off the enemy's head
-				m_LinearVelocity.y = PLAYER_JUMP_SPEED * 0.5f;
-				m_IsInAir = true;
-			}
-			else
-			{
-				//The Player collided with the enemy from the sides 
-				//or top and has met their demise
-				SetState(Dead);
-			}
-		}
-		else if (enemy->GetType() == Enemy::EyeFly)
+		if (enemy->GetType() == Enemy::EyeFly || enemy->GetType() == Enemy::SexyFish)
 		{
 			if ((playerEdgeCollision & AxisAlignedRectangleCollider::BottomEdge) != 0)
 			{
@@ -672,7 +653,10 @@ namespace GameDev2D
 		}
 		else if (enemy->GetType() == Enemy::NPC)
 		{
-			//TODO: Implement speech
+			/*if (NPC->GetType() == NPCType::Speech)
+			{
+
+			}*/
 		}
 	}
 	void Player::HandlePickupCollision(Pickup* pickup)

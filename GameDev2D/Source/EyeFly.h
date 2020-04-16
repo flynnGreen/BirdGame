@@ -5,26 +5,17 @@
 
 namespace GameDev2D
 {
-	class NPC : public Enemy
+	class EyeFly : public Enemy
 	{
 	public:
-		NPC(const Vector2& startingPosition, float displacementX);
-		~NPC();
+		EyeFly(const Vector2& startingPosition, float displacementY);
+		~EyeFly();
 
 		Enemy::Type GetType() override;
-
-		enum NPCType
-		{
-			Normal = 0,
-			Wall,
-			Prophecy,
-		};
 
 		void Update(double delta) override;
 		void Draw(SpriteBatch* spriteBatch) override;
 		void Reset() override;
-
-		void CollisionDetected(CollisionEvent* collisionEvent) override;
 
 		float GetWidth();
 		float GetHeight();
@@ -33,11 +24,10 @@ namespace GameDev2D
 		void Flip();
 
 		//Member variables
-		SpriteAtlas* m_NPC;
+		AnimatedSprite* m_EyeFly;
 		Vector2 m_StartingPosition;
 		Vector2 m_EndPointRight;
 		Vector2 m_EndPointLeft;
 		float m_InitialDirectionX;
-		Timer m_ChangedDirectionTimer;
 	};
 }

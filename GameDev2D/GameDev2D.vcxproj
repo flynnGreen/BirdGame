@@ -15,6 +15,7 @@
     <ClInclude Include="Source\EggPickup.h" />
     <ClInclude Include="Source\EmptyTile.h" />
     <ClInclude Include="Source\Enemy.h" />
+    <ClInclude Include="Source\EyeFly.h" />
     <ClInclude Include="Source\Framework\Animation\Animator.h" />
     <ClInclude Include="Source\Framework\Animation\Easing.h" />
     <ClInclude Include="Source\Framework\Audio\Audio.h" />
@@ -143,6 +144,7 @@
     <ClCompile Include="Source\EggPickup.cpp" />
     <ClCompile Include="Source\EmptyTile.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
+    <ClCompile Include="Source\EyeFly.cpp" />
     <ClCompile Include="Source\Framework\Animation\Animator.cpp" />
     <ClCompile Include="Source\Framework\Animation\Easing.cpp" />
     <ClCompile Include="Source\Framework\Audio\Audio.cpp" />
