@@ -16,7 +16,7 @@ namespace GameDev2D
 		m_EyeFly->AddFrame("Enemy1-1");
 		m_EyeFly->AddFrame("Enemy1-2");
 		m_EyeFly->AddFrame("Enemy1-3");
-		m_EyeFly->SetFrameSpeed(10.0f);
+		m_EyeFly->SetFrameSpeed(15.0f);
 		m_EyeFly->SetDoesLoop(true);
 		m_EyeFly->SetAnchor(0.5f, 0.5f);
 		m_EyeFly->AttachTo(this);

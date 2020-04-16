@@ -6,6 +6,7 @@
 #include "Spikes.h"
 #include "SexyFish.h"
 #include "EyeFly.h"
+#include "NPCnormal.h"
 
 namespace GameDev2D
 {

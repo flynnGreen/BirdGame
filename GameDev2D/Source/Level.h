@@ -16,6 +16,7 @@ namespace GameDev2D
 
 		void Update(double delta);
 		void Draw(SpriteBatch* spriteBatch);
+		void DrawHUD();
 		void Reset();
 
 		Room* GetActiveRoom();

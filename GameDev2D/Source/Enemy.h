@@ -14,7 +14,8 @@ namespace GameDev2D
 		{
 			EyeFly = 0,
 			SexyFish,
-			NPC,
+			NPCnormal,
+			NPCwall,
 		};
 
 		virtual Type GetType() = 0;

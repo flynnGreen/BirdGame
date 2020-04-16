@@ -354,8 +354,8 @@
     <ClInclude Include="Source\MilletPickup.h" />
     <ClInclude Include="Source\EggPickup.h" />
     <ClInclude Include="Source\WingsPickup.h" />
-    <ClInclude Include="Source\NPC.h" />
     <ClInclude Include="Source\EyeFly.h" />
+    <ClInclude Include="Source\NPCnormal.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Libraries\lodepng\lodepng.cpp">
@@ -557,8 +557,8 @@
     <ClCompile Include="Source\MilletPickup.cpp" />
     <ClCompile Include="Source\EggPickup.cpp" />
     <ClCompile Include="Source\WingsPickup.cpp" />
-    <ClCompile Include="Source\NPC.cpp" />
     <ClCompile Include="Source\EyeFly.cpp" />
+    <ClCompile Include="Source\NPCnormal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Libraries\jsoncpp\json_internalarray.inl">
@@ -602,6 +602,7 @@
       <Filter>Assets</Filter>
     </None>
     <None Include="Assets\Fonts\Hanged Letters_32.json" />
+    <None Include="Assets\Fonts\OpenSans-CondBold_22.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Source\Framework\Windows\Icon.ico">
@@ -611,6 +612,9 @@
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\Fonts\Hanged Letters_32.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Fonts\OpenSans-CondBold_22.png">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>

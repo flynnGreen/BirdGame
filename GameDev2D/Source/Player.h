@@ -25,6 +25,8 @@ namespace GameDev2D
 		void Draw(SpriteBatch* spriteBatch = nullptr) override;
 		void Reset() override;
 
+		void DrawHUD();
+
 		void CollisionDetected(CollisionEvent* collisionEvent) override;
 
 		void HandleKeyPress(Keyboard::Key key);
@@ -78,6 +80,7 @@ namespace GameDev2D
 		int m_SeedAmt = 0;
 		int m_MilletAmt = 0;
 		int m_EggAmt = 0;
+		bool m_GotWings = false;
 		bool m_IsInAir;
 		bool m_CanDoubleJump;
 		Vector2 m_PreviousPosition;
@@ -93,5 +96,9 @@ namespace GameDev2D
 		Audio* m_Bonk;
 		Audio* m_ItemGet;
 		SpriteFont* m_Inventory;
+		SpriteFont* m_Dialogue;
+		bool m_IsSpeaking = false;
+		AnimatedSprite* m_WinText;
+		Audio* m_WinMusic;
 	};
 }

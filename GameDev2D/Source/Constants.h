@@ -85,20 +85,29 @@ const GameDev2D::Vector2 SEXY3_START_POS(384.0f, 288.0f);
 const float SEXY3_DISPLACEMENT_X = 90.0f;
 
 //Phantom consts
-const float EYE_SPEED = 60.0;
+const float EYE_SPEED = 70.0;
 
 const GameDev2D::Vector2 EYE_START_POS(1120.0f, 448.0f);
 const float EYE_DISPLACEMENT_Y = 200.0f;
 
 //NPC consts
-const float NPC_SPEED = 50.0;
-const double NPC_COLLISION_IGNORE_DURATION = 1.0;
+const GameDev2D::Vector2 NPC1_START_POS(448.0f, 1367.0f);
+const GameDev2D::Vector2 NPC2_START_POS(384.0f, 2656.0f);
+const GameDev2D::Vector2 NPC3_START_POS(960.0f, 2656.0f);
 
-const GameDev2D::Vector2 NPC1_START_POS(576.0f, 4704.0f);
-const float NPC1_DISPLACEMENT_X = 96.0f;
+const int NPCNORMAL_SPEECH_NUM = 7;
+const std::string NPCNORMAL_SPEECH[NPCNORMAL_SPEECH_NUM] = { "Hey there! On your way to get your wings I see!",
+															 "Did you hear? Poor Greta lost her egg...", 
+															 "Those fish are so dangerous... but so sexy.",
+															  "Man, I sure am glad I've finished my cave trials.",
+															  "Good luck with your wings, kid!",
+															  "Watch out for the cave trials. Some of those drops can be a real doozy.",
+															  "I've heard if you press J, you can activate joke mode.\nToo bad I'm a bird and don't know what a keyboard is!"};
 
 //Item box consts
 //1 = seed, 2 = millet, 3 = egg
+const int MILLET_REQUIRED = 3; //Millet required to get to room 3
+
 const double ITEM_BOX_SCALE_TIMER = 0.25;
 
 const int ROOM_1_ITEM_BOX_NUM = 6;

@@ -31,7 +31,10 @@ namespace GameDev2D
 		m_Music { nullptr },
 		m_Bonk(nullptr),
 		m_ItemGet(nullptr),
-		m_Inventory(nullptr)
+		m_Inventory(nullptr),
+		m_Dialogue(nullptr),
+		m_WinText(nullptr),
+		m_WinMusic(nullptr)
 	{
 		m_Idle = new SpriteAtlas("Assets");
 		m_Idle->UseFrame("Sprite");
@@ -47,6 +50,15 @@ namespace GameDev2D
 		m_Walk->SetFrameSpeed(PLAYER_WALK_ANIMATION_FRAMESPEED);
 		m_Walk->AttachTo(this);
 
+		m_WinText = new AnimatedSprite("Assets");
+		m_WinText->AddFrame("WinText1");
+		m_WinText->AddFrame("WinText2");
+		m_WinText->AddFrame("WinText3");
+		m_WinText->SetDoesLoop(true);
+		m_WinText->SetAnchor(0.5f, 0.5f);
+		m_WinText->SetFrameSpeed(3);
+		m_WinText->AttachTo(GetCamera());
+
 		LoadAudio("Death");
 		LoadAudio("Jump");
 		LoadAudio("JumpReal");
@@ -59,6 +71,7 @@ namespace GameDev2D
 		LoadAudio("Room3Music");
 		LoadAudio("Bonk");
 		LoadAudio("ItemGet");
+		LoadAudio("WinMusic");
 
 		m_DeathSoundJ = new Audio("Death");
 		m_JumpSoundJ = new Audio("Jump");
@@ -69,14 +82,21 @@ namespace GameDev2D
 		m_Birds = new Audio("Birdsong");
 		m_Bonk = new Audio("Bonk");
 		m_ItemGet = new Audio("ItemGet");
+		m_WinMusic = new Audio("WinMusic");
 
 		LoadFont("Hanged Letters_32");
+		LoadFont("OpenSans-CondBold_22");
 
 		m_Inventory = new SpriteFont("Hanged Letters_32");
 		m_Inventory->SetColor(Color::OrangeColor());
 		m_Inventory->SetText("Seeds: 0\nMillet: 0\nEggs: 0");
 		m_Inventory->SetAnchor(4, -1.6);
 		m_Inventory->AttachTo(GetCamera());
+
+		m_Dialogue = new SpriteFont("OpenSans-CondBold_22");
+		m_Dialogue->SetColor(Color::WhiteColor());
+		m_Dialogue->SetAnchor(0.5, 0.5);
+		m_Dialogue->AttachTo(GetCamera());
 
 		CollisionFilter filter(PLAYER_COLLISION_FILTER, TILE_COLLISION_FILTER | PLATFORM_COLLISION_FILTER | SPIKES_COLLISION_FILTER | ENEMY_COLLISION_FILTER | PICKUP_COLLISION_FILTER);
 		m_Collider = AddAxisAlignedRectangleCollider(GetWidth(), GetHeight(), Collider::Dynamic, filter);
@@ -105,6 +125,7 @@ namespace GameDev2D
 		UnloadAudio("Bonk");
 		UnloadAudio("ItemGet");
 		UnloadFont("Hanged Letters_32");
+		UnloadFont("OpenSans-CondBold_22");
 
 		SafeDelete(m_Birds);
 		SafeDelete(m_JokeModeActivated);
@@ -118,6 +139,7 @@ namespace GameDev2D
 		SafeDelete(m_Inventory);
 		SafeDelete(m_Bonk);
 		SafeDelete(m_ItemGet);
+		SafeDelete(m_Dialogue);
 
 		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
 		{
@@ -217,12 +239,16 @@ namespace GameDev2D
 			//If the player doesn't, then they will collide with the ground and this will be
 			//set back to false
 			m_IsInAir = true;
+
+			if (IsKeyDown(Keyboard::Spacebar) || IsKeyDown(Keyboard::Left) || IsKeyDown(Keyboard::Right))
+			{
+				m_IsSpeaking = false;
+			}
 		}
 		else
 		{
 			Reset();
 			m_Level->Reset();
-
 		}
 
 		std::string inventory = "Seeds: " + std::to_string(m_SeedAmt);
@@ -238,8 +264,6 @@ namespace GameDev2D
 		{
 			spriteBatch->Draw(m_ActiveSprite);
 		}
-
-		m_Inventory->Draw();
 	}
 
 	void Player::Reset()
@@ -256,6 +280,7 @@ namespace GameDev2D
 		m_PreviousPosition = Vector2::Zero;
 		SetScaleX(1.0);
 		m_CanDoubleJump = true;
+		m_IsSpeaking = false;
 
 		m_Birds->Stop();
 		m_Birds->Play();
@@ -265,6 +290,21 @@ namespace GameDev2D
 		m_ActiveRoom = m_Level->GetActiveRoomNum();
 
 		m_Level->Reset();
+	}
+
+	void Player::DrawHUD()
+	{
+		if (m_IsSpeaking == true)
+		{
+			m_Dialogue->Draw();
+		}
+
+		if (m_GotWings == true)
+		{
+			m_WinText->Draw();
+		}
+
+		m_Inventory->Draw();
 	}
 
 	void Player::CollisionDetected(CollisionEvent* collisionEvent)
@@ -573,7 +613,13 @@ namespace GameDev2D
 		}
 		else if (tile->GetType() == Tile::Teleport)
 		{
-			if (m_ActiveRoom != LEVEL1_ROOM_NUM - 1 && IsKeyDown(Keyboard::Up))
+			if (m_MilletAmt >= MILLET_REQUIRED && IsKeyDown(Keyboard::Up))
+			{
+				m_ActiveRoom = LEVEL1_ROOM_NUM - 1;
+				m_Level->SetActiveRoom(m_ActiveRoom);
+				SetMusic(m_ActiveRoom);
+			}
+			else if (m_ActiveRoom != LEVEL1_ROOM_NUM - 1 && IsKeyDown(Keyboard::Up))
 			{
 				m_ActiveRoom++;
 				m_Level->SetActiveRoom(m_ActiveRoom);
@@ -651,12 +697,16 @@ namespace GameDev2D
 				SetState(Dead);
 			}
 		}
-		else if (enemy->GetType() == Enemy::NPC)
+		else if (enemy->GetType() == Enemy::NPCnormal)
 		{
-			/*if (NPC->GetType() == NPCType::Speech)
+			if (m_IsSpeaking == false)
 			{
-
-			}*/
+				if (IsKeyDown(Keyboard::C))
+				{
+					m_Dialogue->SetText(NPCNORMAL_SPEECH[Math::RandomInt(0, NPCNORMAL_SPEECH_NUM - 1)]);
+					m_IsSpeaking = true;
+				}
+			}
 		}
 	}
 	void Player::HandlePickupCollision(Pickup* pickup)
@@ -681,9 +731,12 @@ namespace GameDev2D
 		}
 		else if (pickup->GetType() == Pickup::Wings)
 		{
-			m_ItemGet->Stop();
-			m_ItemGet->Play();
-			//TODO: Win
+			for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
+			{
+				m_Music[i]->Stop();
+			}
+			//TODO: Insert win music
+			m_GotWings = true;
 		}
 
 		pickup->Consume();

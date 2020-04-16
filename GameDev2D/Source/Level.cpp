@@ -84,6 +84,11 @@ namespace GameDev2D
 		}
 	}
 
+	void Level::DrawHUD()
+	{
+		m_Player->DrawHUD();
+	}
+
 	void Level::Reset()
 	{
 		//Deactivate all rooms

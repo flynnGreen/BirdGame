@@ -22,7 +22,7 @@ namespace GameDev2D
 	Item::~Item()
 	{
 		SafeDelete(m_Tile);
-		SafeDelete(m_Pickup);
+		//SafeDelete(m_Pickup);
 	}
 
 	Tile::Type Item::GetType()

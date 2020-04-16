@@ -8,7 +8,6 @@
 #include "Tree.h"
 #include "House.h"
 #include "Teleport.h"
-#include "SexyFish.h"
 #include "SeedPickup.h"
 #include "MilletPickup.h"
 #include "EggPickup.h"
@@ -56,7 +55,7 @@ namespace GameDev2D
 			}
 		}
 
-		//Create still platforms/Spikes/SexyFishes/Items
+		//Create still platforms/Spikes/Enemies/Items
 		if (filename == LEVEL1_NAMES[0])
 		{
 			Platform* stillPlatform1 = new Platform(this, STILL_PLATFORM_START_POSITION[0], Vector2::Zero, 0.1);
@@ -71,6 +70,10 @@ namespace GameDev2D
 
 			this->AddGameObject(new SexyFish(SEXY1_START_POS, SEXY1_DISPLACEMENT_X));
 			this->AddGameObject(new SexyFish(SEXY2_START_POS, SEXY2_DISPLACEMENT_X));
+
+			this->AddGameObject(new NPCnormal(NPC1_START_POS));
+			this->AddGameObject(new NPCnormal(NPC2_START_POS));
+			this->AddGameObject(new NPCnormal(NPC3_START_POS));
 
 			for (int i = 0; i < ROOM_1_ITEM_BOX_NUM; i++)
 			{

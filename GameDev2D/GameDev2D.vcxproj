@@ -125,7 +125,7 @@
     <ClInclude Include="Source\Libraries\lodepng\lodepng.h" />
     <ClInclude Include="Source\MainTile.h" />
     <ClInclude Include="Source\MilletPickup.h" />
-    <ClInclude Include="Source\NPC.h" />
+    <ClInclude Include="Source\NPCnormal.h" />
     <ClInclude Include="Source\Pickup.h" />
     <ClInclude Include="Source\Platform.h" />
     <ClInclude Include="Source\Player.h" />
@@ -238,7 +238,7 @@
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\MainTile.cpp" />
     <ClCompile Include="Source\MilletPickup.cpp" />
-    <ClCompile Include="Source\NPC.cpp" />
+    <ClCompile Include="Source\NPCnormal.cpp" />
     <ClCompile Include="Source\Pickup.cpp" />
     <ClCompile Include="Source\Platform.cpp" />
     <ClCompile Include="Source\Player.cpp" />
@@ -259,6 +259,7 @@
     <None Include="Assets\Data\Level1_Room2.bin" />
     <None Include="Assets\Data\Level1_Room3.bin" />
     <None Include="Assets\Fonts\Hanged Letters_32.json" />
+    <None Include="Assets\Fonts\OpenSans-CondBold_22.json" />
     <None Include="Assets\Images\Assets.json" />
     <None Include="Assets\Shaders\passThrough-debug.fsh" />
     <None Include="Assets\Shaders\passThrough-debug.gsh" />
@@ -275,6 +276,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Fonts\Hanged Letters_32.png" />
+    <Image Include="Assets\Fonts\OpenSans-CondBold_22.png" />
     <Image Include="Assets\Images\Assets.png" />
     <Image Include="Source\Framework\Windows\Icon.ico" />
   </ItemGroup>
