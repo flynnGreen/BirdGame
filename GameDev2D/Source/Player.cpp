@@ -33,6 +33,8 @@ namespace GameDev2D
 		m_ItemGet(nullptr),
 		m_Inventory(nullptr),
 		m_Dialogue(nullptr),
+		m_Speaking(nullptr),
+		m_SpeakingJ(nullptr),
 		m_WinText(nullptr),
 		m_WinMusic(nullptr)
 	{
@@ -72,6 +74,8 @@ namespace GameDev2D
 		LoadAudio("Bonk");
 		LoadAudio("ItemGet");
 		LoadAudio("WinMusic");
+		LoadAudio("Speaking");
+		LoadAudio("JokeSpeaking");
 
 		m_DeathSoundJ = new Audio("Death");
 		m_JumpSoundJ = new Audio("Jump");
@@ -83,6 +87,8 @@ namespace GameDev2D
 		m_Bonk = new Audio("Bonk");
 		m_ItemGet = new Audio("ItemGet");
 		m_WinMusic = new Audio("WinMusic");
+		m_Speaking = new Audio("Speaking");
+		m_SpeakingJ = new Audio("JokeSpeaking");
 
 		LoadFont("Hanged Letters_32");
 		LoadFont("OpenSans-CondBold_22");
@@ -126,6 +132,8 @@ namespace GameDev2D
 		UnloadAudio("WinMusic");
 		UnloadAudio("Bonk");
 		UnloadAudio("ItemGet");
+		UnloadAudio("Speaking");
+		UnloadAudio("JokeSpeaking");
 		UnloadFont("Hanged Letters_32");
 		UnloadFont("OpenSans-CondBold_22");
 
@@ -144,6 +152,8 @@ namespace GameDev2D
 		SafeDelete(m_Dialogue);
 		SafeDelete(m_WinMusic);
 		SafeDelete(m_WinText);
+		SafeDelete(m_Speaking);
+		SafeDelete(m_SpeakingJ);
 
 		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
 		{
@@ -715,6 +725,17 @@ namespace GameDev2D
 			{
 				if (IsKeyDown(Keyboard::C))
 				{
+					if (m_IsJokeOn == true)
+					{
+						m_SpeakingJ->Stop();
+						m_SpeakingJ->Play();
+					}
+					else
+					{
+						m_Speaking->Stop();
+						m_Speaking->Play();
+					}
+
 					m_Dialogue->SetText(NPCNORMAL_SPEECH[Math::RandomInt(0, NPCNORMAL_SPEECH_NUM - 1)]);
 					m_IsSpeaking = true;
 				}
@@ -726,6 +747,17 @@ namespace GameDev2D
 			{
 				if (IsKeyDown(Keyboard::C))
 				{
+					if (m_IsJokeOn == true)
+					{
+						m_SpeakingJ->Stop();
+						m_SpeakingJ->Play();
+					}
+					else
+					{
+						m_Speaking->Stop();
+						m_Speaking->Play();
+					}
+
 					if (m_EggAmt == 0 && m_FoundEgg == false)
 					{
 						m_Dialogue->SetText(NPCGRETA_SPEECH[0]);

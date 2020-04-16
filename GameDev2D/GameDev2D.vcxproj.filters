@@ -667,5 +667,14 @@
     <Media Include="Assets\Audio\ItemGet.wav">
       <Filter>Assets</Filter>
     </Media>
+    <Media Include="Assets\Audio\JokeSpeaking.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\Audio\Speaking.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\Audio\WinMusic.wav">
+      <Filter>Assets</Filter>
+    </Media>
   </ItemGroup>
 </Project>
