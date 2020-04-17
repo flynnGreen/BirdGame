@@ -36,6 +36,7 @@ namespace GameDev2D
 		m_Speaking(nullptr),
 		m_SpeakingJ(nullptr),
 		m_WinText(nullptr),
+		m_Cheater(nullptr),
 		m_WinMusic(nullptr)
 	{
 		m_Idle = new SpriteAtlas("Assets");
@@ -60,6 +61,11 @@ namespace GameDev2D
 		m_WinText->SetAnchor(0.5f, 0.5f);
 		m_WinText->SetFrameSpeed(3);
 		m_WinText->AttachTo(GetCamera());
+
+		m_Cheater = new AnimatedSprite("Assets");
+		m_Cheater->UseFrame("Cheater");
+		m_Cheater->SetAnchor(0.5f, 0.5f);
+		m_Cheater->AttachTo(GetCamera());
 
 		LoadAudio("Death");
 		LoadAudio("Jump");
@@ -152,6 +158,7 @@ namespace GameDev2D
 		SafeDelete(m_Dialogue);
 		SafeDelete(m_WinMusic);
 		SafeDelete(m_WinText);
+		SafeDelete(m_Cheater);
 		SafeDelete(m_Speaking);
 		SafeDelete(m_SpeakingJ);
 
@@ -318,7 +325,14 @@ namespace GameDev2D
 
 		if (m_GotWings == true)
 		{
-			m_WinText->Draw();
+			if (m_MilletAmt < MILLET_REQUIRED)
+			{
+				m_Cheater->Draw();
+			}
+			else
+			{
+				m_WinText->Draw();
+			}
 		}
 
 		m_Inventory->Draw();
@@ -807,7 +821,12 @@ namespace GameDev2D
 			{
 				m_Music[i]->Stop();
 			}
-			m_WinMusic->Play();
+
+			if (m_MilletAmt >= MILLET_REQUIRED)
+			{
+				m_WinMusic->Play();
+			}
+
 			m_GotWings = true;
 		}
 

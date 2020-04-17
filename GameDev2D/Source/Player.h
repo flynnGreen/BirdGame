@@ -102,6 +102,7 @@ namespace GameDev2D
 		bool m_IsSpeaking = true;
 		bool m_FoundEgg = false;
 		AnimatedSprite* m_WinText;
+		SpriteAtlas* m_Cheater;
 		Audio* m_WinMusic;
 	};
 }
