@@ -35,6 +35,8 @@ namespace GameDev2D
 		m_SpriteBatch->End();
 
 		m_Level->DrawHUD();
+
+		m_Level->DrawFader();
 	}
 
 	void Game::HandleLeftMouseClick(float mouseX, float mouseY)

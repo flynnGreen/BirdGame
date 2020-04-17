@@ -4,7 +4,11 @@
 namespace GameDev2D
 {
 	Level::Level() :
-		m_Player(nullptr)
+		m_Player(nullptr),
+		m_BlackOverlay(nullptr),
+		m_State(Respawning),
+		m_Fader(Fade_Out),
+		m_FadeTimer(FADE_DURATION)
 	{
 		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
 		{
@@ -12,6 +16,15 @@ namespace GameDev2D
 		}
 
 		m_Player = new Player(this);
+
+		//Create a Polygon object used for Room transitions
+		m_BlackOverlay = new Polygon();
+		m_BlackOverlay->MakeRectangle(GetScreenWidth(), GetScreenHeight(), true);
+		m_BlackOverlay->SetColor(Color::BlackColor(1.0f));
+		m_BlackOverlay->SetAnchor(0.5f, 0.5f);
+
+		//Start the Fade timer
+		m_FadeTimer.Start();
 	}
 
 	Level::~Level()
@@ -21,56 +34,90 @@ namespace GameDev2D
 			SafeDelete(m_Room[i]);
 		}
 		SafeDelete(m_Player);
+		SafeDelete(m_BlackOverlay);
 	}
 
 	void Level::Update(double delta)
 	{
-
-		Vector2 cameraPosition = GetCamera()->GetPosition();
-
-		if (m_Player->IsDead() == false)
-		{
-			Vector2 playerPosition = m_Player->GetPosition();
-			Vector2 deltaPosition = cameraPosition - playerPosition;
-
-			if (fabsf(deltaPosition.x) > 1.0f)
-			{
-				cameraPosition.x -= deltaPosition.x;
-			}
-
-			if (fabsf(deltaPosition.y) > 1.0f)
-			{
-				cameraPosition.y -= deltaPosition.y;
-			}
-		}
-
-		cameraPosition.x = Math::Clamp(cameraPosition.x, GetHalfScreenWidth(), m_Room[m_CurrentRoom]->GetWidth() - GetHalfScreenWidth());
-		cameraPosition.y = Math::Clamp(cameraPosition.y, GetHalfScreenHeight(), m_Room[m_CurrentRoom]->GetHeight() - GetHalfScreenHeight());
-
-		GetCamera()->SetPosition(cameraPosition);
-
-		/*if (IsKeyDown(Keyboard::W))
-		{
-			GetCamera()->SetPositionY(GetCamera()->GetPosition().y + CAMERA_SPEED);
-		}
-		if (IsKeyDown(Keyboard::S))
-		{
-			GetCamera()->SetPositionY(GetCamera()->GetPosition().y - CAMERA_SPEED);
-		}
-		if (IsKeyDown(Keyboard::D))
-		{
-			GetCamera()->SetPositionX(GetCamera()->GetPosition().x + CAMERA_SPEED);
-		}
-		if (IsKeyDown(Keyboard::A))
-		{
-			GetCamera()->SetPositionX(GetCamera()->GetPosition().x - CAMERA_SPEED);
-		}*/
-
 		m_Room[m_CurrentRoom]->Update(delta);
 
-		if (m_Player != nullptr)
+		if (m_State == Gameplay)
 		{
-			m_Player->Update(delta);
+			if (m_Player != nullptr)
+			{
+				m_Player->Update(delta);
+			}
+
+			Vector2 cameraPosition = GetCamera()->GetPosition();
+
+			if (m_Player->IsDead() == false)
+			{
+				Vector2 playerPosition = m_Player->GetPosition();
+				Vector2 deltaPosition = cameraPosition - playerPosition;
+
+				if (fabsf(deltaPosition.x) > 1.0f)
+				{
+					cameraPosition.x -= deltaPosition.x;
+				}
+
+				if (fabsf(deltaPosition.y) > 1.0f)
+				{
+					cameraPosition.y -= deltaPosition.y;
+				}
+			}
+			else
+			{
+				Respawn();
+			}
+
+			cameraPosition.x = Math::Clamp(cameraPosition.x, GetHalfScreenWidth(), m_Room[m_CurrentRoom]->GetWidth() - GetHalfScreenWidth());
+			cameraPosition.y = Math::Clamp(cameraPosition.y, GetHalfScreenHeight(), m_Room[m_CurrentRoom]->GetHeight() - GetHalfScreenHeight());
+
+			GetCamera()->SetPosition(cameraPosition);
+		}
+
+		//Is there a fade in or fade out happening
+		if (IsFading() == true)
+		{
+			//Update the Fade Timer
+			m_FadeTimer.Update(delta);
+
+			if (m_Fader == Fade_In)
+			{
+				m_BlackOverlay->SetAlpha(m_FadeTimer.GetPercentageElapsed());
+
+				//Is the Timer done?
+				if (m_FadeTimer.IsDone() == true)
+				{
+					//Change the state to Fade Out
+					m_Fader = Fade_Out;
+
+					//Restart the Timer for the Fade Out
+					m_FadeTimer.Restart();
+
+					if (m_State == Respawning)
+					{
+						GetActiveRoom()->Reset();
+						m_Player->Reset();
+					}
+					else if (m_State == RoomChange)
+					{
+						SetActiveRoom(m_NextRoom);
+					}
+				}
+			}
+			else if (m_Fader == Fade_Out)
+			{
+				//Set the Black overlay's alpha
+				m_BlackOverlay->SetAlpha(m_FadeTimer.GetPercentageRemaining());
+
+				//Is the Timer done? Set the State to Gameplay
+				if (m_FadeTimer.IsDone() == true)
+				{
+					m_State = Gameplay;
+					m_Fader = No_Fade;
+				}
+			}
 		}
 	}
 
@@ -89,8 +136,21 @@ namespace GameDev2D
 		m_Player->DrawHUD();
 	}
 
+	void Level::DrawFader()
+	{
+		//Draw the Fade
+		if (IsFading() == true)
+		{
+			Vector2 position = GetCamera()->GetPosition();
+			m_BlackOverlay->SetPosition(position);
+			m_BlackOverlay->Draw();
+		}
+	}
+
 	void Level::Reset()
 	{
+		Respawn();
+
 		//Deactivate all rooms
 		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
 		{
@@ -104,10 +164,10 @@ namespace GameDev2D
 		{
 			m_Room[i]->Reset();
 		}
-		/*if (m_Player != nullptr)
+		if (m_Player != nullptr)
 		{
 			m_Player->Reset();
-		}*/
+		}
 	}
 
 	Room* Level::GetActiveRoom()
@@ -156,15 +216,15 @@ namespace GameDev2D
 
 		if (key == Keyboard::One)
 		{
-			SetActiveRoom(0);
+			TransitionToRoom(0);
 		}
 		if (key == Keyboard::Two)
 		{
-			SetActiveRoom(1);
+			TransitionToRoom(1);
 		}
 		if (key == Keyboard::Three)
 		{
-			SetActiveRoom(2);
+			TransitionToRoom(2);
 		}
 		else
 		{
@@ -180,6 +240,34 @@ namespace GameDev2D
 		if (m_Player != nullptr)
 		{
 			m_Player->HandleKeyReleased(key);
+		}
+	}
+
+	Level::State Level::GetState()
+	{
+		return m_State;
+	}
+
+	bool Level::IsFading()
+	{
+		return m_FadeTimer.IsRunning();
+	}
+
+	void Level::Respawn()
+	{
+		m_State = Respawning;
+		m_Fader = Fade_In;
+		m_FadeTimer.Restart();
+	}
+
+	void Level::TransitionToRoom(unsigned int index)
+	{
+		if (m_State == Gameplay)
+		{
+			m_NextRoom = index;
+			m_State = RoomChange;
+			m_Fader = Fade_In;
+			m_FadeTimer.Restart();
 		}
 	}
 }

@@ -120,7 +120,7 @@ namespace GameDev2D
 			m_Music[i]->SetDoesLoop(true);
 		}
 
-		Reset();
+		m_Level->Reset();
 	}
 
 	Player::~Player()
@@ -269,11 +269,6 @@ namespace GameDev2D
 				}
 			}
 		}
-		else
-		{
-			Reset();
-			m_Level->Reset();
-		}
 
 		std::string inventory = "Seeds: " + std::to_string(m_SeedAmt);
 		inventory.append("\nMillet: " + std::to_string(m_MilletAmt));
@@ -312,8 +307,6 @@ namespace GameDev2D
 		SetMusic(m_Level->GetActiveRoomNum());
 
 		m_ActiveRoom = m_Level->GetActiveRoomNum();
-
-		m_Level->Reset();
 	}
 
 	void Player::DrawHUD()

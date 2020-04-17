@@ -27,6 +27,7 @@ namespace GameDev2D
 		void HandleKeyReleased(Keyboard::Key key);
 		
 	private:
+		
 		//Member variables GO HERE 
 		Level* m_Level;
 		SpriteBatch* m_SpriteBatch;

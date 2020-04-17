@@ -3,6 +3,23 @@
 
 const float UI_BUFFER = 5.0f;
 
+const double FADE_DURATION = 1.0;
+
+enum LoadSteps
+{
+	LoadStep_Initialize = 0,
+	LoadStep_Textures,
+	LoadStep_Audio,
+	LoadStep_Level,
+	LoadStep_Room0,
+	LoadStep_Room1,
+	LoadStep_Room2,
+	LoadStep_Room3,
+	LoadStep_Player,
+	LoadStep_Finalize,
+	LoadStep_Complete
+};
+
 const float TILE_SIZE = 64.0f;
 const float HALF_TILE_SIZE = 32.0f;
 
