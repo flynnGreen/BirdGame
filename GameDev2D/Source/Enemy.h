@@ -16,6 +16,7 @@ namespace GameDev2D
 			SexyFish,
 			NPCnormal,
 			NPCgreta,
+			NPCend,
 		};
 
 		virtual Type GetType() = 0;

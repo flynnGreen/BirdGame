@@ -31,13 +31,6 @@ namespace GameDev2D
 		bool isActive = filename == LEVEL1_NAMES[0];
 		SetIsActive(isActive);
 
-		//Set room 2 background
-		if (filename == LEVEL1_NAMES[1])
-		{
-			m_Background = new SpriteAtlas("Assets");
-			m_Background->UseFrame("Background1");
-		}
-
 		//Create the Platforms
 		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
 		{
@@ -131,6 +124,9 @@ namespace GameDev2D
 		}
 		else if (filename == LEVEL1_NAMES[1])
 		{
+			m_Background = new SpriteAtlas("Assets");
+			m_Background->UseFrame("Background");
+
 			Spikes* spikes = new Spikes(this, SPIKES_START_POS, SPIKES_DISPLACEMENT, SPIKES_DURATION);
 			this->AddGameObject(spikes);
 
@@ -193,6 +189,9 @@ namespace GameDev2D
 		}
 		else if (filename == LEVEL1_NAMES[2])
 		{
+			this->AddGameObject(new NPCend(NPC4_START_POS));
+			this->AddGameObject(new NPCend(NPC5_START_POS));
+
 			for (int i = 0; i < ROOM_3_ITEM_BOX_NUM; i++)
 			{
 				Tile* tile = GetTile(ROOM_3_ITEM_BOX_ROWS[i], ROOM_3_ITEM_BOX_COLUMNS[i]);

@@ -15,6 +15,8 @@ const unsigned short PICKUP_COLLISION_FILTER = 0x0020;
 
 const float CAMERA_SPEED = 10.0f;
 
+const std::string INTRO_TEXT = "Are you ready to earn your wings?\n\nSpace to jump\nC to speak\nArrow keys to move\nDown to drop through platforms\nR to restart the room";
+
 const int LEVEL1_ROOM_NUM = 3;
 const std::string LEVEL1_NAMES[LEVEL1_ROOM_NUM] = { "Level1_Room1", "Level1_Room2", "Level1_Room3" };
 const std::string LEVEL1_MUSIC[LEVEL1_ROOM_NUM] = { "Room1Music", "Room2Music", "Room3Music" };
@@ -110,9 +112,18 @@ const std::string NPCGRETA_SPEECH[3] = { "Oh, my egg... My precious egg is gone.
 										 "My egg! Oh, thank you! Thank you so much! Here, I have something for you.\n\nObtained 1 millet!",
 										 "Thank you again! Unfortunately that's all the millet I have..."};
 
+const GameDev2D::Vector2 NPC4_START_POS(832.0f, 1376.0f);
+const GameDev2D::Vector2 NPC5_START_POS(640.0f, 1760.0f);
+
+const int NPCEND_SPEECH_NUM = 4;
+const std::string NPCEND_SPEECH[NPCNORMAL_SPEECH_NUM] = { "Hey there, stranger! Looks like you're one of us now!",
+														  "Welcome to the mountain!",
+														  "Wow, you're pretty young to have made it all the way here!",
+														  "I sure hope you have all your millet! Wouldn't want any cheaters..."};
+
 //Item box consts
 //1 = seed, 2 = millet, 3 = egg
-const int MILLET_REQUIRED = 3; //Millet required to get to room 3
+const int MILLET_REQUIRED = 4; //Millet required to get to room 3
 
 const double ITEM_BOX_SCALE_TIMER = 0.25;
 

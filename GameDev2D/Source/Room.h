@@ -8,6 +8,7 @@
 #include "EyeFly.h"
 #include "NPCnormal.h"
 #include "NPCgreta.h"
+#include "NPCend.h"
 
 namespace GameDev2D
 {

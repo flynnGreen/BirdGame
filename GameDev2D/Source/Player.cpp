@@ -107,7 +107,7 @@ namespace GameDev2D
 
 		m_Dialogue = new SpriteFont("OpenSans-CondBold_22");
 		m_Dialogue->SetColor(Color::WhiteColor());
-		m_Dialogue->SetText("Are you ready to earn your wings?\n\nSpace to jump\nC to speak\nArrow keys to move");
+		m_Dialogue->SetText(INTRO_TEXT);
 		m_Dialogue->SetAnchor(0.5, 0.5);
 		m_Dialogue->AttachTo(GetCamera());
 
@@ -791,6 +791,28 @@ namespace GameDev2D
 						m_IsSpeaking = true;
 						m_MilletAmt++;
 					}
+				}
+			}
+		}
+		else if (enemy->GetType() == Enemy::NPCend)
+		{
+			if (m_IsSpeaking == false)
+			{
+				if (IsKeyDown(Keyboard::C))
+				{
+					if (m_IsJokeOn == true)
+					{
+						m_SpeakingJ->Stop();
+						m_SpeakingJ->Play();
+					}
+					else
+					{
+						m_Speaking->Stop();
+						m_Speaking->Play();
+					}
+
+					m_Dialogue->SetText(NPCEND_SPEECH[Math::RandomInt(0, NPCEND_SPEECH_NUM - 1)]);
+					m_IsSpeaking = true;
 				}
 			}
 		}

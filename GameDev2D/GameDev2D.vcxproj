@@ -125,6 +125,7 @@
     <ClInclude Include="Source\Libraries\lodepng\lodepng.h" />
     <ClInclude Include="Source\MainTile.h" />
     <ClInclude Include="Source\MilletPickup.h" />
+    <ClInclude Include="Source\NPCend.h" />
     <ClInclude Include="Source\NPCgreta.h" />
     <ClInclude Include="Source\NPCnormal.h" />
     <ClInclude Include="Source\Pickup.h" />
@@ -239,6 +240,7 @@
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\MainTile.cpp" />
     <ClCompile Include="Source\MilletPickup.cpp" />
+    <ClCompile Include="Source\NPCend.cpp" />
     <ClCompile Include="Source\NPCgreta.cpp" />
     <ClCompile Include="Source\NPCnormal.cpp" />
     <ClCompile Include="Source\Pickup.cpp" />
