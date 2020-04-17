@@ -100,6 +100,8 @@ namespace GameDev2D
 			m_Music[i] = new Audio(LEVEL1_MUSIC[i]);
 			m_Music[i]->SetDoesLoop(true);
 		}
+
+		m_Level->Reset();
 	}
 
 	Player::~Player()
