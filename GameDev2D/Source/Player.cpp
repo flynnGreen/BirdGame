@@ -631,13 +631,13 @@ namespace GameDev2D
 				SetMusic(m_ActiveRoom);
 				
 			}
-			else if (m_ActiveRoom != 0 && IsKeyDown(Keyboard::Down))
+			else if (m_Level->GetActiveRoomNum() != 0 && IsKeyDown(Keyboard::Down))
 			{
 				m_ActiveRoom--;
 				m_Level->SetActiveRoom(m_ActiveRoom);
 				SetMusic(m_ActiveRoom);
 			}
-			else if (m_ActiveRoom = LEVEL1_ROOM_NUM - 2 && IsKeyDown(Keyboard::Up))
+			else if (m_ActiveRoom == LEVEL1_ROOM_NUM - 2 && IsKeyDown(Keyboard::Up))
 			{
 				m_Dialogue->SetText("You still need " + std::to_string(MILLET_REQUIRED - m_MilletAmt) + " millet to pass!");
 				m_IsSpeaking = true;
