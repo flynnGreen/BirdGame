@@ -29,6 +29,9 @@ namespace GameDev2D
 		void HandleKeyPress(Keyboard::Key key);
 		void HandleKeyReleased(Keyboard::Key key);
 
+		Room* LoadRoom(int roomNum);
+		Player* LoadPlayer();
+
 		enum State
 		{
 			Gameplay = 0,

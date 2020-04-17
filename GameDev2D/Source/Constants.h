@@ -11,7 +11,6 @@ enum LoadSteps
 	LoadStep_Textures,
 	LoadStep_Audio,
 	LoadStep_Level,
-	LoadStep_Room0,
 	LoadStep_Room1,
 	LoadStep_Room2,
 	LoadStep_Room3,

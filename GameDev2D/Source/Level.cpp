@@ -8,15 +8,10 @@ namespace GameDev2D
 		m_BlackOverlay(nullptr),
 		m_State(Respawning),
 		m_Fader(Fade_Out),
-		m_FadeTimer(FADE_DURATION)
+		m_FadeTimer(FADE_DURATION),
+		m_CurrentRoom(0),
+		m_NextRoom(0)
 	{
-		for (int i = 0; i < LEVEL1_ROOM_NUM; i++)
-		{
-			m_Room[i] = new Room(this, LEVEL1_NAMES[i]);
-		}
-
-		m_Player = new Player(this);
-
 		//Create a Polygon object used for Room transitions
 		m_BlackOverlay = new Polygon();
 		m_BlackOverlay->MakeRectangle(GetScreenWidth(), GetScreenHeight(), true);
@@ -39,7 +34,7 @@ namespace GameDev2D
 
 	void Level::Update(double delta)
 	{
-		m_Room[m_CurrentRoom]->Update(delta);
+		GetActiveRoom()->Update(delta);
 
 		if (m_State == Gameplay)
 		{
@@ -241,6 +236,24 @@ namespace GameDev2D
 		{
 			m_Player->HandleKeyReleased(key);
 		}
+	}
+
+	Room* Level::LoadRoom(int roomNum)
+	{
+		Room* room = new Room(this, LEVEL1_NAMES[roomNum]);
+		m_Room[roomNum] = room;
+
+		return room;
+	}
+
+	Player* Level::LoadPlayer()
+	{
+		if (m_Player == nullptr)
+		{
+			m_Player = new Player(this);
+		}
+
+		return m_Player;
 	}
 
 	Level::State Level::GetState()

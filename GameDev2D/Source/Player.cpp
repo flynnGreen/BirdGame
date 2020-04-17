@@ -67,22 +67,6 @@ namespace GameDev2D
 		m_Cheater->SetAnchor(0.5f, 0.5f);
 		m_Cheater->AttachTo(GetCamera());
 
-		LoadAudio("Death");
-		LoadAudio("Jump");
-		LoadAudio("JumpReal");
-		LoadAudio("JumpReal2");
-		LoadAudio("DeathReal");
-		LoadAudio("JokeModeActivated");
-		LoadAudio("Birdsong");
-		LoadAudio("Room1Music");
-		LoadAudio("Room2Music");
-		LoadAudio("Room3Music");
-		LoadAudio("Bonk");
-		LoadAudio("ItemGet");
-		LoadAudio("WinMusic");
-		LoadAudio("Speaking");
-		LoadAudio("JokeSpeaking");
-
 		m_DeathSoundJ = new Audio("Death");
 		m_JumpSoundJ = new Audio("Jump");
 		m_DeathSound = new Audio("DeathReal");
@@ -95,9 +79,6 @@ namespace GameDev2D
 		m_WinMusic = new Audio("WinMusic");
 		m_Speaking = new Audio("Speaking");
 		m_SpeakingJ = new Audio("JokeSpeaking");
-
-		LoadFont("Hanged Letters_32");
-		LoadFont("OpenSans-CondBold_22");
 
 		m_Inventory = new SpriteFont("Hanged Letters_32");
 		m_Inventory->SetColor(Color::OrangeColor());
@@ -119,8 +100,6 @@ namespace GameDev2D
 			m_Music[i] = new Audio(LEVEL1_MUSIC[i]);
 			m_Music[i]->SetDoesLoop(true);
 		}
-
-		m_Level->Reset();
 	}
 
 	Player::~Player()

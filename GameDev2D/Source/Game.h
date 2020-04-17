@@ -27,9 +27,12 @@ namespace GameDev2D
 		void HandleKeyReleased(Keyboard::Key key);
 		
 	private:
-		
+		void LoadStep();
+		bool IsLoading();
+
 		//Member variables GO HERE 
 		Level* m_Level;
 		SpriteBatch* m_SpriteBatch;
+		int m_LoadStep;
 	};
 }
