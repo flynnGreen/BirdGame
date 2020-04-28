@@ -27,7 +27,7 @@ namespace GameDev2D
 
 			if (m_Timer.IsDone() == true)
 			{
-				m_State == Pickup::Showing;
+				m_State = Pickup::Showing;
 			}
 		}
 	}

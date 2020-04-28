@@ -513,10 +513,12 @@ namespace GameDev2D
 			{
 				if (m_IsJokeOn == true)
 				{
+					m_DeathSoundJ->Stop();
 					m_DeathSoundJ->Play();
 				}
 				else
 				{
+					m_DeathSound->Stop();
 					m_DeathSound->Play();
 				}
 			}
@@ -821,6 +823,7 @@ namespace GameDev2D
 			if (m_MilletAmt >= MILLET_REQUIRED)
 			{
 				m_WinMusic->Play();
+				m_Inventory->SetText("You finished with " + std::to_string(m_SeedAmt) + "/" + std::to_string(TOTAL_SEED_NUM) + " seeds!");
 			}
 
 			m_GotWings = true;

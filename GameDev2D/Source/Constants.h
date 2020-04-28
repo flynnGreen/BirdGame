@@ -103,7 +103,7 @@ const GameDev2D::Vector2 SEXY3_START_POS(384.0f, 288.0f);
 const float SEXY3_DISPLACEMENT_X = 90.0f;
 
 //Phantom consts
-const float EYE_SPEED = 70.0;
+const double EYE_SPEED = 70.0;
 
 const GameDev2D::Vector2 EYE_START_POS(1120.0f, 448.0f);
 const float EYE_DISPLACEMENT_Y = 200.0f;
@@ -144,6 +144,8 @@ const int MILLET_REQUIRED = 4; //Millet required to get to room 3
 const double ITEM_BOX_SCALE_TIMER = 0.25;
 
 const int ROOM_1_ITEM_BOX_NUM = 6;
+
+const int TOTAL_SEED_NUM = 4;
 
 const unsigned char ROOM_1_ITEM_BOX_1_ROW = 20;
 const unsigned char ROOM_1_ITEM_BOX_1_COLUMN = 11;
