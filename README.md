@@ -10,4 +10,5 @@ J to activate joke mode
 
 To win, collect the millet and advance to the final room!
 
+All sprites and music created by Flynn Green.
 Built using GameDev2D, an engine built by Professor Bradley Flood for Algonquin College Game Development students.
