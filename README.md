@@ -1,3 +1,5 @@
-# GameDev2D
+# Bird Game
 
-Version 1.0.0
+Earn your wings!
+
+Built using GameDev2D, an engine built by Professor Bradley Flood for Algonquin College Game Development students.
