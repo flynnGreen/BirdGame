@@ -12,6 +12,7 @@ namespace GameDev2D
 		m_MasteringVoice(nullptr),
 		m_Callback()
 	{
+		CoInitialize(nullptr);
 		//Create the engine
 		HRESULT result = XAudio2Create(&m_Engine);
 		assert(SUCCEEDED(result));
