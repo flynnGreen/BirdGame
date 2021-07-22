@@ -6,7 +6,6 @@ Controls:
 - Down arrow key to drop through platforms
 - Up/Down arrow keys when on a teleporter to switch rooms
 - R to restart the current room
-- J to activate joke mode
 
 To win, collect the millet and advance to the final room!
 
